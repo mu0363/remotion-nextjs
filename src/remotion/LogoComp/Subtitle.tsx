@@ -1,5 +1,5 @@
-import type { FC } from "react";
 import { interpolate, useCurrentFrame } from "remotion";
+import type { FC } from "react";
 
 export const Subtitle: FC = () => {
   const frame = useCurrentFrame();
@@ -9,9 +9,8 @@ export const Subtitle: FC = () => {
   });
 
   return (
-    <div className="text-gray-600 text-xl" style={{ opacity }}>
-      Edit <code className="text-red-700 font-bold">src/index.tsx</code> and
-      save to reload.
+    <div className="text-xl text-gray-600" style={{ opacity }}>
+      Edit <code className="font-bold text-red-700">src/index.tsx</code> and save to reload.
     </div>
   );
 };
