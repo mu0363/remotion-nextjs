@@ -1,0 +1,1 @@
+export { LogoComp } from "./LogoComp";
