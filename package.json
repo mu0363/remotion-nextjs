@@ -11,6 +11,16 @@
     "video": "remotion preview src/remotion/index.tsx"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.0",
+    "@emotion/server": "^11.10.0",
+    "@mantine/core": "^5.1.6",
+    "@mantine/dropzone": "^5.1.6",
+    "@mantine/form": "^5.1.6",
+    "@mantine/hooks": "^5.1.6",
+    "@mantine/modals": "^5.1.6",
+    "@mantine/next": "^5.1.6",
+    "@mantine/notifications": "^5.1.6",
+    "@mantine/nprogress": "^5.1.6",
     "@remotion/cli": "^3.2.3",
     "@remotion/player": "^3.2.3",
     "next": "12.2.5",
