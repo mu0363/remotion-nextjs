@@ -1,5 +1,5 @@
 import { Player } from "@remotion/player";
-import { LogoComp } from "../remotion/LogoComp";
+import { LogoComp } from "../LogoComp";
 import type { NextPage } from "next";
 
 const Home: NextPage = () => {

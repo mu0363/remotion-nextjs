@@ -7,8 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "render": "remotion render src/index.tsx MyComp out/video.mp4",
-    "video": "remotion preview src/remotion/index.tsx"
+    "render": "remotion render src/remotion/index.tsx MyComp out/video.mp4",
+    "video": "remotion preview src/remotion/index.tsx",
+    "site": "npx remotion lambda sites create src/remotion/index.tsx"
   },
   "dependencies": {
     "@emotion/react": "^11.10.0",
@@ -21,12 +22,14 @@
     "@mantine/next": "^5.1.6",
     "@mantine/notifications": "^5.1.6",
     "@mantine/nprogress": "^5.1.6",
-    "@remotion/cli": "^3.2.3",
+    "@remotion/cli": "3.2.3",
+    "@remotion/lambda": "3.2.3",
     "@remotion/player": "^3.2.3",
+    "@remotion/renderer": "^3.2.3",
     "next": "12.2.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "remotion": "^3.2.3"
+    "remotion": "3.2.3"
   },
   "devDependencies": {
     "@types/node": "18.7.5",
@@ -34,7 +37,6 @@
     "@types/react-dom": "18.0.6",
     "@typescript-eslint/eslint-plugin": "^5.33.1",
     "@typescript-eslint/parser": "^5.33.1",
-    "autoprefixer": "^10.4.8",
     "eslint": "^8.22.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-next": "12.2.5",
@@ -46,10 +48,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-tailwindcss": "^3.6.0",
     "eslint-plugin-unused-imports": "^2.0.0",
-    "postcss": "^8.4.16",
-    "postcss-preset-env": "^7.7.2",
     "prettier": "^2.7.1",
-    "tailwindcss": "^3.1.8",
     "typescript": "4.7.4"
   }
 }

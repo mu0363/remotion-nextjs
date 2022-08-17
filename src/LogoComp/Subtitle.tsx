@@ -9,8 +9,8 @@ export const Subtitle: FC = () => {
   });
 
   return (
-    <div className="text-xl text-gray-600" style={{ opacity }}>
-      Edit <code className="font-bold text-red-700">src/index.tsx</code> and save to reload.
+    <div style={{ opacity, fontSize: "2rem", color: "#374151" }}>
+      Edit <code style={{ fontWeight: "bold", fontFamily: "sans-serif" }}>src/index.tsx</code> and save to reload.
     </div>
   );
 };

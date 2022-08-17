@@ -1,14 +1,19 @@
+import { FC } from "react";
 import { AbsoluteFill } from "remotion";
 import { Logo } from "./Logo";
 import { Subtitle } from "./Subtitle";
 import { Title } from "./Title";
 
-export const LogoComp = () => {
+export const LogoComp: FC = () => {
   return (
-    <AbsoluteFill className="items-center justify-center bg-gray-100">
-      <div className="m-10" />
+    <AbsoluteFill
+      style={{
+        backgroundColor: "white",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <Logo />
-      <div className="m-3" />
       <Title />
       <Subtitle />
     </AbsoluteFill>

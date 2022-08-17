@@ -1,4 +1,4 @@
-import "../style.css";
+import "../styles/global.css";
 import { MantineProvider } from "@mantine/core";
 import { PlayerLayout } from "../layout/PlayerLayout";
 import type { AppProps } from "next/app";
