@@ -9,8 +9,17 @@ export const Title: FC = () => {
     extrapolateRight: "clamp",
   });
   return (
-    <div style={{ opacity }} className="text-5xl font-bold leading-relaxed text-gray-700">
-      Welcome to Remotion with Tailwind right now!
+    <div
+      style={{
+        opacity,
+        fontSize: "3rem",
+        fontWeight: "bold",
+        color: "#374151",
+        marginTop: 36,
+        fontFamily: "Helvetica",
+      }}
+    >
+      I want to talk about my interesting.
     </div>
   );
 };
