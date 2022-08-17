@@ -16,10 +16,11 @@ module.exports = {
   ],
   overrides: [
     {
-      files: ["*.ts", "*.tsx"], // Your TypeScript files extension
+      files: ["*.{ts,tsx}"], // Your TypeScript files extension
       extends: [
         "plugin:@typescript-eslint/recommended",
         "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        // "plugin:@remotion/recommended",
       ],
       parserOptions: { project: ["./tsconfig.json"] }, // Specify it only for TypeScript files
     },
@@ -37,13 +38,7 @@ module.exports = {
       node: { extensions: [".ts"] },
     },
   },
-  plugins: [
-    "react",
-    "@typescript-eslint",
-    "tailwindcss",
-    "import",
-    "unused-imports",
-  ],
+  plugins: ["react", "@typescript-eslint", "tailwindcss", "import", "unused-imports"],
   rules: {
     "require-jsdoc": "off",
     "sort-imports": 0,
@@ -78,15 +73,7 @@ module.exports = {
     "import/order": [
       "error",
       {
-        groups: [
-          "builtin",
-          "external",
-          "parent",
-          "sibling",
-          "index",
-          "object",
-          "type",
-        ],
+        groups: ["builtin", "external", "parent", "sibling", "index", "object", "type"],
         pathGroups: [
           {
             pattern: "@alias/**",

@@ -1,6 +1,7 @@
-import { AppShell, Navbar, Header, Aside, Text, MediaQuery, Burger, useMantineTheme } from "@mantine/core";
+import { AppShell, Navbar, Header, Text, MediaQuery, Burger, useMantineTheme } from "@mantine/core";
 import { useState } from "react";
 import type { FC, ReactNode } from "react";
+import { Sidebar } from "src/components/Sidebar";
 
 export const PlayerLayout: FC<{ children: ReactNode }> = ({ children }) => {
   const theme = useMantineTheme();
@@ -19,13 +20,13 @@ export const PlayerLayout: FC<{ children: ReactNode }> = ({ children }) => {
           <Text>Application navbar</Text>
         </Navbar>
       }
-      aside={
-        <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
-          <Aside p="md" hiddenBreakpoint="sm" width={{ sm: 200, lg: 300 }}>
-            <Text>Application sidebar</Text>
-          </Aside>
-        </MediaQuery>
-      }
+      // aside={
+      //   <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
+      //     <Aside p="md" hiddenBreakpoint="sm" width={{ sm: 200, lg: 300 }}>
+      //       <Sidebar />
+      //     </Aside>
+      //   </MediaQuery>
+      // }
       header={
         <Header height={70} p="md">
           <div style={{ display: "flex", alignItems: "center", height: "100%" }}>
@@ -45,6 +46,7 @@ export const PlayerLayout: FC<{ children: ReactNode }> = ({ children }) => {
       }
     >
       {children}
+      <Sidebar />
     </AppShell>
   );
 };
