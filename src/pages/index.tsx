@@ -1,12 +1,15 @@
 import { Player } from "@remotion/player";
-import { LogoComp } from "../LogoComp";
+import { useSelector } from "react-redux";
 import type { NextPage } from "next";
+import { LogoComp } from "src/remotion/LogoComp";
+import { selectAllText } from "src/store/features/textSlice";
 
 const Home: NextPage = () => {
+  const texts = useSelector(selectAllText);
   return (
     <Player
       component={LogoComp}
-      inputProps={{ text: "World" }}
+      inputProps={{ firstText: texts.firstText }}
       durationInFrames={120}
       compositionWidth={1920}
       compositionHeight={1080}
