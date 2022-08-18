@@ -1,37 +1,52 @@
-import { AwsRegion, getFunctions } from "@remotion/lambda";
+// FIXME: delete console.log
+/* eslint-disable no-console */
+import { getFunctions, renderMediaOnLambda } from "@remotion/lambda";
 import { NextApiRequest, NextApiResponse } from "next";
+import {} from "firebase-admin/firestore";
+import { REGION, COMP_NAME, SITE_ID } from "src/libs/const";
+import { adminDB, RenderInfo, renderInfoConverter } from "src/libs/firebase/server";
 
-type Override<T1, T2> = Omit<T1, keyof T2> & T2;
-type CustomRequest = Override<NextApiRequest, { body: string }>;
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  try {
+    // FIXME: アサーション削除
+    const data = req.body as string;
+    const texts = JSON.parse(data) as { firstText: string };
 
-export type Finality =
-  | {
-      type: "success";
-      url: string;
-    }
-  | {
-      type: "error";
-      errors: string;
+    const [first] = await getFunctions({
+      compatibleOnly: true,
+      region: REGION,
+    });
+
+    const { renderId, bucketName } = await renderMediaOnLambda({
+      region: REGION,
+      functionName: first.functionName,
+      serveUrl: SITE_ID,
+      composition: COMP_NAME,
+      inputProps: { firstText: texts.firstText },
+      codec: "h264",
+      imageFormat: "jpeg",
+      maxRetries: 1,
+      framesPerLambda: 80,
+      privacy: "public",
+    });
+
+    const docRef = adminDB
+      .collection(process.env.FIREBASE_COLLECTION_NAME as string)
+      .withConverter(renderInfoConverter)
+      .doc();
+    const currentTime = new Date();
+    const newInfo: RenderInfo = {
+      id: docRef.id,
+      renderId,
+      bucketName,
+      functionName: first.functionName,
+      region: REGION,
+      createdAt: currentTime.toISOString(),
     };
+    await docRef.set(newInfo);
 
-export type Render = {
-  renderId: string | null;
-  region: AwsRegion;
-  username: string;
-  bucketName: string | null;
-  finality: Finality | null;
-  functionName: string;
-  account: number | undefined;
-};
-
-export default async function handler(req: CustomRequest, res: NextApiResponse) {
-  const body = (await JSON.parse(req.body)) as string;
-  const region = "us-east-1";
-  const [first] = await getFunctions({
-    compatibleOnly: true,
-    region,
-  });
-  // console.log(first.functionName);
-
-  res.status(200).json(body);
+    res.status(200).json(newInfo);
+  } catch (error) {
+    console.log(error);
+  }
 }

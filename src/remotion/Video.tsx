@@ -1,12 +1,12 @@
 import "../styles/global.css";
 import { Composition } from "remotion";
-
+import { COMP_NAME } from "../libs/const";
 import { LogoComp } from "./LogoComp";
 
 export const RemotionVideo: React.FC = () => {
   return (
     <Composition
-      id="MyComp"
+      id={COMP_NAME}
       component={LogoComp}
       durationInFrames={240}
       fps={30}
