@@ -1,6 +1,7 @@
 // FIXME:
 /* eslint-disable no-console */
-import { Button, Stack, TextInput } from "@mantine/core";
+import { Button, Center, Progress, Stack, Text, TextInput } from "@mantine/core";
+import { NextLink } from "@mantine/next";
 import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { FC } from "react";
@@ -13,13 +14,14 @@ type TextForm = {
 };
 
 export const Sidebar: FC = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [renderInfo, setRenderInfo] = useState<RenderInfo>();
   const [renderStatus, setRenderStatus] = useState<RenderProgressType>();
   const dispatch = useDispatch();
   const texts = useSelector(selectAllText);
 
   // 書き出し進捗確認
-  const pollProgress = useCallback(async (renderInfo: RenderInfo) => {
+  const pollProgress = useCallback(async (renderInfo: RenderInfo): Promise<void> => {
     const poll = async () => {
       const progress = await fetch("/api/progress", {
         method: "POST",
@@ -29,13 +31,6 @@ export const Sidebar: FC = () => {
       });
       const progressJson = (await progress.json()) as RenderProgressType;
       setRenderStatus(progressJson);
-
-      // if (progressJson.type === "progress") {
-      //   console.log("in progress....");
-      // }
-      // if (progressJson.type !== "success") {
-      //   console.log("success!!!!!");
-      // }
     };
     const timeout = (ms: number) => {
       return new Promise((resolve) => setTimeout(resolve, ms));
@@ -45,24 +40,28 @@ export const Sidebar: FC = () => {
     await poll();
   }, []);
 
+  // 1秒ごとに状況確認
   useEffect(() => {
-    if (renderStatus?.type == "progress" && renderInfo) {
-      (async () => {
-        await pollProgress(renderInfo);
-        console.log(renderStatus);
-        console.log(renderInfo);
-      })();
-    }
+    const poll = async (renderInfo: RenderInfo) => {
+      await pollProgress(renderInfo);
+      console.log(renderStatus);
+    };
+
     if (renderStatus?.type == "success") {
-      console.log("完成！from useEffect");
+      setIsLoading(false);
       console.log(renderStatus);
     }
-  }, [renderStatus?.type, pollProgress, renderInfo]);
+
+    if (renderStatus?.type == "progress" && renderInfo) {
+      void poll(renderInfo);
+    }
+  }, [renderStatus, pollProgress, renderInfo]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(updateText({ firstText: e.target.value }));
   };
 
+  // 書き出し開始
   const renderStart = async () => {
     const formData: TextForm = {
       firstText: texts.firstText,
@@ -79,18 +78,29 @@ export const Sidebar: FC = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
     const renderInfo = await renderStart();
     await pollProgress(renderInfo);
   };
 
   return (
-    // FIXME:
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    <form onSubmit={handleSubmit}>
-      <Stack>
-        <TextInput onChange={handleChange} />
-        <Button type="submit">Render!!!!!</Button>
-      </Stack>
-    </form>
+    <Stack>
+      <form onSubmit={handleSubmit}>
+        <Stack>
+          <TextInput onChange={handleChange} />
+          <Button type="submit" loading={isLoading}>
+            {isLoading ? "Rendering..." : "Hit this button to get your Video!"}
+          </Button>
+        </Stack>
+      </form>
+      <Progress value={renderStatus?.percent ? renderStatus?.percent * 100 : 0} />
+      <Center>
+        {renderStatus?.type == "success" && (
+          <NextLink href={renderStatus.url} target="_blank">
+            <Text sx={{ fontWeight: "bold" }}>🎉🎉 Ta-da!! Check the video 🎉🎉</Text>
+          </NextLink>
+        )}
+      </Center>
+    </Stack>
   );
 };

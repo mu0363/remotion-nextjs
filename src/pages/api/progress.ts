@@ -5,16 +5,16 @@ import type { NextApiRequest, NextApiResponse } from "next";
 export type RenderProgressType =
   | {
       type: "progress";
-      progress: {
-        percent: number;
-      };
+      percent: number;
     }
   | {
       type: "success";
+      percent: number;
       url: string;
     }
   | {
       type: "error";
+      percent: number;
       errors: string;
     };
 
@@ -22,6 +22,7 @@ const getRenderProgressStatus = (progress: RenderProgress): RenderProgressType =
   if (progress.outputFile) {
     return {
       type: "success",
+      percent: 100,
       url: progress.outputFile,
     };
   }
@@ -29,15 +30,14 @@ const getRenderProgressStatus = (progress: RenderProgress): RenderProgressType =
   if (progress.fatalErrorEncountered) {
     return {
       type: "error",
+      percent: 0,
       errors: progress.errors[0].stack,
     };
   }
 
   return {
     type: "progress",
-    progress: {
-      percent: progress.overallProgress,
-    },
+    percent: progress.overallProgress,
   };
 };
 
