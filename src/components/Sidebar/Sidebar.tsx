@@ -90,7 +90,7 @@ export const Sidebar: FC = () => {
         <Stack>
           <TextInput onChange={handleChange} />
           <Button type="submit" loading={isLoading}>
-            {isLoading ? "Rendering..." : "Hit this button to get your Video!"}
+            {isLoading ? "書き出し中" : "Create your Video"}
           </Button>
         </Stack>
       </form>

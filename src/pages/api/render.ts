@@ -2,7 +2,6 @@
 /* eslint-disable no-console */
 import { getFunctions, renderMediaOnLambda } from "@remotion/lambda";
 import { NextApiRequest, NextApiResponse } from "next";
-import {} from "firebase-admin/firestore";
 import { REGION, COMP_NAME, SITE_ID } from "src/libs/const";
 import { adminDB, RenderInfo, renderInfoConverter } from "src/libs/firebase/server";
 
