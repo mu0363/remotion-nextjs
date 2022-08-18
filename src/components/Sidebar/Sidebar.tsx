@@ -1,8 +1,9 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 // FIXME:
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable no-console */
 import { Button, Center, Progress, Stack, Text, TextInput } from "@mantine/core";
 import { NextLink } from "@mantine/next";
+import { IconMovie } from "@tabler/icons";
 import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { FC } from "react";
@@ -88,8 +89,8 @@ export const Sidebar: FC = () => {
     <Stack>
       <form onSubmit={handleSubmit}>
         <Stack>
-          <TextInput onChange={handleChange} />
-          <Button type="submit" loading={isLoading}>
+          <TextInput onChange={handleChange} size="lg" />
+          <Button type="submit" leftIcon={<IconMovie size={14} />} loading={isLoading}>
             {isLoading ? "書き出し中" : "Create your Video"}
           </Button>
         </Stack>

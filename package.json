@@ -27,6 +27,7 @@
     "@remotion/lambda": "3.2.3",
     "@remotion/player": "^3.2.3",
     "@remotion/renderer": "^3.2.3",
+    "@tabler/icons": "^1.83.1",
     "firebase": "^9.9.2",
     "firebase-admin": "^11.0.1",
     "next": "12.2.5",
