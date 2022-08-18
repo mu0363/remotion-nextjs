@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 // FIXME:
 /* eslint-disable no-console */
 import { Button, Center, Progress, Stack, Text, TextInput } from "@mantine/core";
