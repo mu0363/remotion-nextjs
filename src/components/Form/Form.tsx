@@ -1,12 +1,11 @@
 // FIXME:
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable no-console */
-import { Aside, Button, Center, MediaQuery, Progress, Stack, Text, TextInput } from "@mantine/core";
+import { Button, Center, Progress, Stack, Text, TextInput } from "@mantine/core";
 import { NextLink } from "@mantine/next";
-import { IconMovie } from "@tabler/icons";
+import { IconCloudStorm } from "@tabler/icons";
 import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import type { FC } from "react";
 import { RenderInfo } from "src/libs/firebase/server";
 import { RenderProgressType } from "src/pages/api/progress";
 import { selectAllText, updateText } from "src/store/features/textSlice";
@@ -15,7 +14,8 @@ type TextForm = {
   firstText: string;
 };
 
-export const Sidebar: FC = () => {
+/** @package */
+export const Form = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [renderInfo, setRenderInfo] = useState<RenderInfo>();
   const [renderStatus, setRenderStatus] = useState<RenderProgressType>();
@@ -86,27 +86,29 @@ export const Sidebar: FC = () => {
   };
 
   return (
-    <MediaQuery smallerThan="md" styles={{ display: "none" }}>
-      <Aside p="md" hiddenBreakpoint="sm" width={{ sm: 300 }}>
+    <form onSubmit={handleSubmit}>
+      <Stack>
         <Stack>
-          <form onSubmit={handleSubmit}>
-            <Stack>
-              <TextInput onChange={handleChange} size="lg" />
-              <Button type="submit" leftIcon={<IconMovie size={14} />} loading={isLoading}>
-                {isLoading ? "書き出し中" : "Create your Video"}
-              </Button>
-            </Stack>
-          </form>
-          <Progress value={renderStatus?.percent ? renderStatus?.percent * 100 : 0} />
-          <Center>
-            {renderStatus?.type == "success" && (
-              <NextLink href={renderStatus.url} target="_blank">
-                <Text sx={{ fontWeight: "bold" }}>🎉🎉 Ta-da!! Check the video 🎉🎉</Text>
-              </NextLink>
-            )}
-          </Center>
+          <TextInput onChange={handleChange} size="lg" value={texts.firstText} />
         </Stack>
-      </Aside>
-    </MediaQuery>
+        <Button
+          type="submit"
+          leftIcon={<IconCloudStorm size={18} />}
+          loading={isLoading}
+          radius="xl"
+          sx={{ height: 50 }}
+        >
+          {isLoading ? "書き出し中" : "Render"}
+        </Button>
+        <Progress value={renderStatus?.percent ? renderStatus?.percent * 100 : 0} />
+        <Center>
+          {renderStatus?.type == "success" && (
+            <NextLink href={renderStatus.url} target="_blank">
+              <Text sx={{ fontWeight: "bold" }}>🎉🎉 Ta-da!! Check the video 🎉🎉</Text>
+            </NextLink>
+          )}
+        </Center>
+      </Stack>
+    </form>
   );
 };

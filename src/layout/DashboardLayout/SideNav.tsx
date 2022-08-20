@@ -18,13 +18,14 @@ import {
   IconChevronLeft,
 } from "@tabler/icons";
 import { FC } from "react";
-import { getPath } from "src/libs/const";
+import { getPath, SIDENAV_WIDTH } from "src/libs/const";
 import { ActiveLink } from "src/libs/next";
 
+/** @package */
 export const SideNav: FC = () => {
   return (
     <MediaQuery smallerThan="md" styles={{ display: "none" }}>
-      <Navbar p="xs" width={{ base: 280 }}>
+      <Navbar p="xs" width={{ base: SIDENAV_WIDTH }}>
         <Navbar.Section grow mt="sm">
           <MainLinks />
         </Navbar.Section>

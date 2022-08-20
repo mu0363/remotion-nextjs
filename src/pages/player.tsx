@@ -1,15 +1,17 @@
+import { Box, MediaQuery } from "@mantine/core";
 import { Player as RemotionPlayer } from "@remotion/player";
 import { useSelector } from "react-redux";
-import type { NextPage } from "next";
+import type { CustomNextPage } from "next";
+import { Form } from "src/components/Form";
 import { DashboardLayout } from "src/layout/DashboardLayout";
 import { LogoComp } from "src/remotion/LogoComp";
 import { selectAllText } from "src/store/features/textSlice";
 
-const Player: NextPage = () => {
+const Player: CustomNextPage = () => {
   const texts = useSelector(selectAllText);
 
   return (
-    <DashboardLayout>
+    <>
       <RemotionPlayer
         component={LogoComp}
         inputProps={{ firstText: texts.firstText }}
@@ -22,8 +24,15 @@ const Player: NextPage = () => {
         loop
         autoPlay
       />
-    </DashboardLayout>
+      <MediaQuery largerThan="md" styles={{ display: "none" }}>
+        <Box m={20}>
+          <Form />
+        </Box>
+      </MediaQuery>
+    </>
   );
 };
+
+Player.getLayout = DashboardLayout;
 
 export default Player;

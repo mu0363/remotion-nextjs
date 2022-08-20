@@ -7,7 +7,7 @@ module.exports = {
   extends: [
     "next/core-web-vitals",
     "plugin:react/recommended",
-    "google",
+    // "google",
     "plugin:@typescript-eslint/recommended",
     // "plugin:react-hooks/recommended",
     "plugin:import/errors",
@@ -38,7 +38,7 @@ module.exports = {
       node: { extensions: [".ts"] },
     },
   },
-  plugins: ["react", "@typescript-eslint", "tailwindcss", "import", "unused-imports"],
+  plugins: ["react", "@typescript-eslint", "tailwindcss", "import", "unused-imports", "import-access"],
   rules: {
     "require-jsdoc": "off",
     "sort-imports": 0,
@@ -70,6 +70,7 @@ module.exports = {
         checkInlineFunction: true,
       },
     ],
+    "import-access/jsdoc": ["error"],
     "import/order": [
       "error",
       {

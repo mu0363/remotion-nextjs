@@ -1,24 +1,43 @@
-import { AppShell, Box } from "@mantine/core";
-import { FC, ReactNode } from "react";
+import { AppShell, createStyles } from "@mantine/core";
+import { CustomLayout } from "next";
 import { LayoutErrorBoundary } from "../LayoutErrorBoundary";
+import { ASide } from "./ASide";
 import { Header } from "./Header";
 import { SideNav } from "./SideNav";
-import { Sidebar } from "src/components/Sidebar";
+import { ASIDE_WIDTH, HEADER_HEIGHT, SIDENAV_WIDTH } from "src/libs/const";
 
-export const DashboardLayout: FC<{ children: ReactNode }> = ({ children }) => {
+const useStyles = createStyles((theme) => {
+  return {
+    container: {
+      marginLeft: SIDENAV_WIDTH,
+      marginTop: HEADER_HEIGHT,
+      marginRight: ASIDE_WIDTH,
+
+      [`@media (max-width: ${theme.breakpoints.md}px)`]: {
+        marginLeft: 0,
+        marginRight: 0,
+      },
+    },
+  };
+});
+
+/** @package */
+export const DashboardLayout: CustomLayout = (page) => {
+  const { classes } = useStyles();
+
   return (
     <AppShell
       styles={(theme) => ({
         body: { minHeight: "100vh" },
-        main: { padding: 0, backgroundColor: theme.colors.gray[2] },
+        main: { padding: 0, backgroundColor: theme.colors.gray[0] },
       })}
       header={<Header />}
       navbar={<SideNav />}
-      aside={<Sidebar />}
+      aside={<ASide />}
     >
-      <Box>
-        <LayoutErrorBoundary>{children}</LayoutErrorBoundary>
-      </Box>
+      <div className={classes.container}>
+        <LayoutErrorBoundary>{page}</LayoutErrorBoundary>
+      </div>
     </AppShell>
   );
 };
