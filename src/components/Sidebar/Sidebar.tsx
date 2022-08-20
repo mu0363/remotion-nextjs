@@ -59,10 +59,6 @@ export const Sidebar: FC = () => {
     }
   }, [renderStatus, pollProgress, renderInfo]);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(updateText({ firstText: e.target.value }));
-  };
-
   // 書き出し開始
   const renderStart = async () => {
     const formData: TextForm = {
@@ -76,6 +72,10 @@ export const Sidebar: FC = () => {
     const renderInfo = (await renderStartRes.json()) as RenderInfo;
     setRenderInfo(renderInfo);
     return renderInfo;
+  };
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(updateText({ firstText: e.target.value }));
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
