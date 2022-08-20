@@ -1,6 +1,7 @@
 const PATH = {
   INDEX: "/",
-  NOTIFICATION: "/notification",
+  PLAYER: "/player",
+  DASHBOARD: "/dashboard",
   SETTINGS: "/settings",
   SIGN_IN: "/sign-in",
   SIGN_UP: "/sign-up",

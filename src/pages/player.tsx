@@ -1,7 +1,7 @@
 import { Player as RemotionPlayer } from "@remotion/player";
 import { useSelector } from "react-redux";
 import type { NextPage } from "next";
-import { PlayerLayout } from "src/layout/PlayerLayout";
+import { DashboardLayout } from "src/layout/DashboardLayout";
 import { LogoComp } from "src/remotion/LogoComp";
 import { selectAllText } from "src/store/features/textSlice";
 
@@ -9,7 +9,7 @@ const Player: NextPage = () => {
   const texts = useSelector(selectAllText);
 
   return (
-    <PlayerLayout>
+    <DashboardLayout>
       <RemotionPlayer
         component={LogoComp}
         inputProps={{ firstText: texts.firstText }}
@@ -22,7 +22,7 @@ const Player: NextPage = () => {
         loop
         autoPlay
       />
-    </PlayerLayout>
+    </DashboardLayout>
   );
 };
 

@@ -1,4 +1,14 @@
-import { Avatar, Box, Group, Navbar, Text, ThemeIcon, UnstyledButton, useMantineTheme } from "@mantine/core";
+import {
+  Avatar,
+  Box,
+  Group,
+  MediaQuery,
+  Navbar,
+  Text,
+  ThemeIcon,
+  UnstyledButton,
+  useMantineTheme,
+} from "@mantine/core";
 import {
   IconGitPullRequest,
   IconAlertCircle,
@@ -8,17 +18,21 @@ import {
   IconChevronLeft,
 } from "@tabler/icons";
 import { FC } from "react";
+import { getPath } from "src/libs/const";
+import { ActiveLink } from "src/libs/next";
 
 export const SideNav: FC = () => {
   return (
-    <Navbar p="xs" width={{ base: 280 }}>
-      <Navbar.Section grow mt="sm">
-        <MainLinks />
-      </Navbar.Section>
-      <Navbar.Section>
-        <User />
-      </Navbar.Section>
-    </Navbar>
+    <MediaQuery smallerThan="md" styles={{ display: "none" }}>
+      <Navbar p="xs" width={{ base: 280 }}>
+        <Navbar.Section grow mt="sm">
+          <MainLinks />
+        </Navbar.Section>
+        <Navbar.Section>
+          <User />
+        </Navbar.Section>
+      </Navbar>
+    </MediaQuery>
   );
 };
 
@@ -26,39 +40,47 @@ type MainLinkProps = {
   icon: React.ReactNode;
   color: string;
   label: string;
+  href: string;
 };
 
-const MainLink = ({ icon, color, label }: MainLinkProps) => {
+const MainLink = ({ icon, color, label, href }: MainLinkProps) => {
   return (
-    <UnstyledButton
-      sx={(theme) => ({
-        display: "block",
-        width: "100%",
-        padding: theme.spacing.xs,
-        borderRadius: theme.radius.sm,
-        color: theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.black,
+    <ActiveLink href={href} passHref>
+      {(isActive) => {
+        return (
+          <UnstyledButton
+            sx={(theme) => ({
+              display: "block",
+              width: "100%",
+              padding: theme.spacing.xs,
+              borderRadius: theme.radius.sm,
+              color: isActive ? theme.colors.blue[8] : theme.colors.gray[7],
+              backgroundColor: isActive ? theme.colors.blue[0] : "white",
+              fontWeight: isActive ? "bold" : "normal",
 
-        "&:hover": {
-          backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.colors.gray[0],
-        },
-      })}
-    >
-      <Group>
-        <ThemeIcon color={color} variant="light">
-          {icon}
-        </ThemeIcon>
-
-        <Text size="sm">{label}</Text>
-      </Group>
-    </UnstyledButton>
+              "&:hover": {
+                backgroundColor: isActive ? theme.colors.blue[0] : theme.colors.gray[0],
+              },
+            })}
+          >
+            <Group>
+              <ThemeIcon color={color} variant="light">
+                {icon}
+              </ThemeIcon>
+              <Text size="sm">{label}</Text>
+            </Group>
+          </UnstyledButton>
+        );
+      }}
+    </ActiveLink>
   );
 };
 
 const data = [
-  { icon: <IconGitPullRequest size={16} />, color: "blue", label: "Pull Requests" },
-  { icon: <IconAlertCircle size={16} />, color: "teal", label: "Open Issues" },
-  { icon: <IconMessages size={16} />, color: "violet", label: "Discussions" },
-  { icon: <IconDatabase size={16} />, color: "grape", label: "Databases" },
+  { icon: <IconAlertCircle size={16} />, color: "teal", label: "Dashboard", href: getPath("DASHBOARD") },
+  { icon: <IconGitPullRequest size={16} />, color: "blue", label: "Player", href: getPath("PLAYER") },
+  { icon: <IconMessages size={16} />, color: "violet", label: "Discussions", href: getPath("INDEX") },
+  { icon: <IconDatabase size={16} />, color: "grape", label: "Databases", href: getPath("INDEX") },
 ];
 
 const MainLinks = () => {

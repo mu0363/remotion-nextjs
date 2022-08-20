@@ -1,7 +1,7 @@
 // FIXME:
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable no-console */
-import { Button, Center, Progress, Stack, Text, TextInput } from "@mantine/core";
+import { Aside, Button, Center, MediaQuery, Progress, Stack, Text, TextInput } from "@mantine/core";
 import { NextLink } from "@mantine/next";
 import { IconMovie } from "@tabler/icons";
 import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from "react";
@@ -86,23 +86,27 @@ export const Sidebar: FC = () => {
   };
 
   return (
-    <Stack>
-      <form onSubmit={handleSubmit}>
+    <MediaQuery smallerThan="md" styles={{ display: "none" }}>
+      <Aside p="md" hiddenBreakpoint="sm" width={{ sm: 300 }}>
         <Stack>
-          <TextInput onChange={handleChange} size="lg" />
-          <Button type="submit" leftIcon={<IconMovie size={14} />} loading={isLoading}>
-            {isLoading ? "書き出し中" : "Create your Video"}
-          </Button>
+          <form onSubmit={handleSubmit}>
+            <Stack>
+              <TextInput onChange={handleChange} size="lg" />
+              <Button type="submit" leftIcon={<IconMovie size={14} />} loading={isLoading}>
+                {isLoading ? "書き出し中" : "Create your Video"}
+              </Button>
+            </Stack>
+          </form>
+          <Progress value={renderStatus?.percent ? renderStatus?.percent * 100 : 0} />
+          <Center>
+            {renderStatus?.type == "success" && (
+              <NextLink href={renderStatus.url} target="_blank">
+                <Text sx={{ fontWeight: "bold" }}>🎉🎉 Ta-da!! Check the video 🎉🎉</Text>
+              </NextLink>
+            )}
+          </Center>
         </Stack>
-      </form>
-      <Progress value={renderStatus?.percent ? renderStatus?.percent * 100 : 0} />
-      <Center>
-        {renderStatus?.type == "success" && (
-          <NextLink href={renderStatus.url} target="_blank">
-            <Text sx={{ fontWeight: "bold" }}>🎉🎉 Ta-da!! Check the video 🎉🎉</Text>
-          </NextLink>
-        )}
-      </Center>
-    </Stack>
+      </Aside>
+    </MediaQuery>
   );
 };
