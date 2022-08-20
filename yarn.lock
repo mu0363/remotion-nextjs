@@ -2454,6 +2454,13 @@
     semver "^7.3.7"
     tsutils "^3.21.0"
 
+"@typescript-eslint/experimental-utils@^5.9.1":
+  version "5.33.1"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/experimental-utils/-/experimental-utils-5.33.1.tgz#5fa908addffb82ea8fb0e62cb47c387de1bff536"
+  integrity sha512-wk2o+4wojvKz/x3UCbsgjgXl0lyLPYQsfKP0MdRzj4jtsQr4bVtgWUWck6+N3GzThUTbUFyyKLduWPwePhh0xQ==
+  dependencies:
+    "@typescript-eslint/utils" "5.33.1"
+
 "@typescript-eslint/parser@^5.21.0", "@typescript-eslint/parser@^5.33.1":
   version "5.33.1"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/parser/-/parser-5.33.1.tgz#e4b253105b4d2a4362cfaa4e184e2d226c440ff3"
@@ -2512,7 +2519,7 @@
     semver "^7.3.5"
     tsutils "^3.21.0"
 
-"@typescript-eslint/typescript-estree@5.33.1":
+"@typescript-eslint/typescript-estree@5.33.1", "@typescript-eslint/typescript-estree@^5.9.1":
   version "5.33.1"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/typescript-estree/-/typescript-estree-5.33.1.tgz#a573bd360790afdcba80844e962d8b2031984f34"
   integrity sha512-JOAzJ4pJ+tHzA2pgsWQi4804XisPHOtbvwUyqsuuq8+y5B5GMZs7lI1xDWs6V2d7gE/Ez5bTGojSK12+IIPtXA==
@@ -3626,6 +3633,15 @@ eslint-module-utils@^2.7.3:
   integrity sha512-j4GT+rqzCoRKHwURX7pddtIPGySnX9Si/cgMI5ztrcqOPtk5dDEeZ34CQVPphnqkJytlc97Vuk05Um2mJ3gEQA==
   dependencies:
     debug "^3.2.7"
+
+eslint-plugin-import-access@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-import-access/-/eslint-plugin-import-access-1.0.1.tgz#47ccf8baa89b5ecd1c355823926c520c064108ed"
+  integrity sha512-u9vNNDh7RTVUoPMsLepDt0fII5d8+k84/igZ41Hn4vqYMfktYAiwF4Y0pYGYDcZ6Ln7IB/VRaB6YUfRgFx8+Aw==
+  dependencies:
+    "@typescript-eslint/experimental-utils" "^5.9.1"
+    "@typescript-eslint/typescript-estree" "^5.9.1"
+    tsutils "^3.21.0"
 
 eslint-plugin-import@^2.26.0:
   version "2.26.0"
@@ -5532,6 +5548,13 @@ react-dropzone@14.2.1:
     attr-accept "^2.2.2"
     file-selector "^0.6.0"
     prop-types "^15.8.1"
+
+react-error-boundary@^3.1.4:
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/react-error-boundary/-/react-error-boundary-3.1.4.tgz#255db92b23197108757a888b01e5b729919abde0"
+  integrity sha512-uM9uPzZJTF6wRQORmSrvOIgt4lJ9MC1sNgEOj2XGsDTRE4kmpWxg7ENK9EWNKJRMAOY9z0MuF4yIfl6gp4sotA==
+  dependencies:
+    "@babel/runtime" "^7.12.5"
 
 react-is@^16.13.1, react-is@^16.7.0:
   version "16.13.1"

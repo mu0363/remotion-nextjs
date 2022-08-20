@@ -1,0 +1,1 @@
+export { AvantIcon } from "./AvantLogo";

@@ -27,5 +27,10 @@
     "files": true
   },
   "include": ["next-env.d.ts", "env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "plugins": [
+    {
+      "name": "eslint-plugin-import-access"
+    }
+  ]
 }
