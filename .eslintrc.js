@@ -9,7 +9,7 @@ module.exports = {
     "plugin:react/recommended",
     "standard",
     "plugin:@typescript-eslint/recommended",
-    // "plugin:react-hooks/recommended",
+    "plugin:react-hooks/recommended",
     "plugin:import/errors",
     "plugin:tailwindcss/recommended",
     "prettier",
