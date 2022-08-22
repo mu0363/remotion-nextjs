@@ -13,7 +13,8 @@ export const RemotionVideo: React.FC = () => {
       width={1920}
       height={1080}
       defaultProps={{
-        firstText: "This is default text",
+        title: "This is default text",
+        imageUrl: "https://source.unsplash.com/random/200x200",
       }}
     />
   );

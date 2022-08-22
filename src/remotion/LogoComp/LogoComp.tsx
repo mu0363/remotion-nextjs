@@ -1,11 +1,10 @@
-import { AbsoluteFill } from "remotion";
-import { interpolate } from "remotion";
-import { useCurrentFrame } from "remotion";
+import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import { Logo } from "./Logo";
 import { Subtitle } from "./Subtitle";
 import type { FC } from "react";
+import { FirstPageState } from "src/store/features/firstPageSlice";
 
-export const LogoComp: FC<{ firstText: string }> = ({ firstText }) => {
+export const LogoComp: FC<FirstPageState> = ({ title, imageUrl }) => {
   const frame = useCurrentFrame();
   const opacity = interpolate(frame, [20, 40], [0, 1], {
     extrapolateLeft: "clamp",
@@ -20,7 +19,7 @@ export const LogoComp: FC<{ firstText: string }> = ({ firstText }) => {
         justifyContent: "center",
       }}
     >
-      <Logo />
+      <Logo imageUrl={imageUrl} />
       <div
         style={{
           opacity,
@@ -31,7 +30,7 @@ export const LogoComp: FC<{ firstText: string }> = ({ firstText }) => {
           fontFamily: "Helvetica",
         }}
       >
-        {firstText}
+        {title}
       </div>
       <Subtitle />
     </AbsoluteFill>

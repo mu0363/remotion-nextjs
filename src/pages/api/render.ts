@@ -1,13 +1,17 @@
+// FIXME:
+/* eslint-disable no-console */
 import { getFunctions, renderMediaOnLambda } from "@remotion/lambda";
 import { NextApiRequest, NextApiResponse } from "next";
 import { REGION, COMP_NAME, SITE_ID } from "src/libs/const";
 import { adminDB, RenderInfo, renderInfoConverter } from "src/libs/firebase/server";
+import { FirstPageState } from "src/store/features/firstPageSlice";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     // FIXME: アサーション削除
-    const data = req.body;
-    const texts = JSON.parse(data) as { firstText: string };
+    const data = req.body as string;
+    const firstPageJson = JSON.parse(data) as FirstPageState;
+    const { title, imageUrl } = firstPageJson;
 
     const [first] = await getFunctions({
       compatibleOnly: true,
@@ -19,7 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       functionName: first.functionName,
       serveUrl: SITE_ID,
       composition: COMP_NAME,
-      inputProps: { firstText: texts.firstText },
+      inputProps: { title, imageUrl },
       codec: "h264",
       imageFormat: "jpeg",
       maxRetries: 1,

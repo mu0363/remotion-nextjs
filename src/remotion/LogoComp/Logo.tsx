@@ -1,7 +1,7 @@
 import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import type { FC } from "react";
 
-export const Logo: FC = () => {
+export const Logo: FC<{ imageUrl: string }> = ({ imageUrl }) => {
   const frame = useCurrentFrame();
   const { height, fps } = useVideoConfig();
 

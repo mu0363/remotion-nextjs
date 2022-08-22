@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import textReducer from "./features/textSlice";
+import firstPageReducer from "./features/firstPageSlice";
 
 export const store = configureStore({
   reducer: {
-    texts: textReducer,
+    firstPage: firstPageReducer,
   },
 });
 

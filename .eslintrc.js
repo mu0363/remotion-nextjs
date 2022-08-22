@@ -7,7 +7,7 @@ module.exports = {
   extends: [
     "next/core-web-vitals",
     "plugin:react/recommended",
-    "standard",
+    // "standard",
     "plugin:@typescript-eslint/recommended",
     "plugin:react-hooks/recommended",
     "plugin:import/errors",

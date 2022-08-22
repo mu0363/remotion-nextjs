@@ -1,3 +1,5 @@
+// FIXME:
+/* eslint-disable no-console */
 import { Button, Center, Progress, Stack, Text, TextInput } from "@mantine/core";
 import { NextLink } from "@mantine/next";
 import { IconCloudStorm } from "@tabler/icons";
@@ -5,11 +7,7 @@ import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { RenderInfo } from "src/libs/firebase/server";
 import { RenderProgressType } from "src/pages/api/progress";
-import { selectAllText, updateText } from "src/store/features/textSlice";
-
-type TextForm = {
-  firstText: string;
-};
+import { FirstPageState, selectAllText, updateText } from "src/store/features/firstPageSlice";
 
 /** @package */
 export const Form = () => {
@@ -17,7 +15,7 @@ export const Form = () => {
   const [renderInfo, setRenderInfo] = useState<RenderInfo>();
   const [renderStatus, setRenderStatus] = useState<RenderProgressType>();
   const dispatch = useDispatch();
-  const texts = useSelector(selectAllText);
+  const firstPageData = useSelector(selectAllText);
 
   // 書き出し進捗確認
   const pollProgress = useCallback(async (renderInfo: RenderInfo): Promise<void> => {
@@ -46,20 +44,21 @@ export const Form = () => {
       console.log(renderStatus);
     };
 
-    if (renderStatus?.type == "success") {
+    if (renderStatus?.type === "success") {
       setIsLoading(false);
       console.log(renderStatus);
     }
 
-    if (renderStatus?.type == "progress" && renderInfo) {
+    if (renderStatus?.type === "progress" && renderInfo) {
       void poll(renderInfo);
     }
   }, [renderStatus, pollProgress, renderInfo]);
 
   // 書き出し開始
   const renderStart = async () => {
-    const formData: TextForm = {
-      firstText: texts.firstText,
+    const formData: FirstPageState = {
+      title: firstPageData.title,
+      imageUrl: firstPageData.imageUrl,
     };
     const renderStartRes = await fetch("/api/render", {
       method: "POST",
@@ -72,21 +71,24 @@ export const Form = () => {
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(updateText({ firstText: e.target.value }));
+    dispatch(updateText({ title: e.target.value }));
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    const renderInfo = await renderStart();
-    await pollProgress(renderInfo);
+    // (async() => {
+
+    //   const renderInfo = await renderStart();
+    //   await pollProgress(renderInfo);
+    // }),();
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <Stack>
         <Stack>
-          <TextInput onChange={handleChange} size="lg" value={texts.firstText} />
+          <TextInput onChange={handleChange} size="lg" value={firstPageData.title} />
         </Stack>
         <Button
           type="submit"
@@ -99,7 +101,7 @@ export const Form = () => {
         </Button>
         <Progress value={renderStatus?.percent ? renderStatus?.percent * 100 : 0} />
         <Center>
-          {renderStatus?.type == "success" && (
+          {renderStatus?.type === "success" && (
             <NextLink href={renderStatus.url} target="_blank">
               <Text sx={{ fontWeight: "bold" }}>🎉🎉 Ta-da!! Check the video 🎉🎉</Text>
             </NextLink>

@@ -2199,10 +2199,10 @@
     semver "7.3.5"
     source-map "0.6.1"
 
-"@remotion/eslint-plugin@^3.2.4":
-  version "3.2.4"
-  resolved "https://registry.yarnpkg.com/@remotion/eslint-plugin/-/eslint-plugin-3.2.4.tgz#3df0877a600bd238ef8672d054677d0b7f1721b1"
-  integrity sha512-EYNuvXkGdTV/GzlGxCENYav0KOJK+m+Fx+tdut3kF+bsM8M0NoleEfk4bHMLefHJT96PRRBvy27xXNN2YLFWXA==
+"@remotion/eslint-plugin@3.2.3":
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/@remotion/eslint-plugin/-/eslint-plugin-3.2.3.tgz#9f2e8c58001023dad91f0e2dc2a6e4ac5403e420"
+  integrity sha512-kAiltWmYlL5I8Rg0sWElSyNVdmb52QvqsTXADGPXt91Lsl90vNm2oeQJ0wM1umoU7JLY8ORHOW1IUq1ah/fefA==
   dependencies:
     "@typescript-eslint/utils" "5.19.0"
 
@@ -2233,14 +2233,14 @@
   dependencies:
     remotion "3.2.3"
 
-"@remotion/player@3.2.3", "@remotion/player@^3.2.3":
+"@remotion/player@3.2.3":
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/@remotion/player/-/player-3.2.3.tgz#5b979a1c1fed1d6eb5d3a143b605553c976d21b4"
   integrity sha512-Js8g2PJ/k9Z80p1Az1E8Scf4b0DOMCk/mCG9VMOZI9sKqszq118exfixl/+xVsYE18sU3LJZLf49UnGFmoNOXw==
   dependencies:
     remotion "3.2.3"
 
-"@remotion/renderer@3.2.3", "@remotion/renderer@^3.2.3":
+"@remotion/renderer@3.2.3":
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/@remotion/renderer/-/renderer-3.2.3.tgz#ca8f8e699007e60f5c149eda373e0ea65a07aeca"
   integrity sha512-CUQ3626sYnU+zQiwpgX7WcYTJkLatZ2osCqFhTBKIGq8pzeS0CwTl0QEXqatjGR98BFf8NvSUftaI51KSEq5Ig==
