@@ -2,10 +2,10 @@ import { Player } from "@remotion/player";
 import { useSelector } from "react-redux";
 import type { NextPage } from "next";
 import { LogoComp } from "src/remotion/LogoComp";
-import { selectAllText } from "src/store/features/firstPageSlice";
+import { selectAllFirstPageData } from "src/store/features/firstPageSlice";
 
 const Home: NextPage = () => {
-  const firstPageData = useSelector(selectAllText);
+  const firstPageData = useSelector(selectAllFirstPageData);
   const { title, imageUrl } = firstPageData;
 
   return (
