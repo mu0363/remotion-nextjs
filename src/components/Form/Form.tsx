@@ -1,6 +1,3 @@
-// FIXME:
-/* eslint-disable @typescript-eslint/no-misused-promises */
-/* eslint-disable no-console */
 import { Button, Center, Progress, Stack, Text, TextInput } from "@mantine/core";
 import { NextLink } from "@mantine/next";
 import { IconCloudStorm } from "@tabler/icons";

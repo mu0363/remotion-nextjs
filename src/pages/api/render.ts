@@ -1,5 +1,3 @@
-// FIXME: delete console.log
-/* eslint-disable no-console */
 import { getFunctions, renderMediaOnLambda } from "@remotion/lambda";
 import { NextApiRequest, NextApiResponse } from "next";
 import { REGION, COMP_NAME, SITE_ID } from "src/libs/const";
@@ -8,7 +6,7 @@ import { adminDB, RenderInfo, renderInfoConverter } from "src/libs/firebase/serv
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     // FIXME: アサーション削除
-    const data = req.body as string;
+    const data = req.body;
     const texts = JSON.parse(data) as { firstText: string };
 
     const [first] = await getFunctions({

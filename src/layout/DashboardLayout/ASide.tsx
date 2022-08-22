@@ -1,6 +1,3 @@
-// FIXME:
-/* eslint-disable @typescript-eslint/no-misused-promises */
-/* eslint-disable no-console */
 import { Aside, MediaQuery } from "@mantine/core";
 import type { FC } from "react";
 import { Form } from "src/components/Form";
