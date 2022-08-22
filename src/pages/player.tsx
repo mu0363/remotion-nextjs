@@ -5,10 +5,10 @@ import type { CustomNextPage } from "next";
 import { Form } from "src/components/Form";
 import { DashboardLayout } from "src/layout/DashboardLayout";
 import { LogoComp } from "src/remotion/LogoComp";
-import { selectAllText } from "src/store/features/firstPageSlice";
+import { selectAllFirstPageData } from "src/store/features/firstPageSlice";
 
 const Player: CustomNextPage = () => {
-  const firstPageData = useSelector(selectAllText);
+  const firstPageData = useSelector(selectAllFirstPageData);
   const { title, imageUrl } = firstPageData;
 
   return (

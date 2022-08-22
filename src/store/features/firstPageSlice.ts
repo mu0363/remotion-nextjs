@@ -19,10 +19,13 @@ export const firstPageSlice = createSlice({
     updateText: (state, action: PayloadAction<Pick<FirstPageState, "title">>) => {
       state.title = action.payload.title;
     },
+    updateImage: (state, action: PayloadAction<Pick<FirstPageState, "imageUrl">>) => {
+      state.imageUrl = action.payload.imageUrl;
+    },
   },
 });
 
-export const selectAllText = (state: RootState) => state.firstPage;
-export const { updateText } = firstPageSlice.actions;
+export const selectAllFirstPageData = (state: RootState) => state.firstPage;
+export const { updateText, updateImage } = firstPageSlice.actions;
 
 export default firstPageSlice.reducer;

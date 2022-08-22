@@ -1,13 +1,13 @@
 // FIXME:
 /* eslint-disable no-console */
-import { Button, Center, Progress, Stack, Text, TextInput } from "@mantine/core";
+import { Button, Center, FileInput, Progress, Stack, Text, TextInput } from "@mantine/core";
 import { NextLink } from "@mantine/next";
 import { IconCloudStorm } from "@tabler/icons";
 import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RenderInfo } from "src/libs/firebase/server";
 import { RenderProgressType } from "src/pages/api/progress";
-import { FirstPageState, selectAllText, updateText } from "src/store/features/firstPageSlice";
+import { FirstPageState, selectAllFirstPageData, updateImage, updateText } from "src/store/features/firstPageSlice";
 
 /** @package */
 export const Form = () => {
@@ -15,7 +15,7 @@ export const Form = () => {
   const [renderInfo, setRenderInfo] = useState<RenderInfo>();
   const [renderStatus, setRenderStatus] = useState<RenderProgressType>();
   const dispatch = useDispatch();
-  const firstPageData = useSelector(selectAllText);
+  const firstPageData = useSelector(selectAllFirstPageData);
 
   // 書き出し進捗確認
   const pollProgress = useCallback(async (renderInfo: RenderInfo): Promise<void> => {
@@ -74,9 +74,16 @@ export const Form = () => {
     dispatch(updateText({ title: e.target.value }));
   };
 
+  const handleImage = (file: File | null) => {
+    if (!file) return;
+    const objectUrl = window.URL.createObjectURL(file);
+    dispatch(updateImage({ imageUrl: objectUrl }));
+  };
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
+    // FIXME: try-catch入れる
     (async () => {
       const renderInfo = await renderStart();
       await pollProgress(renderInfo);
@@ -86,9 +93,8 @@ export const Form = () => {
   return (
     <form onSubmit={handleSubmit}>
       <Stack>
-        <Stack>
-          <TextInput onChange={handleChange} size="lg" value={firstPageData.title} />
-        </Stack>
+        <FileInput mt="md" label="Select image" placeholder="Single" onChange={handleImage} />
+        <TextInput onChange={handleChange} size="lg" value={firstPageData.title} />
         <Button
           type="submit"
           leftIcon={<IconCloudStorm size={18} />}
