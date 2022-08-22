@@ -77,11 +77,10 @@ export const Form = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    // (async() => {
-
-    //   const renderInfo = await renderStart();
-    //   await pollProgress(renderInfo);
-    // }),();
+    (async () => {
+      const renderInfo = await renderStart();
+      await pollProgress(renderInfo);
+    })().catch((err) => console.log(err));
   };
 
   return (
