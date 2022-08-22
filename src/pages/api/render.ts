@@ -3,7 +3,7 @@
 import { getFunctions, renderMediaOnLambda } from "@remotion/lambda";
 import { NextApiRequest, NextApiResponse } from "next";
 import { REGION, COMP_NAME, SITE_ID } from "src/libs/const";
-import { adminDB, RenderInfo, renderInfoConverter } from "src/libs/firebase/server";
+import { adminDB, adminBucket, RenderInfo, renderInfoConverter } from "src/libs/firebase/server";
 import { FirstPageState } from "src/store/features/firstPageSlice";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -12,6 +12,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const data = req.body as string;
     const firstPageJson = JSON.parse(data) as FirstPageState;
     const { title, imageUrl } = firstPageJson;
+    const returnValue = await adminBucket.upload(imageUrl, { destination: "girl.png" });
+    console.log({ returnValue });
 
     const [first] = await getFunctions({
       compatibleOnly: true,
@@ -23,7 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       functionName: first.functionName,
       serveUrl: SITE_ID,
       composition: COMP_NAME,
-      inputProps: { title, imageUrl },
+      inputProps: { title, imageUrl: "https://source.unsplash.com/random/200x200" },
       codec: "h264",
       imageFormat: "jpeg",
       maxRetries: 1,

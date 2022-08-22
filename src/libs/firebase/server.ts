@@ -1,5 +1,6 @@
 import { initializeApp, cert, getApps } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
+import { getStorage } from "firebase-admin/storage";
 import { SnapshotOptions } from "./../../../node_modules/@firebase/firestore-compat/dist/node-esm/src/api/database.d";
 import type { QueryDocumentSnapshot } from "firebase-admin/firestore";
 
@@ -11,9 +12,11 @@ if (!getApps()?.length) {
       privateKey: process.env.FIREBASE_PRIVATE_KEY,
       clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
     }),
+    storageBucket: process.env.FIREBASE_BUCKET_NAME,
   });
 }
 export const adminDB = getFirestore();
+export const adminBucket = getStorage().bucket();
 
 // Firebase withConverter
 export type RenderInfo = {
