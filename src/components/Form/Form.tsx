@@ -1,11 +1,13 @@
 // FIXME:
 /* eslint-disable no-console */
-import { Button, Center, FileInput, Progress, Stack, Text, TextInput } from "@mantine/core";
+import { Button, Center, Progress, Stack, Text, TextInput } from "@mantine/core";
+
 import { NextLink } from "@mantine/next";
 import { IconCloudStorm } from "@tabler/icons";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { ImageDropzone } from "../ImageDropzone";
 import { storage } from "src/libs/firebase/front";
 import { RenderInfo } from "src/libs/firebase/server";
 import { RenderProgressType } from "src/pages/api/progress";
@@ -91,9 +93,9 @@ export const Form = () => {
     dispatch(updateText({ title: e.target.value }));
   };
 
-  const handleImage = (file: File | null) => {
-    if (!file) return;
-    const objectUrl = window.URL.createObjectURL(file);
+  const handleImage = (files: File[] | null) => {
+    if (!files) return;
+    const objectUrl = window.URL.createObjectURL(files[0]);
     dispatch(updateImage({ imageUrl: objectUrl }));
   };
 
@@ -110,8 +112,9 @@ export const Form = () => {
   return (
     <form onSubmit={handleSubmit}>
       <Stack>
-        <FileInput mt="md" label="Select image" placeholder="Single" onChange={handleImage} />
         <TextInput onChange={handleChange} size="lg" value={firstPageData.title} />
+        <ImageDropzone handleImage={handleImage} />
+        {/* <FileInput mt="md" label="Select image" placeholder="Single" onChange={handleImage} /> */}
         <Button
           type="submit"
           leftIcon={<IconCloudStorm size={18} />}
@@ -125,7 +128,7 @@ export const Form = () => {
         <Center>
           {renderStatus?.type === "success" && (
             <NextLink href={renderStatus.url} target="_blank">
-              <Text sx={{ fontWeight: "bold" }}>🎉🎉 Ta-da!! Check the video 🎉🎉</Text>
+              <Text sx={{ fontWeight: "bold" }}>🎉 Ta-da!! Check the video 🎉</Text>
             </NextLink>
           )}
         </Center>
