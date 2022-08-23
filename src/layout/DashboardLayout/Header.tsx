@@ -132,7 +132,9 @@ export const Header: FC = () => {
     <MantineHeader height={HEADER_HEIGHT}>
       <Container className={classes.inner} fluid>
         <Group>
-          <Burger opened={isOpened} onClick={toggle} size="sm" />
+          <MediaQuery largerThan="md" styles={{ display: "none" }}>
+            <Burger opened={isOpened} onClick={toggle} size="sm" />
+          </MediaQuery>
           <MediaQuery smallerThan="md" styles={{ display: "none" }}>
             <AvantIcon />
           </MediaQuery>

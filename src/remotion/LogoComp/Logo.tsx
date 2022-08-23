@@ -25,7 +25,6 @@ export const Logo: FC<{ imageUrl: string }> = ({ imageUrl }) => {
         src={imageUrl}
         style={{
           transform: `translateY(${wave2}px)`,
-
           width: 300,
           height: 300,
           borderRadius: "50%",
