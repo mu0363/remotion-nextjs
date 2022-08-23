@@ -6,12 +6,12 @@ import { selectAllFirstPageData } from "src/store/features/firstPageSlice";
 
 const Home: NextPage = () => {
   const firstPageData = useSelector(selectAllFirstPageData);
-  const { title, imageUrl } = firstPageData;
+  const { title, objectUrl } = firstPageData;
 
   return (
     <Player
       component={LogoComp}
-      inputProps={{ title, imageUrl }}
+      inputProps={{ title, objectUrl }}
       durationInFrames={120}
       compositionWidth={1920}
       compositionHeight={1080}

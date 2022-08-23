@@ -1,19 +1,25 @@
 // FIXME:
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable no-console */
 import { getFunctions, renderMediaOnLambda } from "@remotion/lambda";
+// import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { NextApiRequest, NextApiResponse } from "next";
 import { REGION, COMP_NAME, SITE_ID } from "src/libs/const";
-import { adminDB, adminBucket, RenderInfo, renderInfoConverter } from "src/libs/firebase/server";
+import { adminDB, RenderInfo, renderInfoConverter } from "src/libs/firebase/server";
 import { FirstPageState } from "src/store/features/firstPageSlice";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method !== "POST") return;
+
   try {
     // FIXME: アサーション削除
     const data = req.body as string;
+
     const firstPageJson = JSON.parse(data) as FirstPageState;
+    console.log({ firstPageJson });
     const { title, imageUrl } = firstPageJson;
-    const returnValue = await adminBucket.upload(imageUrl, { destination: "girl.png" });
-    console.log({ returnValue });
 
     const [first] = await getFunctions({
       compatibleOnly: true,
@@ -25,7 +31,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       functionName: first.functionName,
       serveUrl: SITE_ID,
       composition: COMP_NAME,
-      inputProps: { title, imageUrl: "https://source.unsplash.com/random/200x200" },
+      inputProps: {
+        title,
+        imageUrl,
+      },
       codec: "h264",
       imageFormat: "jpeg",
       maxRetries: 1,

@@ -2,8 +2,9 @@ import "../styles/global.css";
 import { Composition } from "remotion";
 import { COMP_NAME } from "../libs/const";
 import { LogoComp } from "./LogoComp";
+import type { FC } from "react";
 
-export const RemotionVideo: React.FC = () => {
+export const RemotionVideo: FC = () => {
   return (
     <Composition
       id={COMP_NAME}

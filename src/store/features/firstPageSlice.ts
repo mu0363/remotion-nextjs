@@ -13,7 +13,7 @@ const initialState: FirstPageState = {
 };
 
 export const firstPageSlice = createSlice({
-  name: "texts",
+  name: "firstPage",
   initialState,
   reducers: {
     updateText: (state, action: PayloadAction<Pick<FirstPageState, "title">>) => {

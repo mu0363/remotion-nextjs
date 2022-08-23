@@ -3,8 +3,10 @@
 import { Button, Center, FileInput, Progress, Stack, Text, TextInput } from "@mantine/core";
 import { NextLink } from "@mantine/next";
 import { IconCloudStorm } from "@tabler/icons";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { storage } from "src/libs/firebase/front";
 import { RenderInfo } from "src/libs/firebase/server";
 import { RenderProgressType } from "src/pages/api/progress";
 import { FirstPageState, selectAllFirstPageData, updateImage, updateText } from "src/store/features/firstPageSlice";
@@ -16,6 +18,7 @@ export const Form = () => {
   const [renderStatus, setRenderStatus] = useState<RenderProgressType>();
   const dispatch = useDispatch();
   const firstPageData = useSelector(selectAllFirstPageData);
+  const { title, imageUrl } = firstPageData;
 
   // 書き出し進捗確認
   const pollProgress = useCallback(async (renderInfo: RenderInfo): Promise<void> => {
@@ -56,9 +59,23 @@ export const Form = () => {
 
   // 書き出し開始
   const renderStart = async () => {
+    const res = await fetch(imageUrl);
+    const blob = await res.blob();
+    const storageRed = ref(storage, "images");
+    const uploadTask = uploadBytesResumable(storageRed, blob);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const prog = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+      },
+      (err) => console.log(err)
+    );
+    const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
+    console.log({ downloadUrl });
+
     const formData: FirstPageState = {
-      title: firstPageData.title,
-      imageUrl: firstPageData.imageUrl,
+      title,
+      imageUrl: downloadUrl,
     };
     const renderStartRes = await fetch("/api/render", {
       method: "POST",
