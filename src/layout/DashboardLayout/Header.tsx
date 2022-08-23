@@ -1,6 +1,17 @@
 // FIXME:
 /* eslint-disable no-console */
-import { Button, Group, Header as MantineHeader, Progress, Stack, Text } from "@mantine/core";
+import {
+  Burger,
+  Button,
+  Container,
+  createStyles,
+  Group,
+  Header as MantineHeader,
+  MediaQuery,
+  Progress,
+  Text,
+} from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 import { NextLink } from "@mantine/next";
 import { IconCloudStorm } from "@tabler/icons";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
@@ -14,8 +25,25 @@ import { RenderInfo } from "src/libs/firebase/server";
 import { RenderProgressType } from "src/pages/api/progress";
 import { FirstPageState, selectAllFirstPageData } from "src/store/features/firstPageSlice";
 
+const useStyles = createStyles((theme) => ({
+  inner: {
+    height: HEADER_HEIGHT,
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+
+  burger: {
+    [theme.fn.largerThan("sm")]: {
+      display: "none",
+    },
+  },
+}));
+
 /** @package */
 export const Header: FC = () => {
+  const { classes } = useStyles();
+  const [isOpened, { toggle }] = useDisclosure(false);
   const [isLoading, setIsLoading] = useState(false);
   const [renderInfo, setRenderInfo] = useState<RenderInfo>();
   const [renderStatus, setRenderStatus] = useState<RenderProgressType>();
@@ -102,29 +130,33 @@ export const Header: FC = () => {
 
   return (
     <MantineHeader height={HEADER_HEIGHT}>
-      <Group position="apart" py={5} px={16} sx={{ display: "flex", justifyItems: "center" }}>
-        <AvantIcon />
+      <Container className={classes.inner} fluid>
         <Group>
+          <Burger opened={isOpened} onClick={toggle} size="sm" />
+          <MediaQuery smallerThan="md" styles={{ display: "none" }}>
+            <AvantIcon />
+          </MediaQuery>
+        </Group>
+        <Group grow>
           {renderStatus?.type === "success" && (
             <NextLink href={renderStatus.url} target="_blank">
               <Text sx={{ fontWeight: "bold" }}>🎉</Text>
             </NextLink>
           )}
-          <Stack spacing={3}>
-            <Button
-              type="button"
-              leftIcon={<IconCloudStorm size={18} />}
-              loading={isLoading}
-              radius="xl"
-              sx={{ height: 36 }}
-              onClick={handleSubmit}
-            >
-              {isLoading ? "書き出し中" : "Render"}
-            </Button>
-            <Progress value={renderStatus?.percent ? renderStatus?.percent * 100 : 0} />
-          </Stack>
+
+          <Progress value={renderStatus?.percent ? renderStatus?.percent * 100 : 0} />
+          <Button
+            type="button"
+            leftIcon={<IconCloudStorm size={18} />}
+            loading={isLoading}
+            radius="xl"
+            sx={{ height: 36, width: 250 }}
+            onClick={handleSubmit}
+          >
+            {isLoading ? "書き出し中" : "Render"}
+          </Button>
         </Group>
-      </Group>
+      </Container>
     </MantineHeader>
   );
 };
