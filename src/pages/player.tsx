@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import type { CustomNextPage } from "next";
 import { Form } from "src/components/Form";
 import { TimelineCard } from "src/components/TimelineCard";
-import { DashboardLayout } from "src/layout/DashboardLayout";
+import { EditLayout } from "src/layout/EditLayout";
 import { TEMPLATE1_DURATION } from "src/libs/const/remotion-config";
 import { Template1 } from "src/remotion/Template1";
 import { selectCurrentFrame } from "src/store/features/currentFrameSlice";
@@ -42,7 +42,7 @@ const Player: CustomNextPage = () => {
 
   return (
     <Box>
-      <Center mt={100} mb={40}>
+      <Center mt={100}>
         <RemotionPlayer
           ref={playerRef}
           component={Template1}
@@ -57,7 +57,7 @@ const Player: CustomNextPage = () => {
           loop
         />
       </Center>
-      <Stack mx={20} pb={16}>
+      <Stack mx={20}>
         <Box sx={{ display: "flex", overflowX: "scroll" }}>
           {scenes.map((scene) => (
             <div key={scene.id}>
@@ -78,6 +78,6 @@ const Player: CustomNextPage = () => {
   );
 };
 
-Player.getLayout = DashboardLayout;
+Player.getLayout = EditLayout;
 
 export default Player;

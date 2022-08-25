@@ -1,15 +1,17 @@
 import { AppShell, createStyles } from "@mantine/core";
 import { CustomLayout } from "next";
 import { LayoutErrorBoundary } from "../LayoutErrorBoundary";
+import { ASide } from "./ASide";
 import { Header } from "./Header";
 import { SideNav } from "./SideNav";
-import { HEADER_HEIGHT, SIDENAV_WIDTH } from "src/libs/const";
+import { ASIDE_WIDTH, HEADER_HEIGHT, SIDENAV_WIDTH } from "src/libs/const";
 
 const useStyles = createStyles((theme) => {
   return {
     container: {
       marginLeft: SIDENAV_WIDTH,
       marginTop: HEADER_HEIGHT,
+      marginRight: ASIDE_WIDTH,
 
       [`@media (max-width: ${theme.breakpoints.md}px)`]: {
         marginLeft: 0,
@@ -20,7 +22,7 @@ const useStyles = createStyles((theme) => {
 });
 
 /** @package */
-export const DashboardLayout: CustomLayout = (page) => {
+export const EditLayout: CustomLayout = (page) => {
   const { classes } = useStyles();
 
   return (
@@ -31,6 +33,7 @@ export const DashboardLayout: CustomLayout = (page) => {
       })}
       header={<Header />}
       navbar={<SideNav />}
+      aside={<ASide />}
     >
       <div className={classes.container}>
         <LayoutErrorBoundary>{page}</LayoutErrorBoundary>

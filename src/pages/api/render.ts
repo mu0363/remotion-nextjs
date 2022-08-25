@@ -18,6 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const data = req.body as string;
 
     const template1Data = JSON.parse(data) as Template1State;
+    console.log(template1Data);
 
     const [first] = await getFunctions({
       compatibleOnly: true,
