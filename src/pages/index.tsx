@@ -1,15 +1,16 @@
 import { Player } from "@remotion/player";
 import { useSelector } from "react-redux";
 import type { NextPage } from "next";
-import { LogoComp } from "src/remotion/LogoComp";
-import { selectAllText } from "src/store/features/textSlice";
+import { Template1 } from "src/remotion/Template1";
+import { selectAllTemplate1Data } from "src/store/features/template1Slice";
 
 const Home: NextPage = () => {
-  const texts = useSelector(selectAllText);
+  const template1Data = useSelector(selectAllTemplate1Data);
+
   return (
     <Player
-      component={LogoComp}
-      inputProps={{ firstText: texts.firstText }}
+      component={Template1}
+      inputProps={template1Data}
       durationInFrames={120}
       compositionWidth={1920}
       compositionHeight={1080}

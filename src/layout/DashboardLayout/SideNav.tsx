@@ -9,14 +9,7 @@ import {
   UnstyledButton,
   useMantineTheme,
 } from "@mantine/core";
-import {
-  IconGitPullRequest,
-  IconAlertCircle,
-  IconMessages,
-  IconDatabase,
-  IconChevronRight,
-  IconChevronLeft,
-} from "@tabler/icons";
+import { IconAlertCircle, IconMessages, IconDatabase, IconChevronRight, IconChevronLeft } from "@tabler/icons";
 import { FC } from "react";
 import { getPath, SIDENAV_WIDTH } from "src/libs/const";
 import { ActiveLink } from "src/libs/next";
@@ -79,7 +72,6 @@ const MainLink = ({ icon, color, label, href }: MainLinkProps) => {
 
 const data = [
   { icon: <IconAlertCircle size={16} />, color: "teal", label: "Dashboard", href: getPath("DASHBOARD") },
-  { icon: <IconGitPullRequest size={16} />, color: "blue", label: "Player", href: getPath("PLAYER") },
   { icon: <IconMessages size={16} />, color: "violet", label: "Discussions", href: getPath("INDEX") },
   { icon: <IconDatabase size={16} />, color: "grape", label: "Databases", href: getPath("INDEX") },
 ];

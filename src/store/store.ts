@@ -1,9 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import textReducer from "./features/textSlice";
+import currentFrameReducer from "./features/currentFrameSlice";
+import currentPageReducer from "./features/currentPageSlice";
+import template1Reducer from "./features/template1Slice";
 
 export const store = configureStore({
   reducer: {
-    texts: textReducer,
+    template1: template1Reducer,
+    currentPage: currentPageReducer,
+    currentFrame: currentFrameReducer,
   },
 });
 

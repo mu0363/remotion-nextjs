@@ -1,12 +1,23 @@
 // FIXME:
 /* eslint-disable no-console */
-import { Burger, Container, createStyles, Group, Header as MantineHeader, MediaQuery } from "@mantine/core";
+import {
+  Burger,
+  Button,
+  Container,
+  createStyles,
+  Group,
+  Header as MantineHeader,
+  MediaQuery,
+  Progress,
+  Text,
+} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { NextLink } from "@mantine/next";
+import { IconCloudStorm, IconArrowLeft } from "@tabler/icons";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { useCallback, useEffect, useState, MouseEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { FC } from "react";
-import { AvantIcon } from "src/components/SVG";
 import { HEADER_HEIGHT } from "src/libs/const";
 import { storage } from "src/libs/firebase/front";
 import { RenderInfo } from "src/libs/firebase/server";
@@ -129,8 +140,29 @@ export const Header: FC = () => {
             <Burger opened={isOpened} onClick={toggle} size="sm" />
           </MediaQuery>
           <MediaQuery smallerThan="md" styles={{ display: "none" }}>
-            <AvantIcon />
+            <Button component="a" href="/dashboard" leftIcon={<IconArrowLeft />} variant="subtle">
+              戻る
+            </Button>
           </MediaQuery>
+        </Group>
+        <Group grow>
+          {renderStatus?.type === "success" && (
+            <NextLink href={renderStatus.url} target="_blank">
+              <Text sx={{ fontWeight: "bold" }}>🎉</Text>
+            </NextLink>
+          )}
+          <Progress value={renderStatus?.percent ? renderStatus?.percent * 100 : 0} />
+
+          <Button
+            type="button"
+            leftIcon={<IconCloudStorm size={18} />}
+            loading={isLoading}
+            radius="xl"
+            sx={{ height: 36, width: 250 }}
+            onClick={handleSubmit}
+          >
+            {isLoading ? "書き出し中" : "Render"}
+          </Button>
         </Group>
       </Container>
     </MantineHeader>

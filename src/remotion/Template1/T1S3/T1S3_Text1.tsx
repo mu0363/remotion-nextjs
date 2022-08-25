@@ -1,11 +1,9 @@
-import { useSelector } from "react-redux";
 import { interpolate } from "remotion";
 import { useCurrentFrame } from "remotion";
-import { selectAllText } from "../../store/features/textSlice";
 import type { FC } from "react";
 
-export const Title: FC = () => {
-  const texts = useSelector(selectAllText);
+/* @package **/
+export const T1S3_Text1: FC<{ text: string }> = ({ text }) => {
   const frame = useCurrentFrame();
   const opacity = interpolate(frame, [20, 40], [0, 1], {
     extrapolateLeft: "clamp",
@@ -23,7 +21,7 @@ export const Title: FC = () => {
         fontFamily: "Helvetica",
       }}
     >
-      {texts.firstText}
+      {text}
     </div>
   );
 };

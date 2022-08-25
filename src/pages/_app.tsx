@@ -13,6 +13,8 @@ const MyApp: CustomAppPage = ({ Component, pageProps }) => {
   const getLayout =
     Component.getLayout ||
     ((page) => {
+      // FIXME:
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       return page;
     });
 

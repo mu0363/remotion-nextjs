@@ -1,111 +1,36 @@
-import { Button, Center, Progress, Stack, Text, TextInput } from "@mantine/core";
-import { NextLink } from "@mantine/next";
-import { IconCloudStorm } from "@tabler/icons";
-import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from "react";
+// FIXME:
+/* eslint-disable no-console */
+import { Stack, TextInput } from "@mantine/core";
+import { ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RenderInfo } from "src/libs/firebase/server";
-import { RenderProgressType } from "src/pages/api/progress";
-import { selectAllText, updateText } from "src/store/features/textSlice";
-
-type TextForm = {
-  firstText: string;
-};
+import { ImageDropzone } from "../ImageDropzone";
+import { selectAllCurrentPage } from "src/store/features/currentPageSlice";
+import { selectAllTemplate1Data, updateImage, updateText } from "src/store/features/template1Slice";
 
 /** @package */
 export const Form = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [renderInfo, setRenderInfo] = useState<RenderInfo>();
-  const [renderStatus, setRenderStatus] = useState<RenderProgressType>();
   const dispatch = useDispatch();
-  const texts = useSelector(selectAllText);
-
-  // 書き出し進捗確認
-  const pollProgress = useCallback(async (renderInfo: RenderInfo): Promise<void> => {
-    const poll = async () => {
-      const progress = await fetch("/api/progress", {
-        method: "POST",
-        body: JSON.stringify({
-          renderInfo,
-        }),
-      });
-      const progressJson = (await progress.json()) as RenderProgressType;
-      setRenderStatus(progressJson);
-    };
-    const timeout = (ms: number) => {
-      return new Promise((resolve) => setTimeout(resolve, ms));
-    };
-
-    await timeout(1000);
-    await poll();
-  }, []);
-
-  // 1秒ごとに状況確認
-  useEffect(() => {
-    const poll = async (renderInfo: RenderInfo) => {
-      await pollProgress(renderInfo);
-      console.log(renderStatus);
-    };
-
-    if (renderStatus?.type == "success") {
-      setIsLoading(false);
-      console.log(renderStatus);
-    }
-
-    if (renderStatus?.type == "progress" && renderInfo) {
-      void poll(renderInfo);
-    }
-  }, [renderStatus, pollProgress, renderInfo]);
-
-  // 書き出し開始
-  const renderStart = async () => {
-    const formData: TextForm = {
-      firstText: texts.firstText,
-    };
-    const renderStartRes = await fetch("/api/render", {
-      method: "POST",
-      body: JSON.stringify(formData),
-    });
-    // FIXME: アサーション削除
-    const renderInfo = (await renderStartRes.json()) as RenderInfo;
-    setRenderInfo(renderInfo);
-    return renderInfo;
-  };
+  const template1Data = useSelector(selectAllTemplate1Data);
+  const currentPageData = useSelector(selectAllCurrentPage);
+  const { page, id } = currentPageData;
+  const pageContents = template1Data.filter((data) => data.page === page);
+  // TODO: findの方が良い?
+  const content = pageContents.filter((pageContent) => pageContent.id === id);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(updateText({ firstText: e.target.value }));
+    dispatch(updateText({ page, id, text: e.target.value }));
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsLoading(true);
-    const renderInfo = await renderStart();
-    await pollProgress(renderInfo);
+  const handleImage = (files: File[] | null) => {
+    if (!files) return;
+    const objectUrl = window.URL.createObjectURL(files[0]);
+    dispatch(updateImage({ page, id, image: objectUrl }));
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Stack>
-        <Stack>
-          <TextInput onChange={handleChange} size="lg" value={texts.firstText} />
-        </Stack>
-        <Button
-          type="submit"
-          leftIcon={<IconCloudStorm size={18} />}
-          loading={isLoading}
-          radius="xl"
-          sx={{ height: 50 }}
-        >
-          {isLoading ? "書き出し中" : "Render"}
-        </Button>
-        <Progress value={renderStatus?.percent ? renderStatus?.percent * 100 : 0} />
-        <Center>
-          {renderStatus?.type == "success" && (
-            <NextLink href={renderStatus.url} target="_blank">
-              <Text sx={{ fontWeight: "bold" }}>🎉🎉 Ta-da!! Check the video 🎉🎉</Text>
-            </NextLink>
-          )}
-        </Center>
-      </Stack>
-    </form>
+    <Stack>
+      <TextInput onChange={handleChange} size="lg" value={content[0].text} />
+      <ImageDropzone handleImage={handleImage} />
+    </Stack>
   );
 };
