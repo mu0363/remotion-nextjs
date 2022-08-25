@@ -11,8 +11,8 @@ import { selectAllTemplate1Data, updateImage, updateText } from "src/store/featu
 
 /** @package */
 export const Form = () => {
-  const [renderStatus, setRenderStatus] = useState<RenderProgressType>();
   const dispatch = useDispatch();
+  const [renderStatus, setRenderStatus] = useState<RenderProgressType>();
   const template1Data = useSelector(selectAllTemplate1Data);
   const currentPageData = useSelector(selectAllCurrentPage);
   const { page, id } = currentPageData;

@@ -8,6 +8,7 @@ export type Template1State = PageState[];
 const initialState = [
   { page: 1, id: 1, text: "First Text from Redux", image: "https://source.unsplash.com/random/200x200" },
   { page: 1, id: 2, text: "Second Text from Redux", image: "https://source.unsplash.com/random/200x200" },
+  { page: 1, id: 3, text: "Third Text from Redux", image: "https://source.unsplash.com/random/200x200" },
 ];
 
 // FIXME: Mapを使いたい
