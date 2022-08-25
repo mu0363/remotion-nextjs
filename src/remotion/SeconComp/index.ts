@@ -1,1 +1,0 @@
-export { SecondComp } from "./SecondComp";

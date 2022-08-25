@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import firstPageReducer from "./features/firstPageSlice";
+import currentPageReducer from "./features/currentPageSlice";
+import template1Reducer from "./features/template1Slice";
 
 export const store = configureStore({
   reducer: {
-    firstPage: firstPageReducer,
+    template1: template1Reducer,
+    currentPage: currentPageReducer,
   },
 });
 

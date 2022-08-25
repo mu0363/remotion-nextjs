@@ -16,14 +16,14 @@ import { NextLink } from "@mantine/next";
 import { IconCloudStorm } from "@tabler/icons";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { useCallback, useEffect, useState, MouseEvent } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { FC } from "react";
 import { AvantIcon } from "src/components/SVG";
 import { HEADER_HEIGHT } from "src/libs/const";
 import { storage } from "src/libs/firebase/front";
 import { RenderInfo } from "src/libs/firebase/server";
 import { RenderProgressType } from "src/pages/api/progress";
-import { FirstPageState, selectAllFirstPageData } from "src/store/features/firstPageSlice";
+import { selectAllTemplate1Data, updateImage } from "src/store/features/template1Slice";
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -47,8 +47,8 @@ export const Header: FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [renderInfo, setRenderInfo] = useState<RenderInfo>();
   const [renderStatus, setRenderStatus] = useState<RenderProgressType>();
-  const firstPageData = useSelector(selectAllFirstPageData);
-  const { title, imageUrl } = firstPageData;
+  const dispatch = useDispatch();
+  const template1Data = useSelector(selectAllTemplate1Data);
 
   // 書き出し進捗確認
   const pollProgress = useCallback(async (renderInfo: RenderInfo): Promise<void> => {
@@ -89,27 +89,28 @@ export const Header: FC = () => {
 
   // 書き出し開始
   const renderStart = async () => {
-    const res = await fetch(imageUrl);
-    const blob = await res.blob();
-    const storageRed = ref(storage, "images");
-    const uploadTask = uploadBytesResumable(storageRed, blob);
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const prog = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-      },
-      (err) => console.log(err)
+    await Promise.all(
+      template1Data.map(async (data) => {
+        const res = await fetch(data.image);
+        const blob = await res.blob();
+        const storageRed = ref(storage, "images");
+        const uploadTask = uploadBytesResumable(storageRed, blob);
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            const prog = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+          },
+          (err) => console.log(err)
+        );
+        const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
+        dispatch(updateImage({ page: data.page, id: data.id, image: downloadUrl }));
+        return downloadUrl;
+      })
     );
-    const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
-    console.log({ downloadUrl });
 
-    const formData: FirstPageState = {
-      title,
-      imageUrl: downloadUrl,
-    };
     const renderStartRes = await fetch("/api/render", {
       method: "POST",
-      body: JSON.stringify(formData),
+      body: JSON.stringify(template1Data),
     });
     // FIXME: アサーション削除
     const renderInfo = (await renderStartRes.json()) as RenderInfo;

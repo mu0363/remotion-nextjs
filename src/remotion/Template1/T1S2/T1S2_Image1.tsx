@@ -2,7 +2,8 @@ import { Avatar } from "@mantine/core";
 import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import type { FC } from "react";
 
-export const Logo: FC<{ imageUrl: string }> = ({ imageUrl }) => {
+/* @package **/
+export const T1S2_Image1: FC<{ image: string }> = ({ image }) => {
   const frame = useCurrentFrame();
   const { height, fps } = useVideoConfig();
 
@@ -23,7 +24,7 @@ export const Logo: FC<{ imageUrl: string }> = ({ imageUrl }) => {
   return (
     <div>
       <Avatar
-        src={imageUrl}
+        src={image}
         radius="xl"
         alt="avatar"
         style={{

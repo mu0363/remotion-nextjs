@@ -1,12 +1,16 @@
+// FIXME:
+/* eslint-disable no-console */
 import { Box, Center, MediaQuery, Stack, Text } from "@mantine/core";
-import { Player as RemotionPlayer } from "@remotion/player";
+import { Player as RemotionPlayer, PlayerRef } from "@remotion/player";
+import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import type { CustomNextPage } from "next";
 import { Form } from "src/components/Form";
 import { TimelineCard } from "src/components/TimelineCard";
 import { DashboardLayout } from "src/layout/DashboardLayout";
-import { LogoComp } from "src/remotion/LogoComp";
-import { selectAllFirstPageData } from "src/store/features/firstPageSlice";
+import { Template1 } from "src/remotion/Template1";
+import { selectAllCurrentPage } from "src/store/features/currentPageSlice";
+import { selectAllTemplate1Data } from "src/store/features/template1Slice";
 
 const scenes = [
   { id: 1, time: 3 },
@@ -20,16 +24,24 @@ const scenes = [
 ];
 
 const Player: CustomNextPage = () => {
-  const firstPageData = useSelector(selectAllFirstPageData);
-  const { title, imageUrl } = firstPageData;
+  const template1Data = useSelector(selectAllTemplate1Data);
+  const currentPageData = useSelector(selectAllCurrentPage);
+  const playerRef = useRef<PlayerRef>(null);
+
+  useEffect(() => {
+    if (playerRef.current) {
+      playerRef.current.seekTo(currentPageData.frame);
+      console.log(currentPageData.frame);
+    }
+  }, [currentPageData]);
 
   return (
     <Box>
       <Center mt={100} mb={40}>
         <RemotionPlayer
-          component={LogoComp}
-          inputProps={{ title, imageUrl }}
-          durationInFrames={120}
+          component={Template1}
+          inputProps={template1Data}
+          durationInFrames={240}
           compositionWidth={1920}
           compositionHeight={1080}
           fps={30}

@@ -8,7 +8,7 @@ import { getFunctions, renderMediaOnLambda } from "@remotion/lambda";
 import { NextApiRequest, NextApiResponse } from "next";
 import { REGION, COMP_NAME, SITE_ID } from "src/libs/const";
 import { adminDB, RenderInfo, renderInfoConverter } from "src/libs/firebase/server";
-import { FirstPageState } from "src/store/features/firstPageSlice";
+import { Template1State } from "src/store/features/template1Slice";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") return;
@@ -17,9 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // FIXME: アサーション削除
     const data = req.body as string;
 
-    const firstPageJson = JSON.parse(data) as FirstPageState;
-    console.log({ firstPageJson });
-    const { title, imageUrl } = firstPageJson;
+    const template1Data = JSON.parse(data) as Template1State;
 
     const [first] = await getFunctions({
       compatibleOnly: true,
@@ -31,10 +29,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       functionName: first.functionName,
       serveUrl: SITE_ID,
       composition: COMP_NAME,
-      inputProps: {
-        title,
-        imageUrl,
-      },
+      inputProps: template1Data,
       codec: "h264",
       imageFormat: "jpeg",
       maxRetries: 1,
