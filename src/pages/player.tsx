@@ -1,4 +1,4 @@
-import { Box, Center, MediaQuery, Stack } from "@mantine/core";
+import { Box, Center, MediaQuery, Stack, Text } from "@mantine/core";
 import { Player as RemotionPlayer } from "@remotion/player";
 import { useSelector } from "react-redux";
 import type { CustomNextPage } from "next";
@@ -33,20 +33,21 @@ const Player: CustomNextPage = () => {
           compositionWidth={1920}
           compositionHeight={1080}
           fps={30}
-          style={{ width: "90%" }}
+          style={{ width: "80%" }}
           controls
           loop
           autoPlay
         />
       </Center>
-      <Stack>
-        <Box m={10} pb={16} sx={{ display: "flex", overflowX: "scroll" }}>
+      <Stack mx={20} pb={16}>
+        <Box sx={{ display: "flex", overflowX: "scroll" }}>
           {scenes.map((scene) => (
             <div key={scene.id}>
               <TimelineCard id={scene.id} />
             </div>
           ))}
         </Box>
+        <Text sx={{ fontWeight: "bold" }}>0:32 / 6:32</Text>
       </Stack>
       <MediaQuery largerThan="md" styles={{ display: "none" }}>
         <Box m={20}>

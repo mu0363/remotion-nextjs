@@ -4,6 +4,7 @@ import { Subtitle } from "./Subtitle";
 import type { FC } from "react";
 import { FirstPageState } from "src/store/features/firstPageSlice";
 
+/** @package */
 export const LogoComp: FC<FirstPageState> = ({ title, imageUrl }) => {
   const frame = useCurrentFrame();
   const opacity = interpolate(frame, [20, 40], [0, 1], {
