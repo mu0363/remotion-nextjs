@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ImageDropzone } from "../ImageDropzone";
 import { storageUrl, USER_ID } from "src/libs/const/remotion-config";
 import { supabaseClient } from "src/libs/supabase/supabaseClient";
-import { selectAllCurrentPage } from "src/store/features/currentSceneSlice";
+import { selectAllCurrentScene } from "src/store/features/currentSceneSlice";
 import { selectAllTemplate1Data, updateImage, updateText } from "src/store/features/template1Slice";
 import { ImageType } from "types";
 
@@ -14,8 +14,8 @@ import { ImageType } from "types";
 export const Form = () => {
   const dispatch = useDispatch();
   const template1Data = useSelector(selectAllTemplate1Data);
-  const currentPageData = useSelector(selectAllCurrentPage);
-  const { scene_number, id, template_number } = currentPageData;
+  const currentSceneData = useSelector(selectAllCurrentScene);
+  const { scene_number, id, template_number } = currentSceneData;
   const sceneContents = template1Data.filter((data) => data.scene_number === scene_number);
   console.log({ sceneContents });
   const content = sceneContents.filter((sceneContent) => sceneContent.id === id);
@@ -39,7 +39,7 @@ export const Form = () => {
         {
           user_id: USER_ID,
           template_number,
-          scene_number: sceneContents[id].scene_number,
+          scene_number: content[0].scene_number,
           image_number: 1,
           image_url: `${storageUrl}/images/${data.path}`,
         },

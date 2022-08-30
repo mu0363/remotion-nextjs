@@ -12,11 +12,11 @@ export type CurrentSceneState = {
 
 const initialState: CurrentSceneState = { template_number: 1, scene_number: 1, id: 1, from: 1, toggle: true };
 
-export const currentPageSlice = createSlice({
-  name: "currentPage",
+export const currentSceneSlice = createSlice({
+  name: "currentScene",
   initialState,
   reducers: {
-    updateCurrentPage: (state, action: PayloadAction<Omit<CurrentSceneState, "toggle">>) => {
+    updateCurrentScene: (state, action: PayloadAction<Omit<CurrentSceneState, "toggle">>) => {
       state.template_number = action.payload.template_number;
       state.scene_number = action.payload.scene_number;
       state.id = action.payload.id;
@@ -26,7 +26,7 @@ export const currentPageSlice = createSlice({
   },
 });
 
-export const selectAllCurrentPage = (state: RootState) => state.currentPage;
-export const { updateCurrentPage } = currentPageSlice.actions;
+export const selectAllCurrentScene = (state: RootState) => state.currentScene;
+export const { updateCurrentScene } = currentSceneSlice.actions;
 
-export default currentPageSlice.reducer;
+export default currentSceneSlice.reducer;

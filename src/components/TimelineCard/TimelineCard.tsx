@@ -4,7 +4,7 @@ import { Tooltip, Card, Image } from "@mantine/core";
 import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thumbnailStartFrame } from "src/libs/const";
-import { selectAllCurrentPage, updateCurrentPage } from "src/store/features/currentSceneSlice";
+import { selectAllCurrentScene, updateCurrentScene } from "src/store/features/currentSceneSlice";
 import { TimelineSceneType } from "types";
 
 type Props = {
@@ -14,13 +14,13 @@ type Props = {
 export const TimelineCard: FC<Props> = ({ card }) => {
   const { id, thumbnail } = card;
   const dispatch = useDispatch();
-  const currentPageData = useSelector(selectAllCurrentPage);
+  const currentPageData = useSelector(selectAllCurrentScene);
   const { template_number, scene_number } = currentPageData;
 
   const handleClick = () => {
     const startFrame = thumbnailStartFrame.find((data) => data.id === id);
     if (startFrame) {
-      dispatch(updateCurrentPage({ template_number, scene_number, id, from: startFrame.from }));
+      dispatch(updateCurrentScene({ template_number, scene_number, id, from: startFrame.from }));
     }
   };
 
