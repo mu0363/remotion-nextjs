@@ -1,6 +1,6 @@
 // FIXME:
 /* eslint-disable no-console */
-import { Box, Center, MediaQuery, Stack, Text } from "@mantine/core";
+import { Box, Center, Grid, Image, MediaQuery, Stack } from "@mantine/core";
 import { Player as RemotionPlayer, PlayerRef } from "@remotion/player";
 import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
@@ -9,8 +9,8 @@ import { Form } from "src/components/Form";
 import { TimelineCard } from "src/components/TimelineCard";
 import { EditLayout } from "src/layout/EditLayout";
 import { TEMPLATE1_DURATION } from "src/libs/const/remotion-config";
+import { useImageQuery } from "src/libs/hooks/useImageQuery";
 import { Template1 } from "src/remotion/Template1";
-import { selectCurrentFrame } from "src/store/features/currentFrameSlice";
 import { selectAllCurrentPage } from "src/store/features/currentPageSlice";
 import { selectAllTemplate1Data } from "src/store/features/template1Slice";
 
@@ -21,9 +21,10 @@ const scenes = [
 ];
 
 const Player: CustomNextPage = () => {
+  const { data: images, isLoading, error } = useImageQuery();
   const template1Data = useSelector(selectAllTemplate1Data);
   const currentPageData = useSelector(selectAllCurrentPage);
-  const currentFrameData = useSelector(selectCurrentFrame);
+
   const playerRef = useRef<PlayerRef>(null);
 
   const calculateTime = (fps: number) => {
@@ -65,15 +66,19 @@ const Player: CustomNextPage = () => {
             </div>
           ))}
         </Box>
-        <Text sx={{ fontWeight: "bold" }}>{`${calculateTime(currentFrameData.currentFrame)} / ${calculateTime(
-          TEMPLATE1_DURATION
-        )}`}</Text>
       </Stack>
       <MediaQuery largerThan="md" styles={{ display: "none" }}>
         <Box m={20}>
           <Form />
         </Box>
       </MediaQuery>
+      <Grid>
+        {images?.map((image) => (
+          <Grid.Col md={4} lg={3} key={image.id}>
+            <Image src={image.imageUrl} alt="gallery" />
+          </Grid.Col>
+        ))}
+      </Grid>
     </Box>
   );
 };
