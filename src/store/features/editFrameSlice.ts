@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-export type CurrentSceneState = {
+export type EditFrameSlice = {
   id: number;
   template_number: number;
   scene_number: number;
@@ -10,13 +10,13 @@ export type CurrentSceneState = {
   toggle: boolean;
 };
 
-const initialState: CurrentSceneState = { template_number: 1, scene_number: 1, id: 1, from: 1, toggle: true };
+const initialState: EditFrameSlice = { template_number: 1, scene_number: 1, id: 1, from: 1, toggle: true };
 
-export const currentSceneSlice = createSlice({
-  name: "currentScene",
+export const editFrameSlice = createSlice({
+  name: "editFrame",
   initialState,
   reducers: {
-    updateCurrentScene: (state, action: PayloadAction<Omit<CurrentSceneState, "toggle">>) => {
+    updateEditFrame: (state, action: PayloadAction<Omit<EditFrameSlice, "toggle">>) => {
       state.template_number = action.payload.template_number;
       state.scene_number = action.payload.scene_number;
       state.id = action.payload.id;
@@ -26,7 +26,7 @@ export const currentSceneSlice = createSlice({
   },
 });
 
-export const selectAllCurrentScene = (state: RootState) => state.currentScene;
-export const { updateCurrentScene } = currentSceneSlice.actions;
+export const selectAllEditFrame = (state: RootState) => state.editFrame;
+export const { updateEditFrame } = editFrameSlice.actions;
 
-export default currentSceneSlice.reducer;
+export default editFrameSlice.reducer;

@@ -10,12 +10,12 @@ import { TimelineCard } from "src/components/TimelineCard";
 import { EditLayout } from "src/layout/EditLayout";
 import { TEMPLATE1_DURATION, timelineScenes } from "src/libs/const/remotion-config";
 import { Template1 } from "src/remotion/Template1";
-import { selectAllCurrentScene } from "src/store/features/currentSceneSlice";
+import { selectAllEditFrame } from "src/store/features/editFrameSlice";
 import { selectAllTemplate1Data } from "src/store/features/template1Slice";
 
 const Player: CustomNextPage = () => {
   const template1Data = useSelector(selectAllTemplate1Data);
-  const currentSceneData = useSelector(selectAllCurrentScene);
+  const editFrameData = useSelector(selectAllEditFrame);
   const playerRef = useRef<PlayerRef>(null);
 
   // const calculateTime = (fps: number) => {
@@ -28,9 +28,9 @@ const Player: CustomNextPage = () => {
   useEffect(() => {
     if (playerRef.current) {
       playerRef.current.pause();
-      playerRef.current.seekTo(currentSceneData.from);
+      playerRef.current.seekTo(editFrameData.from);
     }
-  }, [currentSceneData]);
+  }, [editFrameData]);
 
   return (
     <Box>
