@@ -5,9 +5,13 @@ import { T1S3_Text1 } from "./T1S3_Text1";
 import type { FC } from "react";
 import { PageState } from "src/store/features/template1Slice";
 
+type Props = {
+  pageState: PageState;
+};
+
 /* @package **/
-export const T1S3: FC<{ props: PageState }> = ({ props }) => {
-  const { text, image } = props;
+export const T1S3: FC<Props> = ({ pageState }) => {
+  const { text, image } = pageState;
 
   return (
     <Sequence from={240} durationInFrames={240}>
