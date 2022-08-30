@@ -3,14 +3,9 @@
 import { Tooltip, Card, Image } from "@mantine/core";
 import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { thumbnailStartFrame } from "src/libs/const";
 import { selectAllCurrentPage, updateCurrentPage } from "src/store/features/currentPageSlice";
 import { TimelineSceneType } from "types";
-
-const frameCollection = [
-  { id: 1, from: 0 + 60 },
-  { id: 2, from: 120 + 60 },
-  { id: 3, from: 240 + 60 },
-];
 
 type Props = {
   scene: TimelineSceneType;
@@ -22,13 +17,9 @@ export const TimelineCard: FC<Props> = ({ scene }) => {
   const currentPageData = useSelector(selectAllCurrentPage);
   const { template, page } = currentPageData;
 
-  const getRandomInt = (max: number) => {
-    return Math.floor(Math.random() * max);
-  };
-
   const handleClick = () => {
     // FIXME: findの方がよい?
-    const startFrame = frameCollection.find((data) => data.id === id);
+    const startFrame = thumbnailStartFrame.find((data) => data.id === id);
     if (startFrame) {
       dispatch(updateCurrentPage({ template, page, id, from: startFrame.from }));
     }

@@ -42,3 +42,9 @@ export const timelineScenes: TimelineSceneType[] = [
     thumbnail: "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/thumbnail/T1S3_thumbnail.webp",
   },
 ];
+
+export const thumbnailStartFrame = [
+  { id: 1, from: 0 + 60 },
+  { id: 2, from: 120 + 60 },
+  { id: 3, from: 240 + 60 },
+];
