@@ -4,7 +4,7 @@ import { Tooltip, Card, Image } from "@mantine/core";
 import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAllCurrentPage, updateCurrentPage } from "src/store/features/currentPageSlice";
-import { selectAllTemplate1Data } from "src/store/features/template1Slice";
+import { TimelineSceneType } from "types";
 
 const frameCollection = [
   { id: 1, from: 0 + 60 },
@@ -12,9 +12,13 @@ const frameCollection = [
   { id: 3, from: 240 + 60 },
 ];
 
-export const TimelineCard: FC<{ currentId: number }> = ({ currentId }) => {
+type Props = {
+  scene: TimelineSceneType;
+};
+
+export const TimelineCard: FC<Props> = ({ scene }) => {
+  const { id, thumbnail } = scene;
   const dispatch = useDispatch();
-  const template1Data = useSelector(selectAllTemplate1Data);
   const currentPageData = useSelector(selectAllCurrentPage);
   const { template, page } = currentPageData;
 
@@ -24,15 +28,15 @@ export const TimelineCard: FC<{ currentId: number }> = ({ currentId }) => {
 
   const handleClick = () => {
     // FIXME: findの方がよい?
-    const startFrame = frameCollection.find((data) => data.id === currentId);
+    const startFrame = frameCollection.find((data) => data.id === id);
     if (startFrame) {
-      dispatch(updateCurrentPage({ template, page, id: currentId, from: startFrame.from }));
+      dispatch(updateCurrentPage({ template, page, id, from: startFrame.from }));
     }
   };
 
   return (
     <div className="cursor-pointer">
-      <Tooltip label={`シーン${currentId}`} color="#1f2428" withArrow transition="fade" transitionDuration={300}>
+      <Tooltip label={`シーン${id}`} color="#1f2428" withArrow transition="fade" transitionDuration={300}>
         <Card
           shadow="sm"
           p="lg"
@@ -47,7 +51,7 @@ export const TimelineCard: FC<{ currentId: number }> = ({ currentId }) => {
           onClick={handleClick}
         >
           <Card.Section>
-            <Image src={`https://source.unsplash.com/random/320x180`} height={64} alt="Norway" />
+            <Image src={thumbnail} height={64} alt="scene-thumbnail" />
           </Card.Section>
         </Card>
       </Tooltip>

@@ -1,1 +1,1 @@
-export type {ImageType} from './types'
+export type {ImageType, TimelineSceneType} from './types'

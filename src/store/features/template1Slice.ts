@@ -1,15 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { defaultProps } from "src/libs/const";
 
 export type PageState = { page: number; id: number; text: string; image: string };
 export type Template1State = PageState[];
-
-const initialState = [
-  { page: 1, id: 1, text: "First Text from Redux", image: "https://source.unsplash.com/random/200x200" },
-  { page: 1, id: 2, text: "Second Text from Redux", image: "https://source.unsplash.com/random/200x200" },
-  { page: 1, id: 3, text: "Third Text from Redux", image: "https://source.unsplash.com/random/200x200" },
-];
 
 // FIXME: Mapを使いたい
 // export type PageState = { id: number; text: string; image: string };
@@ -23,7 +18,7 @@ const initialState = [
 
 export const template1Slice = createSlice({
   name: "template1",
-  initialState,
+  initialState: defaultProps,
   reducers: {
     updateText: (states, action: PayloadAction<Pick<PageState, "page" | "id" | "text">>) => {
       const pageContents = states.filter((state) => (state.page = action.payload.page));

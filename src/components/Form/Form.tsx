@@ -23,8 +23,11 @@ export const Form = () => {
 
   const handleImage = (files: File[] | null) => {
     if (!files) return;
+    console.log(files[0]);
+
     const objectUrl = window.URL.createObjectURL(files[0]);
     dispatch(updateImage({ page, id, image: objectUrl }));
+    // supabaseClient.storage.from("images").upload("")
   };
 
   return (
