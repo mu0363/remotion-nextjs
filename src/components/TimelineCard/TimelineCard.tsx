@@ -31,24 +31,26 @@ export const TimelineCard: FC<{ currentId: number }> = ({ currentId }) => {
   };
 
   return (
-    <Tooltip label={`シーン${currentId}`} color="#1f2428" withArrow transition="fade" transitionDuration={300}>
-      <Card
-        shadow="sm"
-        p="lg"
-        mr={10}
-        mt={32}
-        mb={20}
-        radius="md"
-        sx={{
-          width: 130,
-          flexShrink: 0,
-        }}
-        onClick={handleClick}
-      >
-        <Card.Section>
-          <Image src={`https://source.unsplash.com/random/320x180`} height={64} alt="Norway" />
-        </Card.Section>
-      </Card>
-    </Tooltip>
+    <div className="cursor-pointer">
+      <Tooltip label={`シーン${currentId}`} color="#1f2428" withArrow transition="fade" transitionDuration={300}>
+        <Card
+          shadow="sm"
+          p="lg"
+          mr={10}
+          mt={32}
+          mb={20}
+          radius="md"
+          sx={{
+            width: 130,
+            flexShrink: 0,
+          }}
+          onClick={handleClick}
+        >
+          <Card.Section>
+            <Image src={`https://source.unsplash.com/random/320x180`} height={64} alt="Norway" />
+          </Card.Section>
+        </Card>
+      </Tooltip>
+    </div>
   );
 };

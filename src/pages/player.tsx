@@ -23,14 +23,6 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const style = {
-  player: {
-    "@media (max-width: 992px)": {
-      display: "none",
-    },
-  },
-};
-
 const scenes = [
   { id: 1, time: 3 },
   { id: 2, time: 4 },
@@ -61,7 +53,7 @@ const Player: CustomNextPage = () => {
 
   return (
     <Box>
-      <div className="mx-10">
+      <div className="mx-0 md:mx-10">
         <Center className={classes.playerCenter}>
           <RemotionPlayer
             ref={playerRef}
