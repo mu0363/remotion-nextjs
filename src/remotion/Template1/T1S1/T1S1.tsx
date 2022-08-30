@@ -6,12 +6,12 @@ import type { FC } from "react";
 import { PageState } from "src/store/features/template1Slice";
 
 type Props = {
-  pageState: PageState;
+  sceneState: PageState;
 };
 
 /* @package **/
-export const T1S1: FC<Props> = ({ pageState }) => {
-  const { text, image } = pageState;
+export const T1S1: FC<Props> = ({ sceneState }) => {
+  const { text, image_url } = sceneState;
 
   return (
     <Sequence from={0} durationInFrames={120}>
@@ -22,7 +22,7 @@ export const T1S1: FC<Props> = ({ pageState }) => {
           justifyContent: "center",
         }}
       >
-        <T1S1_Image1 image={image} />
+        <T1S1_Image1 image={image_url} />
         <T1S1_Text1 text={text} />
         <Subtitle />
       </AbsoluteFill>

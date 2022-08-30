@@ -3,7 +3,7 @@ import { RootState } from "../store";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { defaultProps } from "src/libs/const";
 
-export type PageState = { page: number; id: number; text: string; image: string };
+export type PageState = { scene_number: number; id: number; text: string; image_url: string };
 export type Template1State = PageState[];
 
 // FIXME: Mapを使いたい
@@ -20,18 +20,18 @@ export const template1Slice = createSlice({
   name: "template1",
   initialState: defaultProps,
   reducers: {
-    updateText: (states, action: PayloadAction<Pick<PageState, "page" | "id" | "text">>) => {
-      const pageContents = states.filter((state) => (state.page = action.payload.page));
+    updateText: (states, action: PayloadAction<Pick<PageState, "scene_number" | "id" | "text">>) => {
+      const pageContents = states.filter((state) => (state.scene_number = action.payload.scene_number));
       const content = pageContents.find((pageContent) => pageContent.id === action.payload.id);
       if (content) {
         content.text = action.payload.text;
       }
     },
-    updateImage: (states, action: PayloadAction<Pick<PageState, "page" | "id" | "image">>) => {
-      const pageContents = states.filter((state) => (state.page = action.payload.page));
+    updateImage: (states, action: PayloadAction<Pick<PageState, "scene_number" | "id" | "image_url">>) => {
+      const pageContents = states.filter((state) => (state.scene_number = action.payload.scene_number));
       const content = pageContents.find((pageContent) => pageContent.id === action.payload.id);
       if (content) {
-        content.image = action.payload.image;
+        content.image_url = action.payload.image_url;
       }
     },
   },

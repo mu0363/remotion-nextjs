@@ -17,9 +17,9 @@ export const Template1: FC<Template1State> = (props) => {
   }, [frame, dispatch]);
   return (
     <>
-      <T1S1 pageState={props[0]} />
-      <T1S2 pageState={props[1]} />
-      <T1S3 pageState={props[2]} />
+      <T1S1 sceneState={props[0]} />
+      <T1S2 sceneState={props[1]} />
+      <T1S3 sceneState={props[2]} />
     </>
   );
 };

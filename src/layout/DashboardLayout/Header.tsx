@@ -81,7 +81,7 @@ export const Header: FC = () => {
   const renderStart = async () => {
     await Promise.all(
       template1Data.map(async (data) => {
-        const res = await fetch(data.image);
+        const res = await fetch(data.image_url);
         const blob = await res.blob();
         const storageRed = ref(storage, `/images/image-${data.id}`);
         const uploadTask = uploadBytesResumable(storageRed, blob);
@@ -93,7 +93,7 @@ export const Header: FC = () => {
           (err) => console.log(err)
         );
         const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
-        dispatch(updateImage({ page: data.page, id: data.id, image: downloadUrl }));
+        dispatch(updateImage({ scene_number: data.scene_number, id: data.id, image_url: downloadUrl }));
         console.log(downloadUrl);
         return downloadUrl;
       })

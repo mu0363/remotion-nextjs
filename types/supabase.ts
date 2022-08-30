@@ -17,9 +17,12 @@ export interface paths {
       parameters: {
         query: {
           id?: parameters["rowFilter.images.id"];
+          template_number?: parameters["rowFilter.images.template_number"];
+          scene_number?: parameters["rowFilter.images.scene_number"];
+          image_number?: parameters["rowFilter.images.image_number"];
+          image_url?: parameters["rowFilter.images.image_url"];
           created_at?: parameters["rowFilter.images.created_at"];
-          imageUrl?: parameters["rowFilter.images.imageUrl"];
-          name?: parameters["rowFilter.images.name"];
+          user_id?: parameters["rowFilter.images.user_id"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -71,9 +74,12 @@ export interface paths {
       parameters: {
         query: {
           id?: parameters["rowFilter.images.id"];
+          template_number?: parameters["rowFilter.images.template_number"];
+          scene_number?: parameters["rowFilter.images.scene_number"];
+          image_number?: parameters["rowFilter.images.image_number"];
+          image_url?: parameters["rowFilter.images.image_url"];
           created_at?: parameters["rowFilter.images.created_at"];
-          imageUrl?: parameters["rowFilter.images.imageUrl"];
-          name?: parameters["rowFilter.images.name"];
+          user_id?: parameters["rowFilter.images.user_id"];
         };
         header: {
           /** Preference */
@@ -89,9 +95,12 @@ export interface paths {
       parameters: {
         query: {
           id?: parameters["rowFilter.images.id"];
+          template_number?: parameters["rowFilter.images.template_number"];
+          scene_number?: parameters["rowFilter.images.scene_number"];
+          image_number?: parameters["rowFilter.images.image_number"];
+          image_url?: parameters["rowFilter.images.image_url"];
           created_at?: parameters["rowFilter.images.created_at"];
-          imageUrl?: parameters["rowFilter.images.imageUrl"];
-          name?: parameters["rowFilter.images.name"];
+          user_id?: parameters["rowFilter.images.user_id"];
         };
         body: {
           /** images */
@@ -118,15 +127,24 @@ export interface definitions {
      * This is a Primary Key.<pk/>
      */
     id: number;
+    /** Format: smallint */
+    template_number: number;
+    /** Format: smallint */
+    scene_number: number;
+    /** Format: smallint */
+    image_number: number;
+    /** Format: text */
+    image_url: string;
     /**
      * Format: timestamp with time zone
      * @default now()
      */
     created_at: string;
-    /** Format: text */
-    imageUrl: string;
-    /** Format: text */
-    name: string;
+    /**
+     * Format: uuid
+     * @default extensions.uuid_generate_v4()
+     */
+    user_id: string;
   };
 }
 
@@ -167,12 +185,18 @@ export interface parameters {
   "body.images": definitions["images"];
   /** Format: bigint */
   "rowFilter.images.id": string;
+  /** Format: smallint */
+  "rowFilter.images.template_number": string;
+  /** Format: smallint */
+  "rowFilter.images.scene_number": string;
+  /** Format: smallint */
+  "rowFilter.images.image_number": string;
+  /** Format: text */
+  "rowFilter.images.image_url": string;
   /** Format: timestamp with time zone */
   "rowFilter.images.created_at": string;
-  /** Format: text */
-  "rowFilter.images.imageUrl": string;
-  /** Format: text */
-  "rowFilter.images.name": string;
+  /** Format: uuid */
+  "rowFilter.images.user_id": string;
 }
 
 export interface operations {}

@@ -8,20 +8,19 @@ import { selectAllCurrentPage, updateCurrentPage } from "src/store/features/curr
 import { TimelineSceneType } from "types";
 
 type Props = {
-  scene: TimelineSceneType;
+  card: TimelineSceneType;
 };
 
-export const TimelineCard: FC<Props> = ({ scene }) => {
-  const { id, thumbnail } = scene;
+export const TimelineCard: FC<Props> = ({ card }) => {
+  const { id, thumbnail } = card;
   const dispatch = useDispatch();
   const currentPageData = useSelector(selectAllCurrentPage);
-  const { template, page } = currentPageData;
+  const { template_number, scene_number } = currentPageData;
 
   const handleClick = () => {
-    // FIXME: findの方がよい?
     const startFrame = thumbnailStartFrame.find((data) => data.id === id);
     if (startFrame) {
-      dispatch(updateCurrentPage({ template, page, id, from: startFrame.from }));
+      dispatch(updateCurrentPage({ template_number, scene_number, id, from: startFrame.from }));
     }
   };
 

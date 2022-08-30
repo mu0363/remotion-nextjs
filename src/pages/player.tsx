@@ -52,9 +52,9 @@ const Player: CustomNextPage = () => {
       </div>
       <Stack mx={20}>
         <Box sx={{ display: "flex", overflowX: "scroll" }}>
-          {timelineScenes.map((scene) => (
-            <div key={scene.id}>
-              <TimelineCard scene={scene} />
+          {timelineScenes.map((card) => (
+            <div key={card.id}>
+              <TimelineCard card={card} />
             </div>
           ))}
         </Box>
