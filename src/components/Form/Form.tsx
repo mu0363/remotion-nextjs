@@ -1,6 +1,6 @@
 // FIXME:
 /* eslint-disable no-console */
-import { Stack, Textarea } from "@mantine/core";
+import { Badge, Stack, Textarea } from "@mantine/core";
 import { ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ImageDropzone } from "../ImageDropzone";
@@ -14,7 +14,6 @@ export const Form = () => {
   const currentPageData = useSelector(selectAllCurrentPage);
   const { page, id } = currentPageData;
   const pageContents = template1Data.filter((data) => data.page === page);
-  // TODO: findの方が良い?
   const content = pageContents.filter((pageContent) => pageContent.id === id);
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -32,7 +31,8 @@ export const Form = () => {
 
   return (
     <Stack>
-      <Textarea label="シーン1" onChange={handleChange} size="lg" value={content[0].text} />
+      <Badge>{`シーン${content[0].id}`}</Badge>
+      <Textarea onChange={handleChange} size="lg" value={content[0].text} />
       <ImageDropzone handleImage={handleImage} />
     </Stack>
   );
