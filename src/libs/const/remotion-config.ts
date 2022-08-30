@@ -1,3 +1,4 @@
+import { SceneState } from "src/store/features/template1Slice";
 import { TimelineSceneType } from "types";
 
 export const COMP_NAME = "MyComp";
@@ -6,24 +7,33 @@ export const REGION = "us-east-1";
 export const TEMPLATE1_DURATION = 360;
 export const storageUrl = "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public";
 export const USER_ID = "22DFD4AE-6E10-491F-81BE-8D9C66CCDDB0";
-export const defaultProps = [
+export const defaultProps: SceneState[] = [
   {
-    scene_number: 1,
     id: 1,
-    text: "最初の文字です",
+    template_number: 1,
+    scene_number: 1,
+    image_number: 1,
     image_url: `${storageUrl}/images/girl.png`,
+    text: "最初の文字です",
+    active: true,
   },
   {
-    scene_number: 1,
     id: 2,
-    text: "2番目の文字です",
+    template_number: 1,
+    scene_number: 2,
+    image_number: 1,
     image_url: `${storageUrl}/images/the_cat.png`,
+    text: "2番目の文字です",
+    active: false,
   },
   {
-    scene_number: 1,
     id: 3,
-    text: "最後の文字です。\n改行もできます",
+    template_number: 1,
+    scene_number: 3,
+    image_number: 1,
     image_url: `${storageUrl}/images/sena_robot.webp`,
+    text: "最後の文字です。\n改行もできます",
+    active: false,
   },
 ];
 

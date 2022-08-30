@@ -10,21 +10,20 @@ import { TimelineCard } from "src/components/TimelineCard";
 import { EditLayout } from "src/layout/EditLayout";
 import { TEMPLATE1_DURATION, timelineScenes } from "src/libs/const/remotion-config";
 import { Template1 } from "src/remotion/Template1";
-import { selectAllCurrentPage } from "src/store/features/currentPageSlice";
+import { selectAllCurrentPage } from "src/store/features/currentSceneSlice";
 import { selectAllTemplate1Data } from "src/store/features/template1Slice";
 
 const Player: CustomNextPage = () => {
   const template1Data = useSelector(selectAllTemplate1Data);
   const currentPageData = useSelector(selectAllCurrentPage);
-
   const playerRef = useRef<PlayerRef>(null);
 
-  const calculateTime = (fps: number) => {
-    const minute = Math.floor(fps / (30 * 60));
-    const second = Math.floor(fps / 30);
-    const padSecond = String(second).padStart(2, "0");
-    return `${minute}:${padSecond}`;
-  };
+  // const calculateTime = (fps: number) => {
+  //   const minute = Math.floor(fps / (30 * 60));
+  //   const second = Math.floor(fps / 30);
+  //   const padSecond = String(second).padStart(2, "0");
+  //   return `${minute}:${padSecond}`;
+  // };
 
   useEffect(() => {
     if (playerRef.current) {

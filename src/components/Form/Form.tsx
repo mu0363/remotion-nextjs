@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ImageDropzone } from "../ImageDropzone";
 import { storageUrl, USER_ID } from "src/libs/const/remotion-config";
 import { supabaseClient } from "src/libs/supabase/supabaseClient";
-import { selectAllCurrentPage } from "src/store/features/currentPageSlice";
+import { selectAllCurrentPage } from "src/store/features/currentSceneSlice";
 import { selectAllTemplate1Data, updateImage, updateText } from "src/store/features/template1Slice";
 import { ImageType } from "types";
 
@@ -16,10 +16,8 @@ export const Form = () => {
   const template1Data = useSelector(selectAllTemplate1Data);
   const currentPageData = useSelector(selectAllCurrentPage);
   const { scene_number, id, template_number } = currentPageData;
-  // FIXME: sceneContentsとcontentsの違いは?
   const sceneContents = template1Data.filter((data) => data.scene_number === scene_number);
   console.log({ sceneContents });
-
   const content = sceneContents.filter((sceneContent) => sceneContent.id === id);
   console.log({ content });
 

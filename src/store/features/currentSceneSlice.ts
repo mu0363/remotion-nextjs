@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-export type CurrentPageState = {
+export type CurrentSceneState = {
   id: number;
   template_number: number;
   scene_number: number;
@@ -10,13 +10,13 @@ export type CurrentPageState = {
   toggle: boolean;
 };
 
-const initialState: CurrentPageState = { template_number: 1, scene_number: 1, id: 1, from: 1, toggle: true };
+const initialState: CurrentSceneState = { template_number: 1, scene_number: 1, id: 1, from: 1, toggle: true };
 
 export const currentPageSlice = createSlice({
   name: "currentPage",
   initialState,
   reducers: {
-    updateCurrentPage: (state, action: PayloadAction<Omit<CurrentPageState, "toggle">>) => {
+    updateCurrentPage: (state, action: PayloadAction<Omit<CurrentSceneState, "toggle">>) => {
       state.template_number = action.payload.template_number;
       state.scene_number = action.payload.scene_number;
       state.id = action.payload.id;
