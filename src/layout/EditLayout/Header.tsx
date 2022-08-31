@@ -87,26 +87,6 @@ export const Header: FC = () => {
 
   // 書き出し開始
   const renderStart = async () => {
-    // await Promise.all(
-    //   template1Data.map(async (data) => {
-    //     const res = await fetch(data.image_url);
-    //     const blob = await res.blob();
-    //     const storageRed = ref(storage, `/images/image-${data.id}`);
-    //     const uploadTask = uploadBytesResumable(storageRed, blob);
-    //     uploadTask.on(
-    //       "state_changed",
-    //       (snapshot) => {
-    //         const prog = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-    //       },
-    //       (err) => console.log(err)
-    //     );
-    //     const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
-    //     dispatch(updateImage({ scene_number: data.scene_number, id: data.id, image_url: downloadUrl }));
-    //     console.log(downloadUrl);
-    //     return downloadUrl;
-    //   })
-    // );
-
     const renderStartRes = await fetch("/api/render", {
       method: "POST",
       body: JSON.stringify(template1Data),

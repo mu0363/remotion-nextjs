@@ -1,10 +1,6 @@
 // FIXME:
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable no-console */
 import { getFunctions, renderMediaOnLambda } from "@remotion/lambda";
-// import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { NextApiRequest, NextApiResponse } from "next";
 import { REGION, COMP_NAME, SITE_ID } from "src/libs/const";
 import { adminDB, RenderInfo, renderInfoConverter } from "src/libs/firebase/server";
