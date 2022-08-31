@@ -48,7 +48,7 @@ export const Form = () => {
 
   return (
     <Stack>
-      <Badge>{`シーン${id}`}</Badge>
+      <Badge className="w-20">{`シーン${id}`}</Badge>
       <Textarea onChange={handleChange} size="lg" value={text} />
       <FileInput label="Your resume" placeholder="Your resume" icon={<IconUpload size={14} />} onChange={handleImage} />
     </Stack>

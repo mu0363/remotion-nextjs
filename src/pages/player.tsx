@@ -1,6 +1,6 @@
 // FIXME:
 /* eslint-disable no-console */
-import { ActionIcon, Box, MediaQuery } from "@mantine/core";
+import { ActionIcon, Box } from "@mantine/core";
 import { Player as RemotionPlayer, PlayerRef } from "@remotion/player";
 import { IconPlayerPlay, IconPlayerPause } from "@tabler/icons";
 import { useEffect, useRef, useState } from "react";
@@ -36,7 +36,7 @@ const Player: CustomNextPage = () => {
 
   return (
     <div>
-      <div className="sticky top-0 mx-0 pt-0 md:mx-10 md:pt-10">
+      <div className="mx-0 pt-0 md:mx-10 md:pt-10">
         <RemotionPlayer
           ref={playerRef}
           component={Template1}
@@ -47,11 +47,12 @@ const Player: CustomNextPage = () => {
           style={{ width: "100%" }}
           fps={30}
           controls={false}
+          clickToPlay={true}
           autoPlay
           loop
         />
       </div>
-      <div className="mx-0 md:mx-10">
+      <div className="mx-0 md:mx-5">
         <div className="flex items-center">
           <div className="flex flex-col items-center">
             <ActionIcon
@@ -79,12 +80,9 @@ const Player: CustomNextPage = () => {
         </div>
       </div>
 
-      <div className="mx-5 pt-5">
+      <div className="mx-5 pt-5 md:hidden">
         <Form />
       </div>
-      <MediaQuery largerThan="md" styles={{ display: "none" }}>
-        <Box m={20}>{/* <Form /> */}</Box>
-      </MediaQuery>
     </div>
   );
 };
