@@ -3,21 +3,21 @@
 import { ActionIcon, Box } from "@mantine/core";
 import { Player as RemotionPlayer, PlayerRef } from "@remotion/player";
 import { IconPlayerPlay, IconPlayerPause } from "@tabler/icons";
-import { useAtomValue } from "jotai";
-import { FC, RefObject, useEffect, useRef, useState } from "react";
+import { useAtom, useAtomValue } from "jotai";
+import { FC, RefObject, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import type { CustomNextPage } from "next";
 import { Form } from "src/components/Form";
 import { TimelineCard } from "src/components/TimelineCard";
 import { EditLayout } from "src/layout/EditLayout";
 import { currentFrameAtom } from "src/libs/atom";
+import { isPlayingAtom } from "src/libs/atom/atom";
 import { TEMPLATE1_DURATION, timelineScenes } from "src/libs/const/remotion-config";
 import { ActiveSceneSlice, selectAllActiveScene } from "src/libs/store/features/activeSceneSlice";
 import { selectAllTemplate1Data } from "src/libs/store/features/template1Slice";
 import { Template1 } from "src/remotion/Template1";
 
 const Player: CustomNextPage = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
   const template1Data = useSelector(selectAllTemplate1Data);
   const activeSceneData = useSelector(selectAllActiveScene);
   const playerRef = useRef<PlayerRef>(null);
@@ -42,19 +42,13 @@ const Player: CustomNextPage = () => {
           style={{ width: "100%" }}
           fps={30}
           controls={false}
-          clickToPlay={true}
           autoPlay
           loop
         />
       </div>
       <div className="mx-0 md:mx-5">
         <div className="flex items-center">
-          <PlayButton
-            playerRef={playerRef}
-            isPlaying={isPlaying}
-            setIsPlaying={setIsPlaying}
-            activeSceneData={activeSceneData}
-          />
+          <PlayButton playerRef={playerRef} activeSceneData={activeSceneData} />
           <Box sx={{ display: "flex", overflowX: "scroll" }}>
             {timelineScenes.map((card) => (
               <div key={card.id}>
@@ -78,13 +72,12 @@ export default Player;
 
 type PlayButtonProps = {
   playerRef: RefObject<PlayerRef>;
-  isPlaying: boolean;
-  setIsPlaying: (isPlaying: boolean) => void;
   activeSceneData: ActiveSceneSlice;
 };
 
-const PlayButton: FC<PlayButtonProps> = ({ playerRef, isPlaying, setIsPlaying, activeSceneData }) => {
+const PlayButton: FC<PlayButtonProps> = ({ playerRef, activeSceneData }) => {
   const currentFrame = useAtomValue(currentFrameAtom);
+  const [isPlaying, setIsPlaying] = useAtom(isPlayingAtom);
 
   useEffect(() => {
     if (playerRef.current) {

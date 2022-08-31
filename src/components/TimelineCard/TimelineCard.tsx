@@ -1,8 +1,10 @@
 // FIXME:
 /* eslint-disable no-console */
 import { Tooltip, Card, Image } from "@mantine/core";
+import { useSetAtom } from "jotai";
 import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { isPlayingAtom } from "src/libs/atom/atom";
 import { thumbnailStartFrame } from "src/libs/const";
 import { selectAllActiveScene, updateActiveScene } from "src/libs/store/features/activeSceneSlice";
 import { TimelineSceneType } from "types";
@@ -16,8 +18,10 @@ export const TimelineCard: FC<Props> = ({ card }) => {
   const dispatch = useDispatch();
   const activeSceneData = useSelector(selectAllActiveScene);
   const { template_number } = activeSceneData;
+  const setIsPlaying = useSetAtom(isPlayingAtom);
 
   const handleClick = () => {
+    setIsPlaying(false);
     const startFrame = thumbnailStartFrame.find((data) => data.id === id);
     if (startFrame) {
       dispatch(updateActiveScene({ template_number, scene_number: id, from: startFrame.from }));
