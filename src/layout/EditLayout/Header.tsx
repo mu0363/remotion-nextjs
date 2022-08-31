@@ -18,9 +18,9 @@ import { useCallback, useEffect, useState, MouseEvent } from "react";
 import { useSelector } from "react-redux";
 import type { FC } from "react";
 import { HEADER_HEIGHT } from "src/libs/const";
-import { RenderInfo } from "src/libs/firebase/server";
 import { RenderProgressType } from "src/pages/api/progress";
 import { selectAllTemplate1Data } from "src/store/features/template1Slice";
+import { RenderInfo } from "types";
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -72,7 +72,6 @@ export const Header: FC = () => {
     const poll = async (renderInfo: RenderInfo) => {
       await pollProgress(renderInfo);
       console.log(renderStatus);
-      console.log(template1Data);
     };
 
     if (renderStatus?.type === "success") {
