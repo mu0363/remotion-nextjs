@@ -31,8 +31,8 @@ export const TimelineCard: FC<Props> = ({ card }) => {
           shadow="sm"
           p="lg"
           mr={10}
-          mt={32}
-          mb={20}
+          mt={16}
+          mb={16}
           radius="md"
           sx={{
             width: 130,

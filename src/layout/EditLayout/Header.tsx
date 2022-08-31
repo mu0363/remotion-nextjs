@@ -107,35 +107,35 @@ export const Header: FC = () => {
   };
 
   return (
-    <MantineHeader height={HEADER_HEIGHT}>
-      <Container className={classes.inner} fluid>
-        <Group>
-          <MediaQuery smallerThan="md" styles={{ display: "none" }}>
+    <MediaQuery smallerThan="md" styles={{ display: "none" }}>
+      <MantineHeader height={HEADER_HEIGHT}>
+        <Container className={classes.inner} fluid>
+          <Group>
             <Button component="a" href="/dashboard" leftIcon={<IconArrowLeft />} variant="subtle">
               戻る
             </Button>
-          </MediaQuery>
-        </Group>
-        <Group grow>
-          {renderStatus?.type === "success" && (
-            <NextLink href={renderStatus.url} target="_blank">
-              <Text sx={{ fontWeight: "bold" }}>🎉</Text>
-            </NextLink>
-          )}
-          <Progress value={renderStatus?.percent ? renderStatus?.percent * 100 : 0} />
+          </Group>
+          <Group grow>
+            {renderStatus?.type === "success" && (
+              <NextLink href={renderStatus.url} target="_blank">
+                <Text sx={{ fontWeight: "bold" }}>🎉</Text>
+              </NextLink>
+            )}
+            <Progress value={renderStatus?.percent ? renderStatus?.percent * 100 : 0} />
 
-          <Button
-            type="button"
-            leftIcon={<IconCloudStorm size={18} />}
-            loading={isLoading}
-            radius="xl"
-            sx={{ height: 36, width: 250 }}
-            onClick={handleSubmit}
-          >
-            {isLoading ? "書き出し中" : "Render"}
-          </Button>
-        </Group>
-      </Container>
-    </MantineHeader>
+            <Button
+              type="button"
+              leftIcon={<IconCloudStorm size={18} />}
+              loading={isLoading}
+              radius="xl"
+              sx={{ height: 36, width: 250 }}
+              onClick={handleSubmit}
+            >
+              {isLoading ? "書き出し中" : "Render"}
+            </Button>
+          </Group>
+        </Container>
+      </MantineHeader>
+    </MediaQuery>
   );
 };

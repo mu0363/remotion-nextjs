@@ -1,7 +1,8 @@
 // FIXME:
 /* eslint-disable no-console */
-import { Box, Button, Drawer, Group, MediaQuery, Stack } from "@mantine/core";
+import { ActionIcon, Box, MediaQuery } from "@mantine/core";
 import { Player as RemotionPlayer, PlayerRef } from "@remotion/player";
+import { IconPlayerPlay, IconPlayerPause } from "@tabler/icons";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import type { CustomNextPage } from "next";
@@ -14,7 +15,7 @@ import { selectAllActiveScene } from "src/store/features/activeSceneSlice";
 import { selectAllTemplate1Data } from "src/store/features/template1Slice";
 
 const Player: CustomNextPage = () => {
-  const [isOpened, setIsOpened] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   const template1Data = useSelector(selectAllTemplate1Data);
   const activeSceneData = useSelector(selectAllActiveScene);
   const playerRef = useRef<PlayerRef>(null);
@@ -35,7 +36,7 @@ const Player: CustomNextPage = () => {
 
   return (
     <div>
-      <div className="sticky top-0 mx-0 pt-10 md:mx-10 md:pt-10">
+      <div className="sticky top-0 mx-0 pt-0 md:mx-10 md:pt-10">
         <RemotionPlayer
           ref={playerRef}
           component={Template1}
@@ -45,44 +46,42 @@ const Player: CustomNextPage = () => {
           compositionHeight={1080}
           style={{ width: "100%" }}
           fps={30}
-          controls
+          controls={false}
           autoPlay
           loop
         />
       </div>
-      <Stack mx={20}>
-        <Box sx={{ display: "flex", overflowX: "scroll" }}>
-          {timelineScenes.map((card) => (
-            <div key={card.id}>
-              <TimelineCard card={card} />
-            </div>
-          ))}
-        </Box>
-      </Stack>
-      {/* <Modal
-        centered
-        overlayOpacity={0}
-        transition="fade"
-        transitionDuration={300}
-        opened={isOpened}
-        onClose={() => setIsOpened(false)}
-      >
+      <div className="mx-0 md:mx-10">
+        <div className="flex items-center">
+          <div className="flex flex-col items-center">
+            <ActionIcon
+              color="red"
+              size="lg"
+              radius="xl"
+              variant="filled"
+              className="mx-5 shadow-md"
+              onClick={() => {
+                playerRef.current?.toggle();
+                setIsPlaying(!isPlaying);
+              }}
+            >
+              {isPlaying ? <IconPlayerPause size={18} /> : <IconPlayerPlay size={18} />}
+            </ActionIcon>
+            <p className="mx-5 mt-2 text-xs font-bold text-gray-600">02:30</p>
+          </div>
+          <Box sx={{ display: "flex", overflowX: "scroll" }}>
+            {timelineScenes.map((card) => (
+              <div key={card.id}>
+                <TimelineCard card={card} />
+              </div>
+            ))}
+          </Box>
+        </div>
+      </div>
+
+      <div className="mx-5 pt-5">
         <Form />
-      </Modal> */}
-      <Drawer
-        opened={isOpened}
-        onClose={() => setIsOpened(false)}
-        overlayOpacity={0}
-        padding="xl"
-        size="sm"
-        position="bottom"
-        withCloseButton={false}
-      >
-        <Form />
-      </Drawer>
-      <Group position="center">
-        <Button onClick={() => setIsOpened(true)}>Open Modal</Button>
-      </Group>
+      </div>
       <MediaQuery largerThan="md" styles={{ display: "none" }}>
         <Box m={20}>{/* <Form /> */}</Box>
       </MediaQuery>

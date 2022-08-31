@@ -3,18 +3,18 @@ import { CustomLayout } from "next";
 import { LayoutErrorBoundary } from "../LayoutErrorBoundary";
 import { ASide } from "./ASide";
 import { Header } from "./Header";
-import { SideNav } from "./SideNav";
-import { ASIDE_WIDTH, HEADER_HEIGHT, SIDENAV_WIDTH } from "src/libs/const";
+import { ASIDE_WIDTH, HEADER_HEIGHT } from "src/libs/const";
 
 const useStyles = createStyles((theme) => {
   return {
     container: {
-      marginLeft: SIDENAV_WIDTH,
+      // marginLeft: SIDENAV_WIDTH,
       marginTop: HEADER_HEIGHT,
       marginRight: ASIDE_WIDTH,
 
       [`@media (max-width: ${theme.breakpoints.md}px)`]: {
-        marginLeft: 0,
+        // marginLeft: 0,
+        marginTop: 0,
         marginRight: 0,
       },
     },
@@ -32,7 +32,7 @@ export const EditLayout: CustomLayout = (page) => {
         main: { padding: 0, backgroundColor: theme.colors.gray[0] },
       })}
       header={<Header />}
-      navbar={<SideNav />}
+      // navbar={<SideNav />}
       aside={<ASide />}
     >
       <div className={classes.container}>
