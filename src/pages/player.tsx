@@ -3,29 +3,32 @@
 import { ActionIcon, Box } from "@mantine/core";
 import { Player as RemotionPlayer, PlayerRef } from "@remotion/player";
 import { IconPlayerPlay, IconPlayerPause } from "@tabler/icons";
+import { useAtomValue } from "jotai";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import type { CustomNextPage } from "next";
 import { Form } from "src/components/Form";
 import { TimelineCard } from "src/components/TimelineCard";
 import { EditLayout } from "src/layout/EditLayout";
+import { currentFrameAtom } from "src/libs/atom";
 import { TEMPLATE1_DURATION, timelineScenes } from "src/libs/const/remotion-config";
 import { selectAllActiveScene } from "src/libs/store/features/activeSceneSlice";
 import { selectAllTemplate1Data } from "src/libs/store/features/template1Slice";
 import { Template1 } from "src/remotion/Template1";
 
 const Player: CustomNextPage = () => {
+  const currentFrame = useAtomValue(currentFrameAtom);
   const [isPlaying, setIsPlaying] = useState(false);
   const template1Data = useSelector(selectAllTemplate1Data);
   const activeSceneData = useSelector(selectAllActiveScene);
   const playerRef = useRef<PlayerRef>(null);
 
-  // const calculateTime = (fps: number) => {
-  //   const minute = Math.floor(fps / (30 * 60));
-  //   const second = Math.floor(fps / 30);
-  //   const padSecond = String(second).padStart(2, "0");
-  //   return `${minute}:${padSecond}`;
-  // };
+  const calculateTime = (fps: number) => {
+    const minute = Math.floor(fps / (30 * 60));
+    const second = Math.floor(fps / 30);
+    const padSecond = String(second).padStart(2, "0");
+    return `${minute}:${padSecond}`;
+  };
 
   useEffect(() => {
     if (playerRef.current) {
@@ -68,7 +71,8 @@ const Player: CustomNextPage = () => {
             >
               {isPlaying ? <IconPlayerPause size={18} /> : <IconPlayerPlay size={18} />}
             </ActionIcon>
-            <p className="mx-5 mt-2 text-xs font-bold text-gray-600">02:30</p>
+            <p className="mx-5 mt-2 text-xs font-bold text-gray-600">{calculateTime(currentFrame)}</p>
+            {/* <p className="mx-5 mt-2 text-xs font-bold text-gray-600">02:30</p> */}
           </div>
           <Box sx={{ display: "flex", overflowX: "scroll" }}>
             {timelineScenes.map((card) => (

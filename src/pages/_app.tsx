@@ -1,6 +1,7 @@
 import "../styles/global.css";
 import { ColorScheme, ColorSchemeProvider, MantineProvider } from "@mantine/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Provider as JotaiProvider } from "jotai";
 import { useState } from "react";
 import { Provider } from "react-redux";
 import type { CustomAppPage } from "next/app";
@@ -23,20 +24,22 @@ const MyApp: CustomAppPage = ({ Component, pageProps }) => {
 
   return (
     <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
-        <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-          <MantineProvider
-            withGlobalStyles
-            withNormalizeCSS
-            theme={{
-              /** Put your mantine theme override here */
-              colorScheme: "light",
-            }}
-          >
-            {getLayout(<Component {...pageProps} />)}
-          </MantineProvider>
-        </ColorSchemeProvider>
-      </QueryClientProvider>
+      <JotaiProvider>
+        <QueryClientProvider client={queryClient}>
+          <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+            <MantineProvider
+              withGlobalStyles
+              withNormalizeCSS
+              theme={{
+                /** Put your mantine theme override here */
+                colorScheme: "light",
+              }}
+            >
+              {getLayout(<Component {...pageProps} />)}
+            </MantineProvider>
+          </ColorSchemeProvider>
+        </QueryClientProvider>
+      </JotaiProvider>
     </Provider>
   );
 };
