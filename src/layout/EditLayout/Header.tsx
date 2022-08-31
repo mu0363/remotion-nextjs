@@ -1,7 +1,6 @@
 // FIXME:
 /* eslint-disable no-console */
 import {
-  Burger,
   Button,
   Container,
   createStyles,
@@ -111,9 +110,6 @@ export const Header: FC = () => {
     <MantineHeader height={HEADER_HEIGHT}>
       <Container className={classes.inner} fluid>
         <Group>
-          <MediaQuery largerThan="md" styles={{ display: "none" }}>
-            <Burger opened={isOpened} onClick={toggle} size="sm" />
-          </MediaQuery>
           <MediaQuery smallerThan="md" styles={{ display: "none" }}>
             <Button component="a" href="/dashboard" leftIcon={<IconArrowLeft />} variant="subtle">
               戻る
