@@ -1,4 +1,4 @@
-import { SceneState } from "src/store/features/template1Slice";
+import { SceneState } from "src/libs/store/features/template1Slice";
 import { TimelineSceneType } from "types";
 
 export const COMP_NAME = "MyComp";

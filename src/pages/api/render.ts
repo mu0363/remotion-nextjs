@@ -4,7 +4,7 @@ import { getFunctions, renderMediaOnLambda } from "@remotion/lambda";
 import { NextApiRequest, NextApiResponse } from "next";
 import { v4 as uuidv4 } from "uuid";
 import { REGION, COMP_NAME, SITE_ID } from "src/libs/const";
-import { SceneState } from "src/store/features/template1Slice";
+import { SceneState } from "src/libs/store/features/template1Slice";
 import { RenderInfo } from "types";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

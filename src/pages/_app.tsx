@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 import { Provider } from "react-redux";
 import type { CustomAppPage } from "next/app";
-import { store } from "src/store";
+import { store } from "src/libs/store";
 
 const queryClient = new QueryClient();
 

@@ -4,7 +4,7 @@ import { Tooltip, Card, Image } from "@mantine/core";
 import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thumbnailStartFrame } from "src/libs/const";
-import { selectAllActiveScene, updateActiveScene } from "src/store/features/activeSceneSlice";
+import { selectAllActiveScene, updateActiveScene } from "src/libs/store/features/activeSceneSlice";
 import { TimelineSceneType } from "types";
 
 type Props = {

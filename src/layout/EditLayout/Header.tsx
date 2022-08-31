@@ -10,15 +10,14 @@ import {
   Progress,
   Text,
 } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
 import { NextLink } from "@mantine/next";
 import { IconCloudStorm, IconArrowLeft } from "@tabler/icons";
 import { useCallback, useEffect, useState, MouseEvent } from "react";
 import { useSelector } from "react-redux";
 import type { FC } from "react";
 import { HEADER_HEIGHT } from "src/libs/const";
+import { selectAllTemplate1Data } from "src/libs/store/features/template1Slice";
 import { RenderProgressType } from "src/pages/api/progress";
-import { selectAllTemplate1Data } from "src/store/features/template1Slice";
 import { RenderInfo } from "types";
 
 const useStyles = createStyles((theme) => ({
@@ -39,7 +38,6 @@ const useStyles = createStyles((theme) => ({
 /** @package */
 export const Header: FC = () => {
   const { classes } = useStyles();
-  const [isOpened, { toggle }] = useDisclosure(false);
   const [isLoading, setIsLoading] = useState(false);
   const [renderInfo, setRenderInfo] = useState<RenderInfo>();
   const [renderStatus, setRenderStatus] = useState<RenderProgressType>();

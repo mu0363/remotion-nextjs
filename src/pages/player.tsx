@@ -10,9 +10,9 @@ import { Form } from "src/components/Form";
 import { TimelineCard } from "src/components/TimelineCard";
 import { EditLayout } from "src/layout/EditLayout";
 import { TEMPLATE1_DURATION, timelineScenes } from "src/libs/const/remotion-config";
+import { selectAllActiveScene } from "src/libs/store/features/activeSceneSlice";
+import { selectAllTemplate1Data } from "src/libs/store/features/template1Slice";
 import { Template1 } from "src/remotion/Template1";
-import { selectAllActiveScene } from "src/store/features/activeSceneSlice";
-import { selectAllTemplate1Data } from "src/store/features/template1Slice";
 
 const Player: CustomNextPage = () => {
   const [isPlaying, setIsPlaying] = useState(false);

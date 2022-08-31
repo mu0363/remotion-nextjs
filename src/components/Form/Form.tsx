@@ -6,9 +6,9 @@ import { ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { storageUrl, USER_ID } from "src/libs/const/remotion-config";
 import { useCurrentData } from "src/libs/hooks/useCurrentData";
+import { selectAllActiveScene } from "src/libs/store/features/activeSceneSlice";
+import { updateImage, updateText } from "src/libs/store/features/template1Slice";
 import { supabaseClient } from "src/libs/supabase/supabaseClient";
-import { selectAllActiveScene } from "src/store/features/activeSceneSlice";
-import { updateImage, updateText } from "src/store/features/template1Slice";
 import { ImageType } from "types";
 
 /** @package */

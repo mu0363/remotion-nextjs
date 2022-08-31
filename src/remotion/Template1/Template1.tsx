@@ -3,7 +3,7 @@ import { T1S1 } from "./T1S1";
 import { T1S2 } from "./T1S2";
 import { T1S3 } from "./T1S3";
 import type { FC } from "react";
-import { SceneState } from "src/store/features/template1Slice";
+import { SceneState } from "src/libs/store/features/template1Slice";
 
 /** @package */
 export const Template1: FC<SceneState[]> = (props) => {
