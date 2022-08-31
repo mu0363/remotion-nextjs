@@ -1,8 +1,8 @@
 // FIXME:
 /* eslint-disable no-console */
-import { Box, MediaQuery, Stack } from "@mantine/core";
+import { Box, Button, Drawer, Group, MediaQuery, Stack } from "@mantine/core";
 import { Player as RemotionPlayer, PlayerRef } from "@remotion/player";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import type { CustomNextPage } from "next";
 import { Form } from "src/components/Form";
@@ -14,6 +14,7 @@ import { selectAllActiveScene } from "src/store/features/activeSceneSlice";
 import { selectAllTemplate1Data } from "src/store/features/template1Slice";
 
 const Player: CustomNextPage = () => {
+  const [isOpened, setIsOpened] = useState(false);
   const template1Data = useSelector(selectAllTemplate1Data);
   const activeSceneData = useSelector(selectAllActiveScene);
   const playerRef = useRef<PlayerRef>(null);
@@ -33,8 +34,8 @@ const Player: CustomNextPage = () => {
   }, [activeSceneData]);
 
   return (
-    <Box>
-      <div className="mx-0 pt-0 md:mx-10 md:pt-10">
+    <div>
+      <div className="sticky top-0 mx-0 pt-10 md:mx-10 md:pt-10">
         <RemotionPlayer
           ref={playerRef}
           component={Template1}
@@ -58,12 +59,34 @@ const Player: CustomNextPage = () => {
           ))}
         </Box>
       </Stack>
+      {/* <Modal
+        centered
+        overlayOpacity={0}
+        transition="fade"
+        transitionDuration={300}
+        opened={isOpened}
+        onClose={() => setIsOpened(false)}
+      >
+        <Form />
+      </Modal> */}
+      <Drawer
+        opened={isOpened}
+        onClose={() => setIsOpened(false)}
+        overlayOpacity={0}
+        padding="xl"
+        size="sm"
+        position="bottom"
+        withCloseButton={false}
+      >
+        <Form />
+      </Drawer>
+      <Group position="center">
+        <Button onClick={() => setIsOpened(true)}>Open Modal</Button>
+      </Group>
       <MediaQuery largerThan="md" styles={{ display: "none" }}>
-        <Box m={20}>
-          <Form />
-        </Box>
+        <Box m={20}>{/* <Form /> */}</Box>
       </MediaQuery>
-    </Box>
+    </div>
   );
 };
 
