@@ -2,6 +2,9 @@
   "name": "remotion-nextjs",
   "version": "0.1.0",
   "private": true,
+  "sideEffects": [
+    "*.css"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -36,6 +39,8 @@
     "firebase-admin": "^11.0.1",
     "formidable": "^2.0.1",
     "next": "12.2.5",
+    "postcss-loader": "^7.0.1",
+    "postcss-preset-env": "^7.8.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-error-boundary": "^3.1.4",
