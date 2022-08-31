@@ -1,9 +1,9 @@
 // FIXME:
 /* eslint-disable no-console */
-import { Badge, Stack, Textarea } from "@mantine/core";
+import { Badge, FileInput, Stack, Textarea } from "@mantine/core";
+import { IconUpload } from "@tabler/icons";
 import { ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ImageDropzone } from "../ImageDropzone";
 import { storageUrl, USER_ID } from "src/libs/const/remotion-config";
 import { useCurrentData } from "src/libs/hooks/useCurrentData";
 import { supabaseClient } from "src/libs/supabase/supabaseClient";
@@ -23,13 +23,13 @@ export const Form = () => {
     dispatch(updateText({ scene_number, id: scene_number, text: e.target.value }));
   };
 
-  const handleImage = (files: File[] | null) => {
-    if (!files) return;
-    const filename = files[0].name;
-    const objectUrl = window.URL.createObjectURL(files[0]);
+  const handleImage = (file: File | null) => {
+    if (!file) return;
+    const filename = file.name;
+    const objectUrl = window.URL.createObjectURL(file);
     dispatch(updateImage({ scene_number, id: scene_number, image_url: objectUrl }));
     (async () => {
-      const { data, error } = await supabaseClient.storage.from("images").upload(`${USER_ID}/${filename}`, files[0]);
+      const { data, error } = await supabaseClient.storage.from("images").upload(`${USER_ID}/${filename}`, file);
       if (error) {
         throw new Error("something went wrong");
       }
@@ -50,7 +50,7 @@ export const Form = () => {
     <Stack>
       <Badge>{`シーン${id}`}</Badge>
       <Textarea onChange={handleChange} size="lg" value={text} />
-      <ImageDropzone handleImage={handleImage} />
+      <FileInput label="Your resume" placeholder="Your resume" icon={<IconUpload size={14} />} onChange={handleImage} />
     </Stack>
   );
 };
