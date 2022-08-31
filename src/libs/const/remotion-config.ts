@@ -15,7 +15,6 @@ export const defaultProps: SceneState[] = [
     image_number: 1,
     image_url: `${storageUrl}/images/girl.png`,
     text: "最初の文字です",
-    active: true,
   },
   {
     id: 2,
@@ -24,7 +23,6 @@ export const defaultProps: SceneState[] = [
     image_number: 1,
     image_url: `${storageUrl}/images/the_cat.png`,
     text: "2番目の文字です",
-    active: false,
   },
   {
     id: 3,
@@ -33,7 +31,6 @@ export const defaultProps: SceneState[] = [
     image_number: 1,
     image_url: `${storageUrl}/images/sena_robot.webp`,
     text: "最後の文字です。\n改行もできます",
-    active: false,
   },
 ];
 

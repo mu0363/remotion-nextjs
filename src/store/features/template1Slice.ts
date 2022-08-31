@@ -20,7 +20,6 @@ export type SceneState = {
   image_number: number;
   image_url: string;
   text: string;
-  active: boolean;
 };
 export type Template1State = SceneState[];
 

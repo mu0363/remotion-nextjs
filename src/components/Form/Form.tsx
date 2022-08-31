@@ -5,20 +5,19 @@ import { ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ImageDropzone } from "../ImageDropzone";
 import { storageUrl, USER_ID } from "src/libs/const/remotion-config";
+import { useCurrentData } from "src/libs/hooks/useCurrentData";
 import { supabaseClient } from "src/libs/supabase/supabaseClient";
 import { selectAllActiveScene } from "src/store/features/activeSceneSlice";
-import { selectAllTemplate1Data, updateImage, updateText } from "src/store/features/template1Slice";
+import { updateImage, updateText } from "src/store/features/template1Slice";
 import { ImageType } from "types";
 
 /** @package */
 export const Form = () => {
   const dispatch = useDispatch();
-  const template1Data = useSelector(selectAllTemplate1Data);
   const activeSceneData = useSelector(selectAllActiveScene);
-  const { scene_number, template_number } = activeSceneData;
-  // FIXME: 謎の挙動
-  const sceneContents = template1Data.filter((data) => data.id === scene_number);
-  const content = sceneContents.filter((sceneContent) => sceneContent.id === scene_number);
+  const { scene_number } = activeSceneData;
+  const currentData = useCurrentData(scene_number);
+  const { id, template_number, image_number, text } = currentData;
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     dispatch(updateText({ scene_number, id: scene_number, text: e.target.value }));
@@ -38,8 +37,8 @@ export const Form = () => {
         {
           user_id: USER_ID,
           template_number,
-          scene_number: sceneContents[0].scene_number,
-          image_number: 1,
+          scene_number,
+          image_number,
           image_url: `${storageUrl}/images/${data.path}`,
         },
       ]);
@@ -49,8 +48,8 @@ export const Form = () => {
 
   return (
     <Stack>
-      <Badge>{`シーン${content[0].id}`}</Badge>
-      <Textarea onChange={handleChange} size="lg" value={content[0].text} />
+      <Badge>{`シーン${id}`}</Badge>
+      <Textarea onChange={handleChange} size="lg" value={text} />
       <ImageDropzone handleImage={handleImage} />
     </Stack>
   );
