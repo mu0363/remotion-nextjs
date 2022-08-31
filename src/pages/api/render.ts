@@ -2,8 +2,9 @@
 /* eslint-disable no-console */
 import { getFunctions, renderMediaOnLambda } from "@remotion/lambda";
 import { NextApiRequest, NextApiResponse } from "next";
+import { v4 as uuidv4 } from "uuid";
 import { REGION, COMP_NAME, SITE_ID } from "src/libs/const";
-import { adminDB, RenderInfo, renderInfoConverter } from "src/libs/firebase/server";
+import { RenderInfo } from "src/libs/firebase/server";
 import { SceneState } from "src/store/features/template1Slice";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -12,10 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     // FIXME: アサーション削除
     const data = req.body as string;
-
     const template1Data = JSON.parse(data) as SceneState[];
-    console.log(template1Data);
-
     const [first] = await getFunctions({
       compatibleOnly: true,
       region: REGION,
@@ -33,21 +31,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       framesPerLambda: 80,
       privacy: "public",
     });
-
-    const docRef = adminDB
-      .collection(process.env.FIREBASE_COLLECTION_NAME as string)
-      .withConverter(renderInfoConverter)
-      .doc();
     const currentTime = new Date();
+    const id = uuidv4();
     const newInfo: RenderInfo = {
-      id: docRef.id,
+      id,
       renderId,
       bucketName,
       functionName: first.functionName,
       region: REGION,
       createdAt: currentTime.toISOString(),
     };
-    await docRef.set(newInfo);
 
     res.status(200).json(newInfo);
   } catch (error) {
