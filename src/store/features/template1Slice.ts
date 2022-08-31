@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { defaultProps } from "../../libs/const";
 import { RootState } from "../store";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { defaultProps } from "src/libs/const";
 
 // FIXME: Mapを使いたい
 // export type PageState = { id: number; text: string; image: string };
