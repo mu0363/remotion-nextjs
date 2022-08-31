@@ -1,5 +1,4 @@
-import { Avatar } from "@mantine/core";
-import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
+import { Img, interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import type { FC } from "react";
 
 /* @package **/
@@ -23,16 +22,12 @@ export const T1S3_Image1: FC<{ image: string }> = ({ image }) => {
 
   return (
     <div>
-      <Avatar
+      <Img
         src={image}
-        radius="xl"
         alt="avatar"
+        className="h-80 w-80 rounded-full object-cover"
         style={{
           transform: `translateY(${wave2}px)`,
-          width: 300,
-          height: 300,
-          borderRadius: "50%",
-          objectFit: "cover",
         }}
       />
     </div>
