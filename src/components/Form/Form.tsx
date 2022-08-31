@@ -14,10 +14,10 @@ import { ImageType } from "types";
 export const Form = () => {
   const dispatch = useDispatch();
   const template1Data = useSelector(selectAllTemplate1Data);
-  const editFrameData = useSelector(selectAllActiveScene);
-  const { scene_number, template_number } = editFrameData;
+  const activeSceneData = useSelector(selectAllActiveScene);
+  const { scene_number, template_number } = activeSceneData;
   // FIXME: 謎の挙動
-  const sceneContents = template1Data.filter((data) => data.scene_number === scene_number);
+  const sceneContents = template1Data.filter((data) => data.id === scene_number);
   const content = sceneContents.filter((sceneContent) => sceneContent.id === scene_number);
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {

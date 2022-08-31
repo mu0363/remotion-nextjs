@@ -30,17 +30,13 @@ export const template1Slice = createSlice({
   reducers: {
     updateText: (states, action: PayloadAction<Pick<SceneState, "scene_number" | "id" | "text">>) => {
       const pageContents = states.filter((state) => (state.scene_number = action.payload.scene_number));
-      const content = pageContents.find((pageContent) => pageContent.id === action.payload.id);
-      if (content) {
-        content.text = action.payload.text;
-      }
+      const content = pageContents.filter((pageContent) => pageContent.id === action.payload.id);
+      content[0].text = action.payload.text;
     },
     updateImage: (states, action: PayloadAction<Pick<SceneState, "scene_number" | "id" | "image_url">>) => {
       const pageContents = states.filter((state) => (state.scene_number = action.payload.scene_number));
-      const content = pageContents.find((pageContent) => pageContent.id === action.payload.id);
-      if (content) {
-        content.image_url = action.payload.image_url;
-      }
+      const content = pageContents.filter((pageContent) => pageContent.id === action.payload.id);
+      content[0].image_url = action.payload.image_url;
     },
   },
 });
