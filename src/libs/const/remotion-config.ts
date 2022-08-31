@@ -2,7 +2,7 @@ import { SceneState } from "src/store/features/template1Slice";
 import { TimelineSceneType } from "types";
 
 export const COMP_NAME = "MyComp";
-export const SITE_ID = "https://remotionlambda-47aic418sn.s3.us-east-1.amazonaws.com/sites/59yr9w42q3/index.html";
+export const SITE_ID = "https://remotionlambda-47aic418sn.s3.us-east-1.amazonaws.com/sites/g327gwy0zt/index.html";
 export const REGION = "us-east-1";
 export const TEMPLATE1_DURATION = 360;
 export const storageUrl = "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public";
