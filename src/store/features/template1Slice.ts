@@ -21,7 +21,6 @@ export type SceneState = {
   image_url: string;
   text: string;
 };
-export type Template1State = SceneState[];
 
 export const template1Slice = createSlice({
   name: "template1",
