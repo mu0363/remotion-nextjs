@@ -2,10 +2,10 @@ import { T1S1 } from "./T1S1";
 import { T1S2 } from "./T1S2";
 import { T1S3 } from "./T1S3";
 import type { FC } from "react";
-import { Template1State } from "src/store/features/template1Slice";
+import { SceneState } from "src/store/features/template1Slice";
 
 /** @package */
-export const Template1: FC<Template1State> = (props) => {
+export const Template1: FC<SceneState[]> = (props) => {
   // const dispatch = useDispatch();
   // const frame = useCurrentFrame();
 
