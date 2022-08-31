@@ -1,14 +1,10 @@
 // FIXME:
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable no-console */
 import { getFunctions, renderMediaOnLambda } from "@remotion/lambda";
-// import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { NextApiRequest, NextApiResponse } from "next";
 import { REGION, COMP_NAME, SITE_ID } from "src/libs/const";
 import { adminDB, RenderInfo, renderInfoConverter } from "src/libs/firebase/server";
-import { Template1State } from "src/store/features/template1Slice";
+import { SceneState } from "src/store/features/template1Slice";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") return;
@@ -17,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // FIXME: アサーション削除
     const data = req.body as string;
 
-    const template1Data = JSON.parse(data) as Template1State;
+    const template1Data = JSON.parse(data) as SceneState[];
     console.log(template1Data);
 
     const [first] = await getFunctions({

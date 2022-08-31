@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
+import activeSceneReducer from "./features/activeSceneSlice";
 import currentFrameReducer from "./features/currentFrameSlice";
-import currentPageReducer from "./features/currentPageSlice";
 import template1Reducer from "./features/template1Slice";
 
 export const store = configureStore({
   reducer: {
     template1: template1Reducer,
-    currentPage: currentPageReducer,
+    activeScene: activeSceneReducer,
     currentFrame: currentFrameReducer,
   },
 });

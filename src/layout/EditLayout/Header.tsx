@@ -14,15 +14,13 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import { NextLink } from "@mantine/next";
 import { IconCloudStorm, IconArrowLeft } from "@tabler/icons";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { useCallback, useEffect, useState, MouseEvent } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import type { FC } from "react";
 import { HEADER_HEIGHT } from "src/libs/const";
-import { storage } from "src/libs/firebase/front";
 import { RenderInfo } from "src/libs/firebase/server";
 import { RenderProgressType } from "src/pages/api/progress";
-import { selectAllTemplate1Data, updateImage } from "src/store/features/template1Slice";
+import { selectAllTemplate1Data } from "src/store/features/template1Slice";
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -46,7 +44,6 @@ export const Header: FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [renderInfo, setRenderInfo] = useState<RenderInfo>();
   const [renderStatus, setRenderStatus] = useState<RenderProgressType>();
-  const dispatch = useDispatch();
   const template1Data = useSelector(selectAllTemplate1Data);
 
   const timeout = (ms: number) => {
@@ -90,27 +87,6 @@ export const Header: FC = () => {
 
   // 書き出し開始
   const renderStart = async () => {
-    await Promise.all(
-      template1Data.map(async (data) => {
-        const res = await fetch(data.image);
-        const blob = await res.blob();
-        const storageRed = ref(storage, `/images/image-${data.id}`);
-        const uploadTask = uploadBytesResumable(storageRed, blob);
-        uploadTask.on(
-          "state_changed",
-          (snapshot) => {
-            const prog = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-          },
-          (err) => console.log(err)
-        );
-        const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
-        dispatch(updateImage({ page: data.page, id: data.id, image: downloadUrl }));
-        console.log(downloadUrl);
-        return downloadUrl;
-      })
-    );
-
-    console.log(template1Data);
     const renderStartRes = await fetch("/api/render", {
       method: "POST",
       body: JSON.stringify(template1Data),

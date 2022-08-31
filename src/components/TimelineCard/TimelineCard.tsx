@@ -3,52 +3,48 @@
 import { Tooltip, Card, Image } from "@mantine/core";
 import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectAllCurrentPage, updateCurrentPage } from "src/store/features/currentPageSlice";
-import { selectAllTemplate1Data } from "src/store/features/template1Slice";
+import { thumbnailStartFrame } from "src/libs/const";
+import { selectAllActiveScene, updateActiveScene } from "src/store/features/activeSceneSlice";
+import { TimelineSceneType } from "types";
 
-const frameCollection = [
-  { id: 1, from: 0 + 60 },
-  { id: 2, from: 120 + 60 },
-  { id: 3, from: 240 + 60 },
-];
+type Props = {
+  card: TimelineSceneType;
+};
 
-export const TimelineCard: FC<{ currentId: number }> = ({ currentId }) => {
+export const TimelineCard: FC<Props> = ({ card }) => {
+  const { id, thumbnail } = card;
   const dispatch = useDispatch();
-  const template1Data = useSelector(selectAllTemplate1Data);
-  const currentPageData = useSelector(selectAllCurrentPage);
-  const { template, page } = currentPageData;
-
-  const getRandomInt = (max: number) => {
-    return Math.floor(Math.random() * max);
-  };
+  const activeSceneData = useSelector(selectAllActiveScene);
+  const { template_number } = activeSceneData;
 
   const handleClick = () => {
-    // FIXME: findの方がよい?
-    const startFrame = frameCollection.find((data) => data.id === currentId);
+    const startFrame = thumbnailStartFrame.find((data) => data.id === id);
     if (startFrame) {
-      dispatch(updateCurrentPage({ template, page, id: currentId, from: startFrame.from }));
+      dispatch(updateActiveScene({ template_number, scene_number: id, from: startFrame.from }));
     }
   };
 
   return (
-    <Tooltip label={`シーン${currentId}`} color="#1f2428" withArrow transition="fade" transitionDuration={300}>
-      <Card
-        shadow="sm"
-        p="lg"
-        mr={10}
-        mt={32}
-        mb={20}
-        radius="md"
-        sx={{
-          width: 130,
-          flexShrink: 0,
-        }}
-        onClick={handleClick}
-      >
-        <Card.Section>
-          <Image src={`https://source.unsplash.com/random/320x180`} height={64} alt="Norway" />
-        </Card.Section>
-      </Card>
-    </Tooltip>
+    <div className="cursor-pointer">
+      <Tooltip label={`シーン${id}`} color="#1f2428" withArrow transition="fade" transitionDuration={300}>
+        <Card
+          shadow="sm"
+          p="lg"
+          mr={10}
+          mt={32}
+          mb={20}
+          radius="md"
+          sx={{
+            width: 130,
+            flexShrink: 0,
+          }}
+          onClick={handleClick}
+        >
+          <Card.Section>
+            <Image src={thumbnail} height={64} alt="scene-thumbnail" />
+          </Card.Section>
+        </Card>
+      </Tooltip>
+    </div>
   );
 };

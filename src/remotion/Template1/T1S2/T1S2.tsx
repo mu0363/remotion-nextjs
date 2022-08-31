@@ -3,11 +3,15 @@ import { Subtitle } from "./Subtitle";
 import { T1S2_Image1 } from "./T1S2_Image1";
 import { T1S2_Text1 } from "./T1S2_Text1";
 import type { FC } from "react";
-import { PageState } from "src/store/features/template1Slice";
+import { SceneState } from "src/store/features/template1Slice";
+
+type Props = {
+  sceneState: SceneState;
+};
 
 /* @package **/
-export const T1S2: FC<{ props: PageState }> = ({ props }) => {
-  const { text, image } = props;
+export const T1S2: FC<Props> = ({ sceneState }) => {
+  const { text, image_url } = sceneState;
 
   return (
     <Sequence from={120} durationInFrames={120}>
@@ -18,7 +22,7 @@ export const T1S2: FC<{ props: PageState }> = ({ props }) => {
           justifyContent: "center",
         }}
       >
-        <T1S2_Image1 image={image} />
+        <T1S2_Image1 image={image_url} />
         <T1S2_Text1 text={text} />
         <Subtitle />
       </AbsoluteFill>

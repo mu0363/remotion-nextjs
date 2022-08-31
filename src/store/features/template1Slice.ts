@@ -1,15 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { defaultProps } from "../../libs/const";
 import { RootState } from "../store";
 import type { PayloadAction } from "@reduxjs/toolkit";
-
-export type PageState = { page: number; id: number; text: string; image: string };
-export type Template1State = PageState[];
-
-const initialState = [
-  { page: 1, id: 1, text: "First Text from Redux", image: "https://source.unsplash.com/random/200x200" },
-  { page: 1, id: 2, text: "Second Text from Redux", image: "https://source.unsplash.com/random/200x200" },
-  { page: 1, id: 3, text: "Third Text from Redux", image: "https://source.unsplash.com/random/200x200" },
-];
 
 // FIXME: Mapを使いたい
 // export type PageState = { id: number; text: string; image: string };
@@ -21,23 +13,28 @@ const initialState = [
 // ]);
 // const initialState = pagesMap;
 
+export type SceneState = {
+  id: number;
+  template_number: number;
+  scene_number: number;
+  image_number: number;
+  image_url: string;
+  text: string;
+};
+
 export const template1Slice = createSlice({
   name: "template1",
-  initialState,
+  initialState: defaultProps,
   reducers: {
-    updateText: (states, action: PayloadAction<Pick<PageState, "page" | "id" | "text">>) => {
-      const pageContents = states.filter((state) => (state.page = action.payload.page));
-      const content = pageContents.find((pageContent) => pageContent.id === action.payload.id);
-      if (content) {
-        content.text = action.payload.text;
-      }
+    updateText: (states, action: PayloadAction<Pick<SceneState, "scene_number" | "id" | "text">>) => {
+      const pageContents = states.filter((state) => (state.scene_number = action.payload.scene_number));
+      const content = pageContents.filter((pageContent) => pageContent.id === action.payload.id);
+      content[0].text = action.payload.text;
     },
-    updateImage: (states, action: PayloadAction<Pick<PageState, "page" | "id" | "image">>) => {
-      const pageContents = states.filter((state) => (state.page = action.payload.page));
-      const content = pageContents.find((pageContent) => pageContent.id === action.payload.id);
-      if (content) {
-        content.image = action.payload.image;
-      }
+    updateImage: (states, action: PayloadAction<Pick<SceneState, "scene_number" | "id" | "image_url">>) => {
+      const pageContents = states.filter((state) => (state.scene_number = action.payload.scene_number));
+      const content = pageContents.filter((pageContent) => pageContent.id === action.payload.id);
+      content[0].image_url = action.payload.image_url;
     },
   },
 });
