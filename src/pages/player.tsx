@@ -130,10 +130,10 @@ const Player: CustomNextPage = () => {
       </div>
 
       {/** 入力フォーム */}
+
       <div className="mx-5 pt-5 md:hidden">
         <Form />
       </div>
-
       {/** 書き出しボタン */}
       <div className="mx-5 mt-10 md:mx-10">
         {renderStatus?.type === "success" && (

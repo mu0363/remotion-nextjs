@@ -1,8 +1,9 @@
 // FIXME:
 /* eslint-disable no-console */
-import { Badge, FileInput, Stack, Textarea } from "@mantine/core";
-import { IconUpload } from "@tabler/icons";
+import { Badge, Stack, Textarea, Tooltip } from "@mantine/core";
+import { IconCamera } from "@tabler/icons";
 import { useAtomValue } from "jotai";
+import Image from "next/image";
 import { ChangeEvent } from "react";
 import { useDispatch } from "react-redux";
 import { activeSceneAtom } from "src/libs/atom/atom";
@@ -17,14 +18,15 @@ export const Form = () => {
   const dispatch = useDispatch();
   const { scene_number } = useAtomValue(activeSceneAtom);
   const currentData = useCurrentData(scene_number);
-  const { id, template_number, image_number, text } = currentData;
+  const { id, template_number, image_number, text, image_url } = currentData;
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     dispatch(updateText({ scene_number, id: scene_number, text: e.target.value }));
   };
 
-  const handleImage = (file: File | null) => {
-    if (!file) return;
+  const handleImage = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+    const file = e.target.files[0];
     const filename = file.name;
     const objectUrl = window.URL.createObjectURL(file);
     dispatch(updateImage({ scene_number, id: scene_number, image_url: objectUrl }));
@@ -50,7 +52,24 @@ export const Form = () => {
     <Stack>
       <Badge className="w-20">{`シーン${id}`}</Badge>
       <Textarea onChange={handleChange} size="lg" value={text} />
-      <FileInput label="Your resume" placeholder="Your resume" icon={<IconUpload size={14} />} onChange={handleImage} />
+      <Tooltip label="画像を変更" color="blue" withArrow>
+        <div className="flex items-center justify-center">
+          <label className="inline-block cursor-pointer">
+            <div className="relative h-16 w-32">
+              <IconCamera className="absolute top-0 left-0 z-10 h-16 w-32 rounded-xl p-3 text-gray-500 opacity-0 transition duration-200 ease-in-out hover:bg-gray-200 hover:opacity-70" />
+              <Image
+                width={160}
+                height={80}
+                src={image_url}
+                objectFit="cover"
+                alt="current-image"
+                className="rounded-xl"
+              />
+            </div>
+            <input type="file" name="avatar-upload" accept="image/*" className="hidden" onChange={handleImage} />
+          </label>
+        </div>
+      </Tooltip>
     </Stack>
   );
 };
