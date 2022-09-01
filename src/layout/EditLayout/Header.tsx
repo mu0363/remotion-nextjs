@@ -2,6 +2,7 @@
 /* eslint-disable no-console */
 import { PlayIcon, ChevronLeftIcon } from "@heroicons/react/24/solid";
 import { Button, Progress, Container, createStyles, Header as MantineHeader, Modal, Text } from "@mantine/core";
+import { NextLink } from "@mantine/next";
 import { Player as RemotionPlayer, PlayerRef } from "@remotion/player";
 import { IconCloudStorm, IconDownload } from "@tabler/icons";
 import { useAtomValue } from "jotai";
@@ -157,15 +158,15 @@ export const Header: FC = () => {
               <Progress value={renderStatus?.percent ? renderStatus?.percent * 100 : 0} />
             )}
             {renderStatus?.type === "success" ? (
-              <Button
-                type="button"
-                leftIcon={<IconDownload size={18} />}
-                loading={isLoading}
-                onClick={handleSubmit}
-                className="mt-3 w-full rounded-full bg-red-400 hover:bg-red-500"
-              >
-                ダウンロード
-              </Button>
+              <NextLink href={renderStatus.url} target="_blank">
+                <Button
+                  component="a"
+                  leftIcon={<IconDownload size={18} />}
+                  className="mt-3 w-full rounded-full bg-red-400 hover:bg-red-500"
+                >
+                  ダウンロード
+                </Button>
+              </NextLink>
             ) : (
               <Button
                 type="button"
