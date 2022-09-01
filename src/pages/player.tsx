@@ -33,44 +33,58 @@ const Player: CustomNextPage = () => {
   }, [activeSceneData]);
 
   return (
-    <div className="fixed w-full md:static">
-      <div className="mx-0 pt-0 md:mx-10 md:pt-10">
-        <RemotionPlayer
-          ref={playerRef}
-          component={Template1}
-          inputProps={template1Data}
-          durationInFrames={TEMPLATE1_DURATION}
-          compositionWidth={1920}
-          compositionHeight={1080}
-          style={{ width: "100%" }}
-          fps={30}
-          controls={false}
-          autoPlay
-          loop
-        />
-      </div>
-      {/** 再生バー */}
-      <div className="relative flex items-center justify-center md:hidden">
-        <div className="absolute z-20 mt-11 rounded-full bg-gray-600 py-9 px-0.5" />
-      </div>
-      <div className="mx-0 md:mx-5">
-        <div className="relative flex items-center">
-          <PlayButton playerRef={playerRef} activeSceneData={activeSceneData} />
-          <div className="flex overflow-x-auto pl-48 md:pl-20">
-            {timelineScenes.map((card) => (
-              <div key={card.id}>
-                <TimelineCard card={card} playerRef={playerRef} />
-              </div>
-            ))}
+    <div>
+      <style>
+        {`@keyframes toLeft {
+        0% {transform: translateX(0%);}
+        100% {transform: translateX(-100%);}
+      }`}
+      </style>
+      <div className="fixed w-full md:static">
+        <div className="mx-0 pt-0 md:mx-10 md:pt-10">
+          <RemotionPlayer
+            ref={playerRef}
+            component={Template1}
+            inputProps={template1Data}
+            durationInFrames={TEMPLATE1_DURATION}
+            compositionWidth={1920}
+            compositionHeight={1080}
+            style={{ width: "100%" }}
+            fps={30}
+            controls={false}
+            autoPlay
+            loop
+          />
+        </div>
+        {/** 再生バー */}
+        <div className="relative flex items-center justify-center md:hidden">
+          <div className="absolute z-20 mt-11 rounded-full bg-gray-600 py-9 px-0.5" />
+        </div>
+        <div className="mx-0 md:mx-5">
+          <div className="relative flex items-center">
+            <PlayButton playerRef={playerRef} activeSceneData={activeSceneData} />
+            <div
+              className="flex overflow-x-auto scroll-smooth pl-48 md:pl-20"
+              style={{
+                animation: `toLeft linear 5s infinite`,
+                // animation: `toLeft 3s infinite`,
+              }}
+            >
+              {timelineScenes.map((card) => (
+                <div key={card.id}>
+                  <TimelineCard card={card} playerRef={playerRef} />
+                </div>
+              ))}
 
-            <div className="px-24 md:px-0" />
+              <div className="px-24 md:px-0" />
+            </div>
           </div>
         </div>
-      </div>
 
-      {/** 入力フォーム */}
-      <div className="mx-5 pt-5 md:hidden">
-        <Form />
+        {/** 入力フォーム */}
+        <div className="mx-5 pt-5 md:hidden">
+          <Form />
+        </div>
       </div>
     </div>
   );
