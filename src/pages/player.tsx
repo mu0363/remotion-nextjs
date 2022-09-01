@@ -34,12 +34,6 @@ const Player: CustomNextPage = () => {
 
   return (
     <div>
-      <style>
-        {`@keyframes toLeft {
-        0% {transform: translateX(0%);}
-        100% {transform: translateX(-100%);}
-      }`}
-      </style>
       <div className="fixed w-full md:static">
         <div className="mx-0 pt-0 md:mx-10 md:pt-10">
           <RemotionPlayer
@@ -56,27 +50,17 @@ const Player: CustomNextPage = () => {
             loop
           />
         </div>
-        {/** 再生バー */}
-        <div className="relative flex items-center justify-center md:hidden">
-          <div className="absolute z-20 mt-11 rounded-full bg-gray-600 py-9 px-0.5" />
-        </div>
         <div className="mx-0 md:mx-5">
           <div className="relative flex items-center">
             <PlayButton playerRef={playerRef} activeSceneData={activeSceneData} />
-            <div
-              className="flex overflow-x-auto scroll-smooth pl-48 md:pl-20"
-              style={{
-                animation: `toLeft linear 5s infinite`,
-                // animation: `toLeft 3s infinite`,
-              }}
-            >
+            <div className="flex overflow-x-auto pl-24 md:pl-20">
               {timelineScenes.map((card) => (
                 <div key={card.id}>
                   <TimelineCard card={card} playerRef={playerRef} />
                 </div>
               ))}
 
-              <div className="px-24 md:px-0" />
+              <div className="px-16 md:px-0" />
             </div>
           </div>
         </div>
