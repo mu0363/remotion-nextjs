@@ -1,6 +1,6 @@
 // FIXME:
 /* eslint-disable no-console */
-import { ActionIcon, Box } from "@mantine/core";
+import { ActionIcon } from "@mantine/core";
 import { Player as RemotionPlayer, PlayerRef } from "@remotion/player";
 import { IconPlayerPlay, IconPlayerPause } from "@tabler/icons";
 import { useAtom, useAtomValue } from "jotai";
@@ -11,15 +11,18 @@ import { Form } from "src/components/Form";
 import { TimelineCard } from "src/components/TimelineCard";
 import { EditLayout } from "src/layout/EditLayout";
 import { currentFrameAtom } from "src/libs/atom";
-import { isPlayingAtom } from "src/libs/atom/atom";
+import { activeSceneAtom, isPlayingAtom } from "src/libs/atom/atom";
 import { TEMPLATE1_DURATION, timelineScenes } from "src/libs/const/remotion-config";
-import { ActiveSceneSlice, selectAllActiveScene } from "src/libs/store/features/activeSceneSlice";
+import { ActiveSceneSlice } from "src/libs/store/features/activeSceneSlice";
 import { selectAllTemplate1Data } from "src/libs/store/features/template1Slice";
 import { Template1 } from "src/remotion/Template1";
 
+// FIXME: スクロール禁止(useEffect内に実装する)
+// document.body.style.overflow = "hidden";
+
 const Player: CustomNextPage = () => {
   const template1Data = useSelector(selectAllTemplate1Data);
-  const activeSceneData = useSelector(selectAllActiveScene);
+  const activeSceneData = useAtomValue(activeSceneAtom);
   const playerRef = useRef<PlayerRef>(null);
 
   useEffect(() => {
@@ -49,13 +52,13 @@ const Player: CustomNextPage = () => {
       <div className="mx-0 md:mx-5">
         <div className="flex items-center">
           <PlayButton playerRef={playerRef} activeSceneData={activeSceneData} />
-          <Box sx={{ display: "flex", overflowX: "scroll" }}>
+          <div className="flex overflow-x-auto">
             {timelineScenes.map((card) => (
               <div key={card.id}>
-                <TimelineCard card={card} />
+                <TimelineCard card={card} playerRef={playerRef} />
               </div>
             ))}
-          </Box>
+          </div>
         </div>
       </div>
 

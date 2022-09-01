@@ -2,11 +2,12 @@
 /* eslint-disable no-console */
 import { Badge, FileInput, Stack, Textarea } from "@mantine/core";
 import { IconUpload } from "@tabler/icons";
+import { useAtomValue } from "jotai";
 import { ChangeEvent } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { activeSceneAtom } from "src/libs/atom/atom";
 import { storageUrl, USER_ID } from "src/libs/const/remotion-config";
 import { useCurrentData } from "src/libs/hooks/useCurrentData";
-import { selectAllActiveScene } from "src/libs/store/features/activeSceneSlice";
 import { updateImage, updateText } from "src/libs/store/features/template1Slice";
 import { supabaseClient } from "src/libs/supabase/supabaseClient";
 import { ImageType } from "types";
@@ -14,8 +15,7 @@ import { ImageType } from "types";
 /** @package */
 export const Form = () => {
   const dispatch = useDispatch();
-  const activeSceneData = useSelector(selectAllActiveScene);
-  const { scene_number } = activeSceneData;
+  const { scene_number } = useAtomValue(activeSceneAtom);
   const currentData = useCurrentData(scene_number);
   const { id, template_number, image_number, text } = currentData;
 
