@@ -7,6 +7,7 @@ import { ASIDE_WIDTH, HEADER_HEIGHT } from "src/libs/const";
 
 const useStyles = createStyles((theme) => {
   return {
+    appShell: { body: { minHeight: "100vh" }, main: { padding: 0, backgroundColor: theme.colors.gray[1] } },
     container: {
       marginTop: HEADER_HEIGHT,
       marginRight: ASIDE_WIDTH,
@@ -24,14 +25,7 @@ export const EditLayout: CustomLayout = (page) => {
   const { classes } = useStyles();
 
   return (
-    <AppShell
-      styles={(theme) => ({
-        body: { minHeight: "100vh" },
-        main: { padding: 0, backgroundColor: theme.colors.gray[0] },
-      })}
-      header={<Header />}
-      aside={<ASide />}
-    >
+    <AppShell className={classes.appShell} header={<Header />} aside={<ASide />}>
       <div className={classes.container}>
         <LayoutErrorBoundary>{page}</LayoutErrorBoundary>
       </div>
