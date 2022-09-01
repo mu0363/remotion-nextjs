@@ -50,14 +50,16 @@ const Player: CustomNextPage = () => {
         />
       </div>
       <div className="mx-0 md:mx-5">
-        <div className="flex items-center">
+        <div className="relative flex items-center">
+          <div className="absolute z-20 bg-red-500 px-4"></div>
           <PlayButton playerRef={playerRef} activeSceneData={activeSceneData} />
-          <div className="flex overflow-x-auto">
+          <div className="flex overflow-x-auto px-48">
             {timelineScenes.map((card) => (
               <div key={card.id}>
                 <TimelineCard card={card} playerRef={playerRef} />
               </div>
             ))}
+            {/* <div className="bg-red-500 px-28" /> */}
           </div>
         </div>
       </div>
@@ -98,24 +100,26 @@ const PlayButton: FC<PlayButtonProps> = ({ playerRef, activeSceneData }) => {
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <ActionIcon
-        size="lg"
-        radius="xl"
-        variant="filled"
-        className="mx-5 bg-gray-50 shadow-md hover:bg-blue-50"
-        onClick={() => {
-          playerRef.current?.toggle();
-          setIsPlaying(!isPlaying);
-        }}
-      >
-        {isPlaying ? (
-          <IconPlayerPause className="text-blue-400" size={18} />
-        ) : (
-          <IconPlayerPlay className="text-blue-400" size={18} />
-        )}
-      </ActionIcon>
-      <p className="mx-5 mt-2 text-xs font-bold text-gray-600">{calculateTime(currentFrame)}</p>
+    <div className="absolute z-20">
+      <div className="flex flex-col items-center">
+        <ActionIcon
+          size="lg"
+          radius="xl"
+          variant="filled"
+          className="mx-5 bg-gray-50 shadow-md hover:bg-blue-50"
+          onClick={() => {
+            playerRef.current?.toggle();
+            setIsPlaying(!isPlaying);
+          }}
+        >
+          {isPlaying ? (
+            <IconPlayerPause className="text-blue-400" size={18} />
+          ) : (
+            <IconPlayerPlay className="text-blue-400" size={18} />
+          )}
+        </ActionIcon>
+        <p className="mx-5 mt-2 text-xs font-bold text-gray-600">{calculateTime(currentFrame)}</p>
+      </div>
     </div>
   );
 };
