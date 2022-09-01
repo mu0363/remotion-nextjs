@@ -45,7 +45,7 @@ const Player: CustomNextPage = () => {
             compositionHeight={1080}
             style={{ width: "100%" }}
             fps={30}
-            controls={false}
+            controls={true}
             autoPlay
             loop
           />

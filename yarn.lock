@@ -1890,6 +1890,13 @@
   dependencies:
     remotion "3.2.3"
 
+"@remotion/media-utils@^3.2.12":
+  version "3.2.12"
+  resolved "https://registry.yarnpkg.com/@remotion/media-utils/-/media-utils-3.2.12.tgz#de341a9182057713e4886f7adbc0b3836c2713c8"
+  integrity sha512-P+l8YMZ+P3T7ag1UHISj3Wc60g9mgdm1YKZ/rwVxhBOZhgOwN19fj2a97cftmO19pofmTDxBQC3LbgNaiXi9jA==
+  dependencies:
+    remotion "3.2.12"
+
 "@remotion/player@3.2.3":
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/@remotion/player/-/player-3.2.3.tgz#5b979a1c1fed1d6eb5d3a143b605553c976d21b4"
@@ -5239,6 +5246,11 @@ regexpp@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/regexpp/-/regexpp-3.2.0.tgz#0425a2768d8f23bad70ca4b90461fa2f1213e1b2"
   integrity sha512-pq2bWo9mVD43nbts2wGv17XLiNLya+GklZ8kaDLV2Z08gDCsGpnKn9BFMepvWuHCbyVvY7J5o5+BVvoQbmlJLg==
+
+remotion@3.2.12:
+  version "3.2.12"
+  resolved "https://registry.yarnpkg.com/remotion/-/remotion-3.2.12.tgz#24265486ce165c78c0ab6d8a1495c6154874d883"
+  integrity sha512-OVmalv6JFnc40eUXWJAM/FDPQ/MYEWHtfWlaaT/+ddWmbRTbhswGVO6WtubtWmsqwUJAmFg1go81josfupzMpw==
 
 remotion@3.2.3:
   version "3.2.3"
