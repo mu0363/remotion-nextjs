@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { selectAllTemplate1Data } from "src/store/features/template1Slice";
+import { selectAllTemplate1Data } from "../store/features/template1Slice";
 
 export const useCurrentData = (scene_number: number) => {
   const template1Data = useSelector(selectAllTemplate1Data);

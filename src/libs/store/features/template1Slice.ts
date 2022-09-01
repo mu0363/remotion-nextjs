@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { defaultProps } from "../../libs/const";
+import { defaultProps } from "../../const";
 import { RootState } from "../store";
 import type { PayloadAction } from "@reduxjs/toolkit";
 

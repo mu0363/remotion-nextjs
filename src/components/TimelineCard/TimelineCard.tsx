@@ -1,50 +1,52 @@
 // FIXME:
 /* eslint-disable no-console */
-import { Tooltip, Card, Image } from "@mantine/core";
-import { FC } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { Tooltip } from "@mantine/core";
+import { PlayerRef } from "@remotion/player";
+import { useAtom, useSetAtom } from "jotai";
+import Image from "next/image";
+import { FC, RefObject } from "react";
+import { activeSceneAtom, isPlayingAtom } from "src/libs/atom/atom";
 import { thumbnailStartFrame } from "src/libs/const";
-import { selectAllActiveScene, updateActiveScene } from "src/store/features/activeSceneSlice";
 import { TimelineSceneType } from "types";
 
 type Props = {
   card: TimelineSceneType;
+  playerRef: RefObject<PlayerRef>;
 };
 
-export const TimelineCard: FC<Props> = ({ card }) => {
+export const TimelineCard: FC<Props> = ({ card, playerRef }) => {
   const { id, thumbnail } = card;
-  const dispatch = useDispatch();
-  const activeSceneData = useSelector(selectAllActiveScene);
-  const { template_number } = activeSceneData;
+  const setIsPlaying = useSetAtom(isPlayingAtom);
+  const [activeSceneData, setActiveSceneData] = useAtom(activeSceneAtom);
 
   const handleClick = () => {
     const startFrame = thumbnailStartFrame.find((data) => data.id === id);
-    if (startFrame) {
-      dispatch(updateActiveScene({ template_number, scene_number: id, from: startFrame.from }));
+    if (playerRef.current && startFrame) {
+      setIsPlaying(false);
+      playerRef.current.pause();
+      setActiveSceneData((prev) => {
+        return { template_number: 1, scene_number: id, from: startFrame.from, toggle: !prev.toggle };
+      });
     }
   };
 
   return (
-    <div className="cursor-pointer">
-      <Tooltip label={`シーン${id}`} color="#1f2428" withArrow transition="fade" transitionDuration={300}>
-        <Card
-          shadow="sm"
-          p="lg"
-          mr={10}
-          mt={32}
-          mb={20}
-          radius="md"
-          sx={{
-            width: 130,
-            flexShrink: 0,
-          }}
+    <Tooltip label={`シーン${id}`} color="#1f2428" withArrow transition="fade" transitionDuration={300}>
+      <div
+        className={`my-3 mr-2 h-16 w-28 cursor-pointer rounded-2xl ${
+          activeSceneData.scene_number === id ? "border border-solid border-blue-300" : "border"
+        } `}
+      >
+        <Image
+          src={thumbnail}
+          width={213}
+          height={120}
+          objectFit="cover"
+          className="rounded-2xl"
+          alt="scene-thumbnail"
           onClick={handleClick}
-        >
-          <Card.Section>
-            <Image src={thumbnail} height={64} alt="scene-thumbnail" />
-          </Card.Section>
-        </Card>
-      </Tooltip>
-    </div>
+        />
+      </div>
+    </Tooltip>
   );
 };

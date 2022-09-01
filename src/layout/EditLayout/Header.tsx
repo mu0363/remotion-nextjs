@@ -1,32 +1,37 @@
 // FIXME:
 /* eslint-disable no-console */
-import {
-  Button,
-  Container,
-  createStyles,
-  Group,
-  Header as MantineHeader,
-  MediaQuery,
-  Progress,
-  Text,
-} from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import { NextLink } from "@mantine/next";
-import { IconCloudStorm, IconArrowLeft } from "@tabler/icons";
-import { useCallback, useEffect, useState, MouseEvent } from "react";
+import { PlayIcon, ChevronLeftIcon } from "@heroicons/react/24/solid";
+import { Button, Progress, Container, createStyles, Header as MantineHeader, Modal, Text } from "@mantine/core";
+import { Player as RemotionPlayer, PlayerRef } from "@remotion/player";
+import { IconCloudStorm, IconDownload } from "@tabler/icons";
+import { useAtomValue } from "jotai";
+import Link from "next/link";
+import { useCallback, useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
-import type { FC } from "react";
+import type { FC, MouseEvent } from "react";
+import type { RenderProgressType } from "src/pages/api/progress";
+import { activeSceneAtom } from "src/libs/atom/atom";
 import { HEADER_HEIGHT } from "src/libs/const";
-import { RenderProgressType } from "src/pages/api/progress";
-import { selectAllTemplate1Data } from "src/store/features/template1Slice";
+import { TEMPLATE1_DURATION } from "src/libs/const/remotion-config";
+import { selectAllTemplate1Data } from "src/libs/store/features/template1Slice";
+import { Template1 } from "src/remotion/Template1";
 import { RenderInfo } from "types";
 
 const useStyles = createStyles((theme) => ({
+  root: {
+    height: HEADER_HEIGHT,
+    [theme.fn.smallerThan("md")]: {
+      height: 40,
+    },
+  },
   inner: {
     height: HEADER_HEIGHT,
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
+    [theme.fn.smallerThan("md")]: {
+      height: 40,
+    },
   },
 
   burger: {
@@ -39,11 +44,22 @@ const useStyles = createStyles((theme) => ({
 /** @package */
 export const Header: FC = () => {
   const { classes } = useStyles();
-  const [isOpened, { toggle }] = useDisclosure(false);
+  const [isOpened, setIsOpened] = useState(false);
+  const playerRef = useRef<PlayerRef>(null);
+  const template1Data = useSelector(selectAllTemplate1Data);
+  const activeSceneData = useAtomValue(activeSceneAtom);
   const [isLoading, setIsLoading] = useState(false);
   const [renderInfo, setRenderInfo] = useState<RenderInfo>();
   const [renderStatus, setRenderStatus] = useState<RenderProgressType>();
-  const template1Data = useSelector(selectAllTemplate1Data);
+
+  useEffect(() => {
+    // スクロール禁止
+    document.body.style.overflow = "hidden";
+    if (playerRef.current) {
+      playerRef.current.pause();
+      playerRef.current.seekTo(activeSceneData.from);
+    }
+  }, [activeSceneData]);
 
   const timeout = (ms: number) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -107,35 +123,78 @@ export const Header: FC = () => {
   };
 
   return (
-    <MantineHeader height={HEADER_HEIGHT}>
+    <MantineHeader height={HEADER_HEIGHT} className={classes.root}>
       <Container className={classes.inner} fluid>
-        <Group>
-          <MediaQuery smallerThan="md" styles={{ display: "none" }}>
-            <Button component="a" href="/dashboard" leftIcon={<IconArrowLeft />} variant="subtle">
-              戻る
-            </Button>
-          </MediaQuery>
-        </Group>
-        <Group grow>
-          {renderStatus?.type === "success" && (
-            <NextLink href={renderStatus.url} target="_blank">
-              <Text sx={{ fontWeight: "bold" }}>🎉</Text>
-            </NextLink>
-          )}
-          <Progress value={renderStatus?.percent ? renderStatus?.percent * 100 : 0} />
-
-          <Button
-            type="button"
-            leftIcon={<IconCloudStorm size={18} />}
-            loading={isLoading}
-            radius="xl"
-            sx={{ height: 36, width: 250 }}
-            onClick={handleSubmit}
-          >
-            {isLoading ? "書き出し中" : "Render"}
-          </Button>
-        </Group>
+        <Link href="/dashboard">
+          <div className="flex items-center space-x-1 hover:cursor-pointer">
+            <ChevronLeftIcon className="ml-1 h-5 text-blue-500 md:ml-5 md:h-7" />
+            <Text className="text-xs font-bold text-blue-500 md:text-sm">戻る</Text>
+          </div>
+        </Link>
+        <div
+          className="flex cursor-pointer items-center space-x-1 rounded-lg bg-red-400 py-1 pr-4 pl-2 hover:bg-red-500 md:rounded-xl"
+          onClick={() => setIsOpened(true)}
+        >
+          <PlayIcon className="h-5 text-white md:h-7" />
+          <Text className="text-xs font-bold text-white md:text-sm">12秒</Text>
+        </div>
       </Container>
+      <Modal
+        opened={isOpened}
+        onClose={() => setIsOpened(false)}
+        withCloseButton={false}
+        centered
+        size="100%"
+        transition="fade"
+        transitionDuration={600}
+        transitionTimingFunction="ease"
+        className="m-0 p-0"
+      >
+        <div className="mb-5 flex flex-col">
+          {/** 書き出しボタン */}
+          <div>
+            {renderStatus?.type === "success" ? null : (
+              <Progress value={renderStatus?.percent ? renderStatus?.percent * 100 : 0} />
+            )}
+            {renderStatus?.type === "success" ? (
+              <Button
+                type="button"
+                leftIcon={<IconDownload size={18} />}
+                loading={isLoading}
+                onClick={handleSubmit}
+                className="mt-3 w-full rounded-full bg-red-400 hover:bg-red-500"
+              >
+                ダウンロード
+              </Button>
+            ) : (
+              <Button
+                type="button"
+                leftIcon={<IconCloudStorm size={18} />}
+                loading={isLoading}
+                onClick={handleSubmit}
+                className="mt-3 w-full rounded-full"
+              >
+                {isLoading ? "書き出し中" : "Render"}
+              </Button>
+            )}
+          </div>
+        </div>
+        <div className="border shadow-lg">
+          <RemotionPlayer
+            ref={playerRef}
+            component={Template1}
+            inputProps={template1Data}
+            durationInFrames={TEMPLATE1_DURATION}
+            compositionWidth={1920}
+            compositionHeight={1080}
+            style={{ width: "100%" }}
+            fps={30}
+            controls
+            autoPlay
+            loop
+          />
+        </div>
+      </Modal>
     </MantineHeader>
   );
 };

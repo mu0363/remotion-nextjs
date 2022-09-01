@@ -1,32 +1,31 @@
 // FIXME:
 /* eslint-disable no-console */
-import { Box, Button, Drawer, Group, MediaQuery, Stack } from "@mantine/core";
+import { ActionIcon } from "@mantine/core";
 import { Player as RemotionPlayer, PlayerRef } from "@remotion/player";
-import { useEffect, useRef, useState } from "react";
+import { IconPlayerPlay, IconPlayerPause } from "@tabler/icons";
+import { useAtom, useAtomValue } from "jotai";
+import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import type { CustomNextPage } from "next";
+import type { FC, RefObject } from "react";
 import { Form } from "src/components/Form";
 import { TimelineCard } from "src/components/TimelineCard";
 import { EditLayout } from "src/layout/EditLayout";
+import { currentFrameAtom } from "src/libs/atom";
+import { activeSceneAtom, isPlayingAtom } from "src/libs/atom/atom";
 import { TEMPLATE1_DURATION, timelineScenes } from "src/libs/const/remotion-config";
+import { ActiveSceneSlice } from "src/libs/store/features/activeSceneSlice";
+import { selectAllTemplate1Data } from "src/libs/store/features/template1Slice";
 import { Template1 } from "src/remotion/Template1";
-import { selectAllActiveScene } from "src/store/features/activeSceneSlice";
-import { selectAllTemplate1Data } from "src/store/features/template1Slice";
 
 const Player: CustomNextPage = () => {
-  const [isOpened, setIsOpened] = useState(false);
   const template1Data = useSelector(selectAllTemplate1Data);
-  const activeSceneData = useSelector(selectAllActiveScene);
+  const activeSceneData = useAtomValue(activeSceneAtom);
   const playerRef = useRef<PlayerRef>(null);
 
-  // const calculateTime = (fps: number) => {
-  //   const minute = Math.floor(fps / (30 * 60));
-  //   const second = Math.floor(fps / 30);
-  //   const padSecond = String(second).padStart(2, "0");
-  //   return `${minute}:${padSecond}`;
-  // };
-
   useEffect(() => {
+    // スクロール禁止
+    document.body.style.overflow = "hidden";
     if (playerRef.current) {
       playerRef.current.pause();
       playerRef.current.seekTo(activeSceneData.from);
@@ -34,8 +33,8 @@ const Player: CustomNextPage = () => {
   }, [activeSceneData]);
 
   return (
-    <div>
-      <div className="sticky top-0 mx-0 pt-10 md:mx-10 md:pt-10">
+    <div className="fixed w-full md:static">
+      <div className="mx-0 pt-0 md:mx-10 md:pt-10">
         <RemotionPlayer
           ref={playerRef}
           component={Template1}
@@ -45,47 +44,28 @@ const Player: CustomNextPage = () => {
           compositionHeight={1080}
           style={{ width: "100%" }}
           fps={30}
-          controls
+          controls={false}
           autoPlay
           loop
         />
       </div>
-      <Stack mx={20}>
-        <Box sx={{ display: "flex", overflowX: "scroll" }}>
-          {timelineScenes.map((card) => (
-            <div key={card.id}>
-              <TimelineCard card={card} />
-            </div>
-          ))}
-        </Box>
-      </Stack>
-      {/* <Modal
-        centered
-        overlayOpacity={0}
-        transition="fade"
-        transitionDuration={300}
-        opened={isOpened}
-        onClose={() => setIsOpened(false)}
-      >
+      <div className="mx-0 md:mx-5">
+        <div className="flex items-center">
+          <PlayButton playerRef={playerRef} activeSceneData={activeSceneData} />
+          <div className="flex overflow-x-auto">
+            {timelineScenes.map((card) => (
+              <div key={card.id}>
+                <TimelineCard card={card} playerRef={playerRef} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/** 入力フォーム */}
+      <div className="mx-5 pt-5 md:hidden">
         <Form />
-      </Modal> */}
-      <Drawer
-        opened={isOpened}
-        onClose={() => setIsOpened(false)}
-        overlayOpacity={0}
-        padding="xl"
-        size="sm"
-        position="bottom"
-        withCloseButton={false}
-      >
-        <Form />
-      </Drawer>
-      <Group position="center">
-        <Button onClick={() => setIsOpened(true)}>Open Modal</Button>
-      </Group>
-      <MediaQuery largerThan="md" styles={{ display: "none" }}>
-        <Box m={20}>{/* <Form /> */}</Box>
-      </MediaQuery>
+      </div>
     </div>
   );
 };
@@ -93,3 +73,49 @@ const Player: CustomNextPage = () => {
 Player.getLayout = EditLayout;
 
 export default Player;
+
+type PlayButtonProps = {
+  playerRef: RefObject<PlayerRef>;
+  activeSceneData: ActiveSceneSlice;
+};
+
+const PlayButton: FC<PlayButtonProps> = ({ playerRef, activeSceneData }) => {
+  const currentFrame = useAtomValue(currentFrameAtom);
+  const [isPlaying, setIsPlaying] = useAtom(isPlayingAtom);
+
+  useEffect(() => {
+    if (playerRef.current) {
+      playerRef.current.pause();
+      playerRef.current.seekTo(activeSceneData.from);
+    }
+  }, [activeSceneData, playerRef]);
+
+  const calculateTime = (fps: number) => {
+    const minute = Math.floor(fps / (30 * 60));
+    const second = Math.floor(fps / 30);
+    const padSecond = String(second).padStart(2, "0");
+    return `${minute}:${padSecond}`;
+  };
+
+  return (
+    <div className="flex flex-col items-center">
+      <ActionIcon
+        size="lg"
+        radius="xl"
+        variant="filled"
+        className="mx-5 bg-gray-50 shadow-md hover:bg-blue-50"
+        onClick={() => {
+          playerRef.current?.toggle();
+          setIsPlaying(!isPlaying);
+        }}
+      >
+        {isPlaying ? (
+          <IconPlayerPause className="text-blue-400" size={18} />
+        ) : (
+          <IconPlayerPlay className="text-blue-400" size={18} />
+        )}
+      </ActionIcon>
+      <p className="mx-5 mt-2 text-xs font-bold text-gray-600">{calculateTime(currentFrame)}</p>
+    </div>
+  );
+};
