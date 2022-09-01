@@ -32,7 +32,6 @@ export const PlayerLayout: FC<{ children: ReactNode }> = ({ children }) => {
                 mr="xl"
               />
             </MediaQuery>
-
             <Text>Application header</Text>
           </div>
         </Header>

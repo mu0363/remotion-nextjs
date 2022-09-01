@@ -8,13 +8,11 @@ import { ASIDE_WIDTH, HEADER_HEIGHT } from "src/libs/const";
 const useStyles = createStyles((theme) => {
   return {
     container: {
-      // marginLeft: SIDENAV_WIDTH,
       marginTop: HEADER_HEIGHT,
       marginRight: ASIDE_WIDTH,
 
-      [`@media (max-width: ${theme.breakpoints.md}px)`]: {
-        // marginLeft: 0,
-        marginTop: 0,
+      [theme.fn.smallerThan("md")]: {
+        marginTop: 40,
         marginRight: 0,
       },
     },
@@ -32,7 +30,6 @@ export const EditLayout: CustomLayout = (page) => {
         main: { padding: 0, backgroundColor: theme.colors.gray[0] },
       })}
       header={<Header />}
-      // navbar={<SideNav />}
       aside={<ASide />}
     >
       <div className={classes.container}>
