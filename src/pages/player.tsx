@@ -33,40 +33,42 @@ const Player: CustomNextPage = () => {
   }, [activeSceneData]);
 
   return (
-    <div className="fixed w-full md:static">
-      <div className="mx-0 pt-0 md:mx-10 md:pt-10">
-        <RemotionPlayer
-          ref={playerRef}
-          component={Template1}
-          inputProps={template1Data}
-          durationInFrames={TEMPLATE1_DURATION}
-          compositionWidth={1920}
-          compositionHeight={1080}
-          style={{ width: "100%" }}
-          fps={30}
-          controls={false}
-          autoPlay
-          loop
-        />
-      </div>
-      <div className="mx-0 md:mx-5">
-        <div className="relative flex items-center">
-          <div className="absolute z-20 bg-red-500 px-4"></div>
-          <PlayButton playerRef={playerRef} activeSceneData={activeSceneData} />
-          <div className="flex overflow-x-auto px-48">
-            {timelineScenes.map((card) => (
-              <div key={card.id}>
-                <TimelineCard card={card} playerRef={playerRef} />
-              </div>
-            ))}
-            {/* <div className="bg-red-500 px-28" /> */}
+    <div>
+      <div className="fixed w-full md:static">
+        <div className="mx-0 pt-0 md:mx-10 md:pt-10">
+          <RemotionPlayer
+            ref={playerRef}
+            component={Template1}
+            inputProps={template1Data}
+            durationInFrames={TEMPLATE1_DURATION}
+            compositionWidth={1920}
+            compositionHeight={1080}
+            style={{ width: "100%" }}
+            fps={30}
+            controls={true}
+            autoPlay
+            loop
+          />
+        </div>
+        <div className="mx-0 md:mx-5">
+          <div className="relative flex items-center">
+            <PlayButton playerRef={playerRef} activeSceneData={activeSceneData} />
+            <div className="flex overflow-x-auto pl-24 md:pl-20">
+              {timelineScenes.map((card) => (
+                <div key={card.id}>
+                  <TimelineCard card={card} playerRef={playerRef} />
+                </div>
+              ))}
+
+              <div className="px-16 md:px-0" />
+            </div>
           </div>
         </div>
-      </div>
 
-      {/** 入力フォーム */}
-      <div className="mx-5 pt-5 md:hidden">
-        <Form />
+        {/** 入力フォーム */}
+        <div className="mx-5 pt-5 md:hidden">
+          <Form />
+        </div>
       </div>
     </div>
   );
