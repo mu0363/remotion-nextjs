@@ -21,9 +21,6 @@ import { selectAllTemplate1Data } from "src/libs/store/features/template1Slice";
 import { Template1 } from "src/remotion/Template1";
 import { RenderInfo } from "types";
 
-// FIXME: スクロール禁止(useEffect内に実装する)
-// document.body.style.overflow = "hidden";
-
 const Player: CustomNextPage = () => {
   const template1Data = useSelector(selectAllTemplate1Data);
   const activeSceneData = useAtomValue(activeSceneAtom);
@@ -33,6 +30,8 @@ const Player: CustomNextPage = () => {
   const [renderStatus, setRenderStatus] = useState<RenderProgressType>();
 
   useEffect(() => {
+    // スクロール禁止
+    document.body.style.overflow = "hidden";
     if (playerRef.current) {
       playerRef.current.pause();
       playerRef.current.seekTo(activeSceneData.from);
@@ -101,7 +100,7 @@ const Player: CustomNextPage = () => {
   };
 
   return (
-    <div>
+    <div className="fixed w-full md:static">
       <div className="mx-0 pt-0 md:mx-10 md:pt-10">
         <RemotionPlayer
           ref={playerRef}
@@ -187,17 +186,20 @@ const PlayButton: FC<PlayButtonProps> = ({ playerRef, activeSceneData }) => {
   return (
     <div className="flex flex-col items-center">
       <ActionIcon
-        color="red"
         size="lg"
         radius="xl"
         variant="filled"
-        className="mx-5 shadow-md"
+        className="mx-5 bg-gray-50 shadow-md hover:bg-blue-50"
         onClick={() => {
           playerRef.current?.toggle();
           setIsPlaying(!isPlaying);
         }}
       >
-        {isPlaying ? <IconPlayerPause size={18} /> : <IconPlayerPlay size={18} />}
+        {isPlaying ? (
+          <IconPlayerPause className="text-blue-400" size={18} />
+        ) : (
+          <IconPlayerPlay className="text-blue-400" size={18} />
+        )}
       </ActionIcon>
       <p className="mx-5 mt-2 text-xs font-bold text-gray-600">{calculateTime(currentFrame)}</p>
     </div>
