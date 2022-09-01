@@ -49,18 +49,21 @@ const Player: CustomNextPage = () => {
           loop
         />
       </div>
+      {/** 再生バー */}
+      <div className="relative flex items-center justify-center md:hidden">
+        <div className="absolute z-20 mt-11 rounded-full bg-gray-600 py-9 px-0.5" />
+      </div>
       <div className="mx-0 md:mx-5">
         <div className="relative flex items-center">
-          <div className="absolute z-20 ml-48 rounded-full bg-gray-600 py-10 px-0.5"></div>
           <PlayButton playerRef={playerRef} activeSceneData={activeSceneData} />
-          <div className="flex overflow-x-auto pl-48">
+          <div className="flex overflow-x-auto pl-48 md:pl-20">
             {timelineScenes.map((card) => (
               <div key={card.id}>
                 <TimelineCard card={card} playerRef={playerRef} />
               </div>
             ))}
 
-            <div className="px-24"></div>
+            <div className="px-24 md:px-0" />
           </div>
         </div>
       </div>
