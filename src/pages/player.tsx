@@ -51,15 +51,16 @@ const Player: CustomNextPage = () => {
       </div>
       <div className="mx-0 md:mx-5">
         <div className="relative flex items-center">
-          <div className="absolute z-20 bg-red-500 px-4"></div>
+          <div className="absolute z-20 ml-48 rounded-full bg-gray-600 py-10 px-0.5"></div>
           <PlayButton playerRef={playerRef} activeSceneData={activeSceneData} />
-          <div className="flex overflow-x-auto px-48">
+          <div className="flex overflow-x-auto pl-48">
             {timelineScenes.map((card) => (
               <div key={card.id}>
                 <TimelineCard card={card} playerRef={playerRef} />
               </div>
             ))}
-            {/* <div className="bg-red-500 px-28" /> */}
+
+            <div className="px-24"></div>
           </div>
         </div>
       </div>
