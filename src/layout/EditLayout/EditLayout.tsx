@@ -3,7 +3,7 @@ import { CustomLayout } from "next";
 import { LayoutErrorBoundary } from "../LayoutErrorBoundary";
 import { ASide } from "./ASide";
 import { Header } from "./Header";
-import { ASIDE_WIDTH, HEADER_HEIGHT } from "src/libs/const";
+import { ASIDE_WIDTH, HEADER_HEIGHT, HEADER_HEIGHT_SM } from "src/libs/const";
 
 const useStyles = createStyles((theme) => {
   return {
@@ -13,7 +13,7 @@ const useStyles = createStyles((theme) => {
       marginRight: ASIDE_WIDTH,
 
       [theme.fn.smallerThan("md")]: {
-        marginTop: 40,
+        marginTop: HEADER_HEIGHT_SM,
         marginRight: 0,
       },
     },
