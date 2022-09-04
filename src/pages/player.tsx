@@ -4,14 +4,14 @@ import { ActionIcon } from "@mantine/core";
 import { Player as RemotionPlayer, PlayerRef } from "@remotion/player";
 import { IconPlayerPlay, IconPlayerPause } from "@tabler/icons";
 import { useAtom, useAtomValue } from "jotai";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import type { CustomNextPage } from "next";
 import type { FC, RefObject } from "react";
 import { Form } from "src/components/Form";
 import { TimelineCard } from "src/components/TimelineCard";
 import { EditLayout } from "src/layout/EditLayout";
-import { currentFrameAtom } from "src/libs/atom";
+import { videConfigAtom } from "src/libs/atom";
 import { activeSceneAtom, isPlayingAtom } from "src/libs/atom/atom";
 import { TEMPLATE1_DURATION, timelineScenes } from "src/libs/const/remotion-config";
 import { ActiveSceneSlice } from "src/libs/store/features/activeSceneSlice";
@@ -22,9 +22,31 @@ const Player: CustomNextPage = () => {
   const template1Data = useSelector(selectAllTemplate1Data);
   const activeSceneData = useAtomValue(activeSceneAtom);
   const playerRef = useRef<PlayerRef>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const { currentFrame } = useAtomValue(videConfigAtom);
+
+  const getOffset = useCallback(() => {
+    if (scrollRef.current && playerRef.current) {
+      playerRef.current.seekTo(scrollRef.current.scrollLeft);
+    }
+  }, []);
 
   useEffect(() => {
-    // スクロール禁止
+    if (scrollRef.current) {
+      scrollRef.current.scrollLeft += (currentFrame + 1000) / 1000;
+    }
+  }, [currentFrame, playerRef]);
+
+  useEffect(() => {
+    getOffset();
+  }, [getOffset]);
+
+  useEffect(() => {
+    window.addEventListener("touchmove", getOffset);
+  }, [getOffset]);
+
+  useEffect(() => {
+    // prevent scroll
     document.body.style.overflow = "hidden";
     if (playerRef.current) {
       playerRef.current.pause();
@@ -45,25 +67,35 @@ const Player: CustomNextPage = () => {
             compositionHeight={1080}
             style={{ width: "100%" }}
             fps={30}
-            controls={true}
+            controls={false}
             autoPlay
-            loop
           />
+        </div>
+        {/** 再生バー */}
+
+        <div className="relative flex items-center justify-center md:hidden">
+          <div className="absolute z-20 mt-11 scroll-auto rounded-full bg-gray-600 py-9 px-0.5" />
         </div>
         <div className="mx-0 md:mx-5">
           <div className="relative flex items-center">
             <PlayButton playerRef={playerRef} activeSceneData={activeSceneData} />
-            <div className="flex overflow-x-auto pl-24 md:pl-20">
+            <div className="flex overflow-x-auto pl-48 md:pl-20" ref={scrollRef}>
               {timelineScenes.map((card) => (
                 <div key={card.id}>
                   <TimelineCard card={card} playerRef={playerRef} />
                 </div>
               ))}
 
-              <div className="px-16 md:px-0" />
+              <div className="px-24 md:px-0" />
             </div>
           </div>
         </div>
+        {scrollRef.current && (
+          <div>
+            <div className="text-xs">{`scrollRef: ${scrollRef.current.scrollLeft}`}</div>
+            <div className="text-xs">{`currentFrame: ${currentFrame}`}</div>
+          </div>
+        )}
 
         {/** 入力フォーム */}
         <div className="mx-5 pt-5 md:hidden">
@@ -84,7 +116,7 @@ type PlayButtonProps = {
 };
 
 const PlayButton: FC<PlayButtonProps> = ({ playerRef, activeSceneData }) => {
-  const currentFrame = useAtomValue(currentFrameAtom);
+  const { currentFrame } = useAtomValue(videConfigAtom);
   const [isPlaying, setIsPlaying] = useAtom(isPlayingAtom);
 
   useEffect(() => {

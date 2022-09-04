@@ -1,7 +1,7 @@
 import { useSetAtom, useAtomValue } from "jotai";
 import { FC, useEffect } from "react";
-import { Audio, interpolate, useCurrentFrame } from "remotion";
-import { currentFrameAtom } from "../../libs/atom";
+import { Audio, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
+import { videConfigAtom } from "../../libs/atom";
 import { musicAtom } from "../../libs/atom/";
 import { Watermark } from "../Watermark";
 import { T1S1 } from "./T1S1";
@@ -11,13 +11,14 @@ import { SceneState } from "src/libs/store/features/template1Slice";
 
 /** @package */
 export const Template1: FC<SceneState[]> = (props) => {
-  const setCurrentFrame = useSetAtom(currentFrameAtom);
+  const setVideoConfigFrame = useSetAtom(videConfigAtom);
   const music = useAtomValue(musicAtom);
   const frame = useCurrentFrame();
+  const { width, height, fps } = useVideoConfig();
 
   useEffect(() => {
-    setCurrentFrame(frame);
-  }, [frame, setCurrentFrame]);
+    setVideoConfigFrame({ currentFrame: frame, fps, width, height });
+  }, [frame, fps, width, height, setVideoConfigFrame]);
 
   return (
     <>
