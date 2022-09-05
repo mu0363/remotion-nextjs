@@ -3,14 +3,14 @@
 import { MusicalNoteIcon } from "@heroicons/react/24/outline";
 import { Badge, Stack, Textarea, Tooltip } from "@mantine/core";
 import { IconCamera } from "@tabler/icons";
-import { useAtomValue, useSetAtom } from "jotai";
+import { useAtomValue } from "jotai";
 import Image from "next/image";
 import { ChangeEvent } from "react";
 import { useDispatch } from "react-redux";
-import { activeSceneAtom, musicAtom } from "src/libs/atom/atom";
+import { activeSceneAtom } from "src/libs/atom/atom";
 import { storageUrl, USER_ID } from "src/libs/const/remotion-config";
 import { useCurrentData } from "src/libs/hooks/useCurrentData";
-import { updateImage, updateText } from "src/libs/store/features/template1Slice";
+import { updateImage, updateText, updateMusic } from "src/libs/store/features/template1Slice";
 import { supabaseClient } from "src/libs/supabase/supabaseClient";
 import { ImageType } from "types";
 
@@ -20,7 +20,6 @@ export const Form = () => {
   const { scene_number } = useAtomValue(activeSceneAtom);
   const currentData = useCurrentData(scene_number);
   const { id, template_number, image_number, text, image_url } = currentData;
-  const setMusic = useSetAtom(musicAtom);
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     dispatch(updateText({ scene_number, id: scene_number, text: e.target.value }));
@@ -78,19 +77,31 @@ export const Form = () => {
         <MusicalNoteIcon
           className="h-8 cursor-pointer rounded-full bg-yellow-400 p-2 text-gray-600"
           onClick={() =>
-            setMusic("https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/images/music1.mp3")
+            dispatch(
+              updateMusic({
+                music: "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/images/music1.mp3",
+              })
+            )
           }
         />
         <MusicalNoteIcon
           className="h-8 cursor-pointer rounded-full bg-yellow-400 p-2 text-gray-600"
           onClick={() =>
-            setMusic("https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/images/music2.mp3")
+            dispatch(
+              updateMusic({
+                music: "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/images/music2.mp3",
+              })
+            )
           }
         />
         <MusicalNoteIcon
           className="h-8 cursor-pointer rounded-full bg-yellow-400 p-2 text-gray-600"
           onClick={() =>
-            setMusic("https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/images/music4.mp3")
+            dispatch(
+              updateMusic({
+                music: "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/images/music4.mp3",
+              })
+            )
           }
         />
       </div>
