@@ -3,7 +3,7 @@ import { Subtitle } from "./Subtitle";
 import { T1S2_Image1 } from "./T1S2_Image1";
 import { T1S2_Text1 } from "./T1S2_Text1";
 import type { FC } from "react";
-import { SceneState } from "src/libs/store/features/template1Slice";
+import type { SceneState } from "types";
 
 type Props = {
   sceneState: SceneState;
