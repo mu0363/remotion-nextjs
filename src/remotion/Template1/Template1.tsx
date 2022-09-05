@@ -1,23 +1,23 @@
-import { useSetAtom, useAtomValue } from "jotai";
+import { useSetAtom } from "jotai";
 import { FC, useEffect } from "react";
-import { Audio, interpolate, useCurrentFrame } from "remotion";
-import { currentFrameAtom } from "../../libs/atom";
-import { musicAtom } from "../../libs/atom/";
+import { Audio, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
+import { videConfigAtom } from "../../libs/atom";
 import { Watermark } from "../Watermark";
 import { T1S1 } from "./T1S1";
 import { T1S2 } from "./T1S2";
 import { T1S3 } from "./T1S3";
-import { SceneState } from "src/libs/store/features/template1Slice";
+import type { Template1Type } from "types";
 
 /** @package */
-export const Template1: FC<SceneState[]> = (props) => {
-  const setCurrentFrame = useSetAtom(currentFrameAtom);
-  const music = useAtomValue(musicAtom);
+export const Template1: FC<Template1Type> = (props) => {
+  const setVideoConfigFrame = useSetAtom(videConfigAtom);
   const frame = useCurrentFrame();
+  const { width, height, fps } = useVideoConfig();
+  const { music, sceneState } = props;
 
   useEffect(() => {
-    setCurrentFrame(frame);
-  }, [frame, setCurrentFrame]);
+    setVideoConfigFrame({ currentFrame: frame, fps, width, height });
+  }, [frame, fps, width, height, setVideoConfigFrame]);
 
   return (
     <>
@@ -28,9 +28,9 @@ export const Template1: FC<SceneState[]> = (props) => {
         })}
       />
       <Watermark />
-      <T1S1 sceneState={props[0]} />
-      <T1S2 sceneState={props[1]} />
-      <T1S3 sceneState={props[2]} />
+      <T1S1 sceneState={sceneState[0]} />
+      <T1S2 sceneState={sceneState[1]} />
+      <T1S3 sceneState={sceneState[2]} />
     </>
   );
 };

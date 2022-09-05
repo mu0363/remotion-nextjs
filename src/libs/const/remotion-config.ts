@@ -1,38 +1,40 @@
-import { SceneState } from "src/libs/store/features/template1Slice";
-import { TimelineSceneType } from "types";
+import type { Template1Type, TimelineSceneType } from "types";
 
 export const COMP_NAME = "MyComp";
-export const SITE_ID = "https://remotionlambda-47aic418sn.s3.us-east-1.amazonaws.com/sites/mi4bvcd4un/index.html";
+export const SITE_ID = "https://remotionlambda-47aic418sn.s3.us-east-1.amazonaws.com/sites/pqsf0x8ux8/index.html";
 export const REGION = "us-east-1";
 export const TEMPLATE1_DURATION = 360;
 export const storageUrl = "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public";
 export const USER_ID = "22DFD4AE-6E10-491F-81BE-8D9C66CCDDB0";
-export const defaultProps: SceneState[] = [
-  {
-    id: 1,
-    template_number: 1,
-    scene_number: 1,
-    image_number: 1,
-    image_url: `${storageUrl}/images/girl.png`,
-    text: "最初の文字です",
-  },
-  {
-    id: 2,
-    template_number: 1,
-    scene_number: 2,
-    image_number: 1,
-    image_url: `${storageUrl}/images/sena_robot.webp`,
-    text: "2番目の文字です",
-  },
-  {
-    id: 3,
-    template_number: 1,
-    scene_number: 3,
-    image_number: 1,
-    image_url: `${storageUrl}/images/the_cat.png`,
-    text: "最後の文字です。\n改行もできます",
-  },
-];
+export const defaultProps: Template1Type = {
+  music: "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/images/music1.mp3",
+  sceneState: [
+    {
+      id: 1,
+      template_number: 1,
+      scene_number: 1,
+      image_number: 1,
+      image_url: `${storageUrl}/images/girl.png`,
+      text: "最初の文字です",
+    },
+    {
+      id: 2,
+      template_number: 1,
+      scene_number: 2,
+      image_number: 1,
+      image_url: `${storageUrl}/images/sena_robot.webp`,
+      text: "2番目の文字です",
+    },
+    {
+      id: 3,
+      template_number: 1,
+      scene_number: 3,
+      image_number: 1,
+      image_url: `${storageUrl}/images/the_cat.png`,
+      text: "最後の文字です。\n改行もできます",
+    },
+  ],
+};
 
 export const timelineScenes: TimelineSceneType[] = [
   {

@@ -3,9 +3,8 @@
 import { getFunctions, renderMediaOnLambda } from "@remotion/lambda";
 import { NextApiRequest, NextApiResponse } from "next";
 import { v4 as uuidv4 } from "uuid";
+import type { RenderInfo, Template1Type } from "types";
 import { REGION, COMP_NAME, SITE_ID } from "src/libs/const";
-import { SceneState } from "src/libs/store/features/template1Slice";
-import { RenderInfo } from "types";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") return;
@@ -13,7 +12,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     // FIXME: アサーション削除
     const data = req.body as string;
-    const template1Data = JSON.parse(data) as SceneState[];
+    const template1Data = JSON.parse(data) as Template1Type;
+
     const [first] = await getFunctions({
       compatibleOnly: true,
       region: REGION,

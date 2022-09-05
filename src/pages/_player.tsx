@@ -14,7 +14,6 @@
 // import { currentFrameAtom } from "src/libs/atom";
 // import { activeSceneAtom, isPlayingAtom } from "src/libs/atom/atom";
 // import { TEMPLATE1_DURATION, timelineScenes } from "src/libs/const/remotion-config";
-// import { ActiveSceneSlice } from "src/libs/store/features/activeSceneSlice";
 // import { selectAllTemplate1Data } from "src/libs/store/features/template1Slice";
 // import { Template1 } from "src/remotion/Template1";
 
@@ -112,7 +111,6 @@
 
 // type PlayButtonProps = {
 //   playerRef: RefObject<PlayerRef>;
-//   activeSceneData: ActiveSceneSlice;
 // };
 
 // const PlayButton: FC<PlayButtonProps> = ({ playerRef, activeSceneData }) => {

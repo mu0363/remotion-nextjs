@@ -1,7 +1,7 @@
 // FIXME:
 /* eslint-disable no-console */
 import { PlayIcon, ChevronLeftIcon } from "@heroicons/react/24/solid";
-import { Button, Progress, Container, createStyles, Header as MantineHeader, Modal, Text } from "@mantine/core";
+import { Button, Progress, Container, createStyles, Header as MantineHeader, Modal } from "@mantine/core";
 import { NextLink } from "@mantine/next";
 import { Player as RemotionPlayer, PlayerRef } from "@remotion/player";
 import { IconCloudStorm, IconDownload } from "@tabler/icons";
@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 import type { FC, MouseEvent } from "react";
 import type { RenderProgressType } from "src/pages/api/progress";
 import { activeSceneAtom } from "src/libs/atom/atom";
-import { HEADER_HEIGHT } from "src/libs/const";
+import { HEADER_HEIGHT, HEADER_HEIGHT_SM } from "src/libs/const";
 import { TEMPLATE1_DURATION } from "src/libs/const/remotion-config";
 import { selectAllTemplate1Data } from "src/libs/store/features/template1Slice";
 import { Template1 } from "src/remotion/Template1";
@@ -22,7 +22,7 @@ const useStyles = createStyles((theme) => ({
   root: {
     height: HEADER_HEIGHT,
     [theme.fn.smallerThan("md")]: {
-      height: 40,
+      height: HEADER_HEIGHT_SM,
     },
   },
   inner: {
@@ -31,7 +31,7 @@ const useStyles = createStyles((theme) => ({
     justifyContent: "space-between",
     alignItems: "center",
     [theme.fn.smallerThan("md")]: {
-      height: 40,
+      height: HEADER_HEIGHT_SM,
     },
   },
 
@@ -128,8 +128,8 @@ export const Header: FC = () => {
       <Container className={classes.inner} fluid>
         <Link href="/dashboard">
           <div className="flex items-center space-x-1 hover:cursor-pointer">
-            <ChevronLeftIcon className="ml-1 h-5 text-blue-500 md:ml-5 md:h-7" />
-            <Text className="text-xs font-bold text-blue-500 md:text-sm">戻る</Text>
+            <ChevronLeftIcon className="ml-1 h-6 text-blue-500 md:ml-5 md:h-7" />
+            <div className="text-sm font-bold text-blue-500 md:text-sm">戻る</div>
           </div>
         </Link>
         <div
@@ -137,7 +137,7 @@ export const Header: FC = () => {
           onClick={() => setIsOpened(true)}
         >
           <PlayIcon className="h-5 text-white md:h-7" />
-          <Text className="text-xs font-bold text-white md:text-sm">12秒</Text>
+          <div className="text-xs font-bold text-white md:text-sm">12秒</div>
         </div>
       </Container>
       <Modal
