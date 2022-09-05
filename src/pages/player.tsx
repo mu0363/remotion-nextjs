@@ -13,7 +13,6 @@ import { EditLayout } from "src/layout/EditLayout";
 import { videConfigAtom } from "src/libs/atom";
 import { activeSceneAtom, isPlayingAtom } from "src/libs/atom/atom";
 import { TEMPLATE1_DURATION, timelineScenes } from "src/libs/const/remotion-config";
-import { ActiveSceneSlice } from "src/libs/store/features/activeSceneSlice";
 import { selectAllTemplate1Data } from "src/libs/store/features/template1Slice";
 import { Template1 } from "src/remotion/Template1";
 
@@ -102,7 +101,7 @@ const Player: CustomNextPage = () => {
         </div>
         <div className="mx-0 mt-1 md:mx-5">
           <div className="relative flex items-center">
-            <PlayButton playerRef={playerRef} activeSceneData={activeSceneData} />
+            <PlayButton playerRef={playerRef} />
             <div className="flex overflow-x-auto pl-48 md:pl-20" ref={scrollRef}>
               {timelineScenes.map((card) => (
                 <div key={card.id}>
@@ -131,11 +130,11 @@ export default Player;
 
 type PlayButtonProps = {
   playerRef: RefObject<PlayerRef>;
-  activeSceneData: ActiveSceneSlice;
 };
 
-const PlayButton: FC<PlayButtonProps> = ({ playerRef, activeSceneData }) => {
+const PlayButton: FC<PlayButtonProps> = ({ playerRef }) => {
   const [isPlaying, setIsPlaying] = useAtom(isPlayingAtom);
+  const activeSceneData = useAtomValue(activeSceneAtom);
 
   useEffect(() => {
     if (playerRef.current) {
