@@ -1,9 +1,7 @@
 // FIXME:
 /* eslint-disable no-console */
-import { FunnelIcon } from "@heroicons/react/24/solid";
-import { ActionIcon } from "@mantine/core";
+import { FunnelIcon, PlayIcon, PauseIcon } from "@heroicons/react/24/solid";
 import { Player as RemotionPlayer, PlayerRef } from "@remotion/player";
-import { IconPlayerPlay, IconPlayerPause } from "@tabler/icons";
 import { useAtom, useAtomValue } from "jotai";
 import { useCallback, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
@@ -27,6 +25,13 @@ const Player: CustomNextPage = () => {
   const dragRef = useRef<HTMLDivElement>(null);
   const { currentFrame } = useAtomValue(videConfigAtom);
 
+  const calculateTime = (fps: number) => {
+    const minute = Math.floor(fps / (30 * 60));
+    const second = Math.floor(fps / 30);
+    const padSecond = String(second).padStart(2, "0");
+    return `${minute}:${padSecond}`;
+  };
+
   const getOffset = useCallback(() => {
     if (scrollRef.current && playerRef.current) {
       playerRef.current.seekTo(scrollRef.current.scrollLeft);
@@ -38,7 +43,7 @@ const Player: CustomNextPage = () => {
     if (scrollRef.current) {
       scrollRef.current.scrollLeft += (currentFrame + 1000) / 1000;
     }
-  }, [currentFrame, playerRef]);
+  }, [currentFrame]);
 
   useEffect(() => {
     getOffset();
@@ -56,6 +61,12 @@ const Player: CustomNextPage = () => {
       playerRef.current.seekTo(activeSceneData.from);
     }
   }, [activeSceneData]);
+
+  useEffect(() => {
+    if (dragRef.current) {
+      console.log(dragRef.current.offsetLeft);
+    }
+  }, [dragRef]);
 
   return (
     <div>
@@ -89,7 +100,7 @@ const Player: CustomNextPage = () => {
         <div className="relative flex items-center justify-center md:hidden">
           <div className="absolute z-20 mt-11 scroll-auto rounded-full bg-gray-600 py-9 px-0.5" />
         </div>
-        <div className="mx-0 md:mx-5">
+        <div className="mx-0 mt-1 md:mx-5">
           <div className="relative flex items-center">
             <PlayButton playerRef={playerRef} activeSceneData={activeSceneData} />
             <div className="flex overflow-x-auto pl-48 md:pl-20" ref={scrollRef}>
@@ -103,12 +114,7 @@ const Player: CustomNextPage = () => {
             </div>
           </div>
         </div>
-        {scrollRef.current && (
-          <div>
-            <div className="text-xs">{`scrollRef: ${scrollRef.current.scrollLeft}`}</div>
-            <div className="text-xs">{`currentFrame: ${currentFrame}`}</div>
-          </div>
-        )}
+        <p className="mx-5 mt-2 text-xs font-bold text-gray-600">{calculateTime(currentFrame)}</p>
 
         {/** 入力フォーム */}
         <div className="mx-5 pt-5 md:hidden">
@@ -129,7 +135,6 @@ type PlayButtonProps = {
 };
 
 const PlayButton: FC<PlayButtonProps> = ({ playerRef, activeSceneData }) => {
-  const { currentFrame } = useAtomValue(videConfigAtom);
   const [isPlaying, setIsPlaying] = useAtom(isPlayingAtom);
 
   useEffect(() => {
@@ -139,33 +144,22 @@ const PlayButton: FC<PlayButtonProps> = ({ playerRef, activeSceneData }) => {
     }
   }, [activeSceneData, playerRef]);
 
-  const calculateTime = (fps: number) => {
-    const minute = Math.floor(fps / (30 * 60));
-    const second = Math.floor(fps / 30);
-    const padSecond = String(second).padStart(2, "0");
-    return `${minute}:${padSecond}`;
-  };
-
   return (
     <div className="absolute z-20">
       <div className="flex flex-col items-center">
-        <ActionIcon
-          size="lg"
-          radius="xl"
-          variant="filled"
-          className="mx-5 bg-gray-50 shadow-md hover:bg-blue-50"
+        <div
+          className="mx-5 bg-gray-50 hover:bg-blue-50"
           onClick={() => {
             playerRef.current?.toggle();
             setIsPlaying(!isPlaying);
           }}
         >
           {isPlaying ? (
-            <IconPlayerPause className="text-blue-400" size={18} />
+            <PauseIcon className="h-12 rounded-full border-2 p-2 text-blue-400 shadow-md" />
           ) : (
-            <IconPlayerPlay className="text-blue-400" size={18} />
+            <PlayIcon className="h-12 rounded-full border-2 p-2 text-blue-400 shadow-md" />
           )}
-        </ActionIcon>
-        <p className="mx-5 mt-2 text-xs font-bold text-gray-600">{calculateTime(currentFrame)}</p>
+        </div>
       </div>
     </div>
   );
