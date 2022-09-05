@@ -7,7 +7,7 @@ import { Watermark } from "../Watermark";
 import { T1S1 } from "./T1S1";
 import { T1S2 } from "./T1S2";
 import { T1S3 } from "./T1S3";
-import { SceneState } from "src/libs/store/features/template1Slice";
+import type { SceneState } from "types";
 
 /** @package */
 export const Template1: FC<SceneState[]> = (props) => {

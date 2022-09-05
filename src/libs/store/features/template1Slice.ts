@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { defaultProps } from "../../const";
 import { RootState } from "../store";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import type { SceneState } from "types";
 
 // FIXME: Mapを使いたい
 // export type PageState = { id: number; text: string; image: string };
@@ -12,15 +13,6 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 //   ["page2", { id: 2, text: "Second Text from Redux", image: "https://source.unsplash.com/random/200x200" }],
 // ]);
 // const initialState = pagesMap;
-
-export type SceneState = {
-  id: number;
-  template_number: number;
-  scene_number: number;
-  image_number: number;
-  image_url: string;
-  text: string;
-};
 
 export const template1Slice = createSlice({
   name: "template1",

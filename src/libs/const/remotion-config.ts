@@ -1,5 +1,4 @@
-import { SceneState } from "src/libs/store/features/template1Slice";
-import { TimelineSceneType } from "types";
+import { SceneState, TimelineSceneType } from "types";
 
 export const COMP_NAME = "MyComp";
 export const SITE_ID = "https://remotionlambda-47aic418sn.s3.us-east-1.amazonaws.com/sites/mi4bvcd4un/index.html";
