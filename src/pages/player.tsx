@@ -1,5 +1,6 @@
 // FIXME:
 /* eslint-disable no-console */
+import { FunnelIcon } from "@heroicons/react/24/solid";
 import { ActionIcon } from "@mantine/core";
 import { Player as RemotionPlayer, PlayerRef } from "@remotion/player";
 import { IconPlayerPlay, IconPlayerPause } from "@tabler/icons";
@@ -23,11 +24,13 @@ const Player: CustomNextPage = () => {
   const activeSceneData = useAtomValue(activeSceneAtom);
   const playerRef = useRef<PlayerRef>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const dragRef = useRef<HTMLDivElement>(null);
   const { currentFrame } = useAtomValue(videConfigAtom);
 
   const getOffset = useCallback(() => {
     if (scrollRef.current && playerRef.current) {
       playerRef.current.seekTo(scrollRef.current.scrollLeft);
+      dragRef.current;
     }
   }, []);
 
@@ -67,12 +70,22 @@ const Player: CustomNextPage = () => {
             compositionHeight={1080}
             style={{ width: "100%" }}
             fps={30}
-            controls={false}
+            controls={true}
             autoPlay
           />
         </div>
-        {/** 再生バー */}
 
+        {/** 再生バー */}
+        <div className="relative z-20 hidden md:flex" style={{ left: currentFrame + 90 }} ref={dragRef}>
+          <div className="absolute">
+            <div className="absolute cursor-grab">
+              <FunnelIcon className="w-6 text-gray-600" />
+            </div>
+            <div className="absolute left-2.5 top-1 rounded-full bg-gray-600 py-10 px-0.5" />
+          </div>
+        </div>
+
+        {/** mobile再生バー */}
         <div className="relative flex items-center justify-center md:hidden">
           <div className="absolute z-20 mt-11 scroll-auto rounded-full bg-gray-600 py-9 px-0.5" />
         </div>
