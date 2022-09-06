@@ -81,7 +81,6 @@ const Player: CustomNextPage = () => {
             style={{ width: "100%" }}
             fps={30}
             controls={true}
-            autoPlay
           />
         </div>
 

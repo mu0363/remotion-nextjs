@@ -18,7 +18,6 @@ const Home: NextPage = () => {
       style={{ width: "100%" }}
       controls
       loop
-      autoPlay
     />
   );
 };

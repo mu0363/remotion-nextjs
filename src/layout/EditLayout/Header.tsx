@@ -204,7 +204,6 @@ export const Header: FC = () => {
             style={{ width: "100%" }}
             fps={30}
             controls
-            autoPlay
             loop
           />
         </div>

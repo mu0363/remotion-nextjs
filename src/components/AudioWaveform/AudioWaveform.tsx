@@ -2,7 +2,6 @@
 /* eslint-disable no-console */
 import { Menu, Tooltip } from "@mantine/core";
 import { getAudioData } from "@remotion/media-utils";
-import { IconSettings, IconMessageCircle, IconPhoto } from "@tabler/icons";
 import { useAtom, useAtomValue } from "jotai";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -52,9 +51,9 @@ export const AudioWaveform = () => {
   }, [getWaveForm]);
 
   return (
-    <Menu shadow="md" width={200} opened={isOpened} onChange={setIsOpened}>
+    <Menu shadow="md" width={400} opened={isOpened} onChange={setIsOpened}>
       <Menu.Target>
-        <Tooltip label="BGMを変更" color="blue" withArrow>
+        <Tooltip label="BGMを変更" color="teal" withArrow>
           <div
             style={{
               display: "flex",
@@ -63,7 +62,7 @@ export const AudioWaveform = () => {
               height: MAX_BAR_HEIGHT,
               width: "auto",
             }}
-            className="cursor-pointer pl-24"
+            className="cursor-pointer pl-24 pr-10"
             onClick={() => setIsOpened(true)}
           >
             {waveforms.map((v, i) => {
@@ -89,7 +88,6 @@ export const AudioWaveform = () => {
       <Menu.Dropdown>
         <Menu.Label>Music</Menu.Label>
         <Menu.Item
-          icon={<IconSettings size={14} />}
           onClick={() =>
             dispatch(
               updateMusic({
@@ -98,10 +96,9 @@ export const AudioWaveform = () => {
             )
           }
         >
-          Settings
+          Circle of Life
         </Menu.Item>
         <Menu.Item
-          icon={<IconMessageCircle size={14} />}
           onClick={() =>
             dispatch(
               updateMusic({
@@ -110,10 +107,9 @@ export const AudioWaveform = () => {
             )
           }
         >
-          Messages
+          View Above the Clouds
         </Menu.Item>
         <Menu.Item
-          icon={<IconPhoto size={14} />}
           onClick={() =>
             dispatch(
               updateMusic({
@@ -122,7 +118,7 @@ export const AudioWaveform = () => {
             )
           }
         >
-          Gallery
+          Real Thing
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>
