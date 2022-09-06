@@ -19,14 +19,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       compatibleOnly: true,
       region: REGION,
     });
-    console.log(template1Data);
 
     const { renderId, bucketName } = await renderMediaOnLambda({
       region: REGION,
       functionName: first.functionName,
       serveUrl: SITE_ID,
       composition: COMP_NAME,
-      // inputProps: template1Data,
       inputProps: { ...template1Data, watermark: WATERMARK_EMPTY },
       codec: "h264",
       imageFormat: "jpeg",

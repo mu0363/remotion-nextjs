@@ -60,9 +60,9 @@ export const AudioWaveform = () => {
               flexDirection: "row",
               alignItems: "center",
               height: MAX_BAR_HEIGHT,
-              width: "auto",
+              width: 900,
             }}
-            className="cursor-pointer pl-24 pr-10"
+            className="cursor-pointer pr-10"
             onClick={() => setIsOpened(true)}
           >
             {waveforms.map((v, i) => {
