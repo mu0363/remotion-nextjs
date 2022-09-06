@@ -15,7 +15,7 @@ export const T1S2_Text1: FC<{ text: string }> = ({ text }) => {
       className="mt-16 whitespace-pre-wrap font-sans text-5xl font-bold leading-normal text-gray-700"
       style={{
         opacity,
-        fontFamily: "Bangers",
+        fontFamily: "Kiwi Maru",
       }}
     >
       {text}

@@ -79,7 +79,7 @@ export const Form = () => {
           onClick={() =>
             dispatch(
               updateMusic({
-                music: "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/images/music1.mp3",
+                music: "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/music/music1.mp3",
               })
             )
           }
@@ -89,7 +89,7 @@ export const Form = () => {
           onClick={() =>
             dispatch(
               updateMusic({
-                music: "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/images/music2.mp3",
+                music: "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/music/music2.mp3",
               })
             )
           }
@@ -99,7 +99,7 @@ export const Form = () => {
           onClick={() =>
             dispatch(
               updateMusic({
-                music: "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/images/music4.mp3",
+                music: "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/music/music3.mp3",
               })
             )
           }

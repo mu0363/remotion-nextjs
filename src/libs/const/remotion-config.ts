@@ -14,7 +14,7 @@ export const defaultProps: Template1Type = {
       template_number: 1,
       scene_number: 1,
       image_number: 1,
-      image_url: `${storageUrl}/images/girl.png`,
+      image_url: `${storageUrl}/images/image-01.jpg`,
       text: "最初の文字です",
     },
     {
@@ -22,7 +22,7 @@ export const defaultProps: Template1Type = {
       template_number: 1,
       scene_number: 2,
       image_number: 1,
-      image_url: `${storageUrl}/images/sena_robot.webp`,
+      image_url: `${storageUrl}/images/image-02.jpg`,
       text: "2番目の文字です",
     },
     {
@@ -30,7 +30,7 @@ export const defaultProps: Template1Type = {
       template_number: 1,
       scene_number: 3,
       image_number: 1,
-      image_url: `${storageUrl}/images/the_cat.png`,
+      image_url: `${storageUrl}/images/image-03.jpg`,
       text: "最後の文字です。\n改行もできます",
     },
   ],
