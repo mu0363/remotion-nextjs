@@ -1,4 +1,5 @@
 import "../styles/global.css";
+import "../styles/font.css";
 import { Provider } from "react-redux";
 import { Composition } from "remotion";
 import { COMP_NAME } from "../libs/const";

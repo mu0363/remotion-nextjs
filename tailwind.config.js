@@ -2,7 +2,12 @@
 module.exports = {
   content: ["./src/**/*.{jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        hina: ["Hina Mincho"],
+        noto: ["Noto Serif JP"],
+      },
+    },
     screens: {
       sm: "768px",
       // => @media (min-width: 576px) { ... }
