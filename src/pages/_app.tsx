@@ -1,4 +1,5 @@
 import "../styles/global.css";
+import "../styles/font.css";
 import { ColorScheme, ColorSchemeProvider, MantineProvider } from "@mantine/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Provider as JotaiProvider } from "jotai";

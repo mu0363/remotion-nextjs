@@ -90,6 +90,11 @@ export const Header: FC = () => {
       console.log(renderStatus);
     };
 
+    if (renderStatus?.type === "error") {
+      setIsLoading(false);
+      console.log(renderStatus);
+    }
+
     if (renderStatus?.type === "success") {
       setIsLoading(false);
       console.log(renderStatus);
@@ -128,16 +133,28 @@ export const Header: FC = () => {
       <Container className={classes.inner} fluid>
         <Link href="/dashboard">
           <div className="flex items-center space-x-1 hover:cursor-pointer">
-            <ChevronLeftIcon className="ml-1 h-6 text-blue-500 md:ml-5 md:h-7" />
-            <div className="text-sm font-bold text-blue-500 md:text-sm">戻る</div>
+            <ChevronLeftIcon className="ml-1 h-6 text-gray-600 md:ml-5 md:h-7" />
+            <div
+              className="text-sm text-gray-600 md:text-sm"
+              style={{ fontFamily: "BIZ UDPGothic", fontWeight: "bold" }}
+            >
+              戻る
+            </div>
           </div>
         </Link>
-        <div
-          className="flex cursor-pointer items-center space-x-1 rounded-lg bg-red-400 py-1 pr-4 pl-2 hover:bg-red-500 md:rounded-xl"
-          onClick={() => setIsOpened(true)}
-        >
-          <PlayIcon className="h-5 text-white md:h-7" />
-          <div className="text-xs font-bold text-white md:text-sm">12秒</div>
+        <div className="flex items-center space-x-3">
+          <div
+            className="flex cursor-pointer items-center space-x-1 rounded-lg bg-red-400 py-1 pr-4 pl-2 hover:bg-red-500 md:rounded-xl"
+            onClick={() => setIsOpened(true)}
+          >
+            <PlayIcon className="h-5 text-white md:h-7" />
+            <div
+              className="text-base font-bold text-white md:text-sm"
+              style={{ fontFamily: "BIZ UDPGothic", fontWeight: "bold" }}
+            >
+              12秒
+            </div>
+          </div>
         </div>
       </Container>
       <Modal
@@ -160,7 +177,6 @@ export const Header: FC = () => {
             {renderStatus?.type === "success" ? (
               <NextLink href={renderStatus.url} target="_blank">
                 <Button
-                  component="a"
                   leftIcon={<IconDownload size={18} />}
                   className="mt-3 w-full rounded-full bg-red-400 hover:bg-red-500"
                 >
@@ -191,7 +207,6 @@ export const Header: FC = () => {
             style={{ width: "100%" }}
             fps={30}
             controls
-            autoPlay
             loop
           />
         </div>

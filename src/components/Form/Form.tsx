@@ -1,6 +1,5 @@
 // FIXME:
 /* eslint-disable no-console */
-import { MusicalNoteIcon } from "@heroicons/react/24/outline";
 import { Badge, Stack, Textarea, Tooltip } from "@mantine/core";
 import { IconCamera } from "@tabler/icons";
 import { useAtomValue } from "jotai";
@@ -10,7 +9,7 @@ import { useDispatch } from "react-redux";
 import { activeSceneAtom } from "src/libs/atom/atom";
 import { storageUrl, USER_ID } from "src/libs/const/remotion-config";
 import { useCurrentData } from "src/libs/hooks/useCurrentData";
-import { updateImage, updateText, updateMusic } from "src/libs/store/features/template1Slice";
+import { updateImage, updateText } from "src/libs/store/features/template1Slice";
 import { supabaseClient } from "src/libs/supabase/supabaseClient";
 import { ImageType } from "types";
 
@@ -52,7 +51,7 @@ export const Form = () => {
   return (
     <div>
       <Stack>
-        <Badge className="w-20">{`シーン${id}`}</Badge>
+        <Badge className="w-20" style={{ fontFamily: "BIZ UDPGothic", fontWeight: "bold" }}>{`シーン${id}`}</Badge>
         <Textarea onChange={handleChange} size="lg" value={text} />
         <Tooltip label="画像を変更" color="blue" withArrow>
           <div className="flex items-center justify-center">
@@ -73,38 +72,6 @@ export const Form = () => {
           </div>
         </Tooltip>
       </Stack>
-      <div className="mt-10 flex items-center justify-center space-x-10">
-        <MusicalNoteIcon
-          className="h-8 cursor-pointer rounded-full bg-yellow-400 p-2 text-gray-600"
-          onClick={() =>
-            dispatch(
-              updateMusic({
-                music: "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/images/music1.mp3",
-              })
-            )
-          }
-        />
-        <MusicalNoteIcon
-          className="h-8 cursor-pointer rounded-full bg-yellow-400 p-2 text-gray-600"
-          onClick={() =>
-            dispatch(
-              updateMusic({
-                music: "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/images/music2.mp3",
-              })
-            )
-          }
-        />
-        <MusicalNoteIcon
-          className="h-8 cursor-pointer rounded-full bg-yellow-400 p-2 text-gray-600"
-          onClick={() =>
-            dispatch(
-              updateMusic({
-                music: "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/images/music4.mp3",
-              })
-            )
-          }
-        />
-      </div>
     </div>
   );
 };

@@ -32,3 +32,5 @@ export const EditLayout: CustomLayout = (page) => {
     </AppShell>
   );
 };
+
+// fontFamily: "Kiwi Maru",
