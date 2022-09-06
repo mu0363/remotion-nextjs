@@ -87,7 +87,7 @@ const Player: CustomNextPage = () => {
         {/** 再生バー */}
         <div className="relative z-20 hidden md:flex" style={{ left: currentFrame + 90 }} ref={dragRef}>
           <div className="absolute">
-            <div className="absolute cursor-grab">
+            <div className="absolute cursor-grab active:cursor-grabbing">
               <FunnelIcon className="w-6 text-gray-600" />
             </div>
             <div className="absolute left-2.5 top-1 rounded-full bg-gray-600 py-10 px-0.5" />
@@ -112,8 +112,10 @@ const Player: CustomNextPage = () => {
             </div>
           </div>
         </div>
-        <AudioWaveform />
-        <p className="mx-5 mt-2 text-xs font-bold text-gray-600">{calculateTime(currentFrame)}</p>
+        <div className="flex items-center space-x-6 pl-12">
+          <p className="text-xs font-bold text-gray-600">{calculateTime(currentFrame)}</p>
+          <AudioWaveform />
+        </div>
         {/** 入力フォーム */}
         <div className="mx-5 pt-5 md:hidden">
           <Form />
@@ -146,16 +148,16 @@ const PlayButton: FC<PlayButtonProps> = ({ playerRef }) => {
     <div className="absolute z-20">
       <div className="flex flex-col items-center">
         <div
-          className="mx-5 bg-gray-50 hover:bg-blue-50"
+          className="mx-5"
           onClick={() => {
             playerRef.current?.toggle();
             setIsPlaying(!isPlaying);
           }}
         >
           {isPlaying ? (
-            <PauseIcon className="h-12 rounded-full border-2 p-2 text-blue-400 shadow-md" />
+            <PauseIcon className="h-12 cursor-pointer rounded-full border-2 bg-white p-2 text-gray-400 shadow-md hover:bg-gray-100" />
           ) : (
-            <PlayIcon className="h-12 rounded-full border-2 p-2 text-blue-400 shadow-md" />
+            <PlayIcon className="h-12 cursor-pointer rounded-full border-2 bg-white p-2 text-gray-400 shadow-md hover:bg-gray-100" />
           )}
         </div>
       </div>
