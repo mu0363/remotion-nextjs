@@ -173,7 +173,6 @@ export const Header: FC = () => {
             {renderStatus?.type === "success" ? (
               <NextLink href={renderStatus.url} target="_blank">
                 <Button
-                  component="a"
                   leftIcon={<IconDownload size={18} />}
                   className="mt-3 w-full rounded-full bg-red-400 hover:bg-red-500"
                 >
