@@ -19,7 +19,9 @@ module.exports = {
       // => @media (min-width: 1440px) { ... }
     },
     fontFamily: {
-      sans: ["Helvetica", "Arial", "sans-serif"],
+      body: ["Rampart One"],
+      sans: ["Rampart One"],
+      // sans: ["Helvetica", "Arial", "sans-serif"],
     },
   },
   plugins: [],

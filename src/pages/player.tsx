@@ -7,6 +7,7 @@ import { useCallback, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import type { CustomNextPage } from "next";
 import type { FC, RefObject } from "react";
+import { AudioWaveform } from "src/components/AudioWaveform";
 import { Form } from "src/components/Form";
 import { TimelineCard } from "src/components/TimelineCard";
 import { EditLayout } from "src/layout/EditLayout";
@@ -63,7 +64,6 @@ const Player: CustomNextPage = () => {
 
   useEffect(() => {
     if (dragRef.current) {
-      console.log(dragRef.current.offsetLeft);
     }
   }, [dragRef]);
 
@@ -113,8 +113,8 @@ const Player: CustomNextPage = () => {
             </div>
           </div>
         </div>
+        <AudioWaveform />
         <p className="mx-5 mt-2 text-xs font-bold text-gray-600">{calculateTime(currentFrame)}</p>
-
         {/** 入力フォーム */}
         <div className="mx-5 pt-5 md:hidden">
           <Form />

@@ -8,7 +8,7 @@ import { IconCloudStorm, IconDownload } from "@tabler/icons";
 import { useAtomValue } from "jotai";
 import Link from "next/link";
 import { useCallback, useEffect, useState, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { FC, MouseEvent } from "react";
 import type { RenderProgressType } from "src/pages/api/progress";
 import { activeSceneAtom } from "src/libs/atom/atom";
@@ -44,6 +44,7 @@ const useStyles = createStyles((theme) => ({
 
 /** @package */
 export const Header: FC = () => {
+  const dispatch = useDispatch();
   const { classes } = useStyles();
   const [isOpened, setIsOpened] = useState(false);
   const playerRef = useRef<PlayerRef>(null);
@@ -128,16 +129,28 @@ export const Header: FC = () => {
       <Container className={classes.inner} fluid>
         <Link href="/dashboard">
           <div className="flex items-center space-x-1 hover:cursor-pointer">
-            <ChevronLeftIcon className="ml-1 h-6 text-blue-500 md:ml-5 md:h-7" />
-            <div className="text-sm font-bold text-blue-500 md:text-sm">戻る</div>
+            <ChevronLeftIcon className="ml-1 h-6 text-gray-600 md:ml-5 md:h-7" />
+            <div
+              className="text-sm text-gray-600 md:text-sm"
+              style={{ fontFamily: "BIZ UDPGothic", fontWeight: "bold" }}
+            >
+              戻る
+            </div>
           </div>
         </Link>
-        <div
-          className="flex cursor-pointer items-center space-x-1 rounded-lg bg-red-400 py-1 pr-4 pl-2 hover:bg-red-500 md:rounded-xl"
-          onClick={() => setIsOpened(true)}
-        >
-          <PlayIcon className="h-5 text-white md:h-7" />
-          <div className="text-xs font-bold text-white md:text-sm">12秒</div>
+        <div className="flex items-center space-x-3">
+          <div
+            className="flex cursor-pointer items-center space-x-1 rounded-lg bg-red-400 py-1 pr-4 pl-2 hover:bg-red-500 md:rounded-xl"
+            onClick={() => setIsOpened(true)}
+          >
+            <PlayIcon className="h-5 text-white md:h-7" />
+            <div
+              className="text-base font-bold text-white md:text-sm"
+              style={{ fontFamily: "BIZ UDPGothic", fontWeight: "bold" }}
+            >
+              12秒
+            </div>
+          </div>
         </div>
       </Container>
       <Modal

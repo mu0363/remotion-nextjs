@@ -7,7 +7,7 @@ export const TEMPLATE1_DURATION = 360;
 export const storageUrl = "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public";
 export const USER_ID = "22DFD4AE-6E10-491F-81BE-8D9C66CCDDB0";
 export const defaultProps: Template1Type = {
-  music: "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/images/music1.mp3",
+  music: "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/music/music1.mp3",
   sceneState: [
     {
       id: 1,

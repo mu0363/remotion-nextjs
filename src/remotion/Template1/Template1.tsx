@@ -12,12 +12,12 @@ import type { Template1Type } from "types";
 export const Template1: FC<Template1Type> = (props) => {
   const setVideoConfigFrame = useSetAtom(videConfigAtom);
   const frame = useCurrentFrame();
-  const { width, height, fps } = useVideoConfig();
+  const { width, height, fps, durationInFrames } = useVideoConfig();
   const { music, sceneState } = props;
 
   useEffect(() => {
-    setVideoConfigFrame({ currentFrame: frame, fps, width, height });
-  }, [frame, fps, width, height, setVideoConfigFrame]);
+    setVideoConfigFrame({ currentFrame: frame, fps, width, height, durationInFrames });
+  }, [frame, fps, width, height, setVideoConfigFrame, durationInFrames]);
 
   return (
     <>
