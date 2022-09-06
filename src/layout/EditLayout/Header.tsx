@@ -8,7 +8,7 @@ import { IconCloudStorm, IconDownload } from "@tabler/icons";
 import { useAtomValue } from "jotai";
 import Link from "next/link";
 import { useCallback, useEffect, useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import type { FC, MouseEvent } from "react";
 import type { RenderProgressType } from "src/pages/api/progress";
 import { activeSceneAtom } from "src/libs/atom/atom";
@@ -44,7 +44,6 @@ const useStyles = createStyles((theme) => ({
 
 /** @package */
 export const Header: FC = () => {
-  const dispatch = useDispatch();
   const { classes } = useStyles();
   const [isOpened, setIsOpened] = useState(false);
   const playerRef = useRef<PlayerRef>(null);
@@ -90,6 +89,11 @@ export const Header: FC = () => {
       await pollProgress(renderInfo);
       console.log(renderStatus);
     };
+
+    if (renderStatus?.type === "error") {
+      setIsLoading(false);
+      console.log(renderStatus);
+    }
 
     if (renderStatus?.type === "success") {
       setIsLoading(false);

@@ -52,6 +52,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     functionName,
     region,
   });
+  console.log(progress);
 
   const progressStatus = getRenderProgressStatus(progress);
   res.status(200).json(progressStatus);

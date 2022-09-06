@@ -13,7 +13,7 @@ export const Template1: FC<Template1Type> = (props) => {
   const setVideoConfigFrame = useSetAtom(videConfigAtom);
   const frame = useCurrentFrame();
   const { width, height, fps, durationInFrames } = useVideoConfig();
-  const { music, sceneState } = props;
+  const { music, watermark, sceneState } = props;
 
   useEffect(() => {
     setVideoConfigFrame({ currentFrame: frame, fps, width, height, durationInFrames });
@@ -21,8 +21,8 @@ export const Template1: FC<Template1Type> = (props) => {
 
   return (
     <>
-      <Audio src={music} volume={(f) => interpolate(frame, [170, 360], [1, 0], { extrapolateLeft: "clamp" })} />
-      <Watermark />
+      <Audio src={music} volume={(_f) => interpolate(frame, [170, 360], [1, 0], { extrapolateLeft: "clamp" })} />
+      <Watermark watermark={watermark} />
       <T1S1 sceneState={sceneState[0]} />
       <T1S2 sceneState={sceneState[1]} />
       <T1S3 sceneState={sceneState[2]} />

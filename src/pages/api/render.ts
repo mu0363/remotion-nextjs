@@ -5,6 +5,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { v4 as uuidv4 } from "uuid";
 import type { RenderInfo, Template1Type } from "types";
 import { REGION, COMP_NAME, SITE_ID } from "src/libs/const";
+import { WATERMARK_EMPTY } from "src/libs/const/remotion-config";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") return;
@@ -18,13 +19,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       compatibleOnly: true,
       region: REGION,
     });
+    console.log(template1Data);
 
     const { renderId, bucketName } = await renderMediaOnLambda({
       region: REGION,
       functionName: first.functionName,
       serveUrl: SITE_ID,
       composition: COMP_NAME,
-      inputProps: template1Data,
+      // inputProps: template1Data,
+      inputProps: { ...template1Data, watermark: WATERMARK_EMPTY },
       codec: "h264",
       imageFormat: "jpeg",
       maxRetries: 1,
