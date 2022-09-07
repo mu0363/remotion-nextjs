@@ -1,5 +1,4 @@
-import { MusicType } from "./../../../types/types";
-import type { Template1Type, TimelineSceneType } from "types";
+import type { Template1Type, TimelineSceneType, MusicState } from "types";
 
 export const COMP_NAME = "MyComp";
 export const SITE_ID = "https://remotionlambda-47aic418sn.s3.us-east-1.amazonaws.com/sites/j16b05o8oq/index.html";
@@ -59,7 +58,7 @@ export const timelineScenes: TimelineSceneType[] = [
   },
 ];
 
-export const musicList: MusicType[] = [
+export const musicList: MusicState[] = [
   {
     id: 1,
     name: "Captured Memories",
@@ -67,6 +66,7 @@ export const musicList: MusicType[] = [
     time: "3:30",
     thumbnail: `${storageUrl}/images/thumbnail/thumbnail_music_01.jpeg`,
     music: "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/music/music1.mp3",
+    isSelected: true,
   },
   {
     id: 2,
@@ -75,6 +75,7 @@ export const musicList: MusicType[] = [
     time: "1:55",
     thumbnail: `${storageUrl}/images/thumbnail/thumbnail_music_02.jpeg`,
     music: "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/music/music2.mp3",
+    isSelected: false,
   },
   {
     id: 3,
@@ -83,6 +84,7 @@ export const musicList: MusicType[] = [
     time: "3:08",
     thumbnail: `${storageUrl}/images/thumbnail/thumbnail_music_04.jpeg`,
     music: "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/music/music3.mp3",
+    isSelected: false,
   },
 ];
 

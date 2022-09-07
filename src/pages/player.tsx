@@ -6,7 +6,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { Player as RemotionPlayer, PlayerRef } from "@remotion/player";
 import { useAtom, useAtomValue } from "jotai";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useSound from "use-sound";
 import type { CustomNextPage } from "next";
 import type { FC, RefObject } from "react";
@@ -14,17 +14,23 @@ import { Form } from "src/components/Form";
 import { TimelineCard } from "src/components/TimelineCard";
 import { EditLayout } from "src/layout/EditLayout";
 import { videConfigAtom } from "src/libs/atom";
-import { activeSceneAtom, currentMusicAtom, isPlayingAtom } from "src/libs/atom/atom";
-import { TEMPLATE1_DURATION, timelineScenes, musicList } from "src/libs/const/remotion-config";
-import { selectAllTemplate1Data } from "src/libs/store/features/template1Slice";
+import { activeSceneAtom, isPlayingAtom } from "src/libs/atom/atom";
+import { TEMPLATE1_DURATION, timelineScenes } from "src/libs/const/remotion-config";
+import {
+  selectAllMusicSliceData,
+  selectCurrentMusicSliceData,
+  updateMusicList,
+} from "src/libs/store/features/musicSlice";
+import { selectAllTemplate1Data, updateMusic } from "src/libs/store/features/template1Slice";
 import { Template1 } from "src/remotion/Template1";
-import { MusicType } from "types";
+import { MusicState } from "types";
 
 const Player: CustomNextPage = () => {
   const [isDrawerOpened, handlers] = useDisclosure(false);
   const template1Data = useSelector(selectAllTemplate1Data);
+  const currentMusicData = useSelector(selectCurrentMusicSliceData);
+  const musicListData = useSelector(selectAllMusicSliceData);
   const activeSceneData = useAtomValue(activeSceneAtom);
-  const currentMusicData = useAtomValue(currentMusicAtom);
   const { currentFrame } = useAtomValue(videConfigAtom);
   const playerRef = useRef<PlayerRef>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -158,7 +164,7 @@ const Player: CustomNextPage = () => {
         overlayBlur={3}
       >
         <div className="space-y-5">
-          {musicList.map((musicData) => (
+          {musicListData.map((musicData) => (
             <MusicCard key={musicData.id} musicData={musicData} />
           ))}
         </div>
@@ -207,9 +213,10 @@ const PlayButton: FC<PlayButtonProps> = ({ playerRef }) => {
   );
 };
 
-const MusicCard: FC<{ musicData: MusicType }> = ({ musicData }) => {
+const MusicCard: FC<{ musicData: MusicState }> = ({ musicData }) => {
   const [play, { stop }] = useSound(musicData.music, { interrupt: true });
   const [isPlaying, setIsPlaying] = useState(false);
+  const dispatch = useDispatch();
 
   return (
     <div className="hover:scale-125 hover:cursor-pointer">
@@ -225,15 +232,24 @@ const MusicCard: FC<{ musicData: MusicType }> = ({ musicData }) => {
             }
           }}
         >
-          {isPlaying ? <PauseIcon className="h-6 text-gray-600" /> : <PlayIcon className="h-6 text-gray-600" />}
+          {isPlaying ? <PauseIcon className="h-6 text-gray-500" /> : <PlayIcon className="h-6 text-gray-500" />}
         </div>
-        <Avatar size={40} src={musicData.thumbnail} />
-        <div>
-          <p className="scale-125 transition duration-100">text</p>
-          <Text lineClamp={1}>{musicData.name}</Text>
-          <Text size="xs" color="dimmed">
-            {musicData.artist}
-          </Text>
+        <div
+          className="flex items-center space-x-2"
+          onClick={() => {
+            dispatch(updateMusicList({ id: musicData.id }));
+            dispatch(updateMusic({ music: musicData.music }));
+          }}
+        >
+          <Avatar size={40} src={musicData.thumbnail} />
+          <div>
+            <div className={`text-gray-600 ${musicData.isSelected ? "font-bold text-orange-500" : ""}`}>
+              {musicData.name}
+            </div>
+            <Text size="xs" color="dimmed">
+              {musicData.artist}
+            </Text>
+          </div>
         </div>
       </Group>
     </div>
