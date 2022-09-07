@@ -7,7 +7,6 @@ import { useCallback, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import type { CustomNextPage } from "next";
 import type { FC, RefObject } from "react";
-import { AudioWaveform } from "src/components/AudioWaveform";
 import { Form } from "src/components/Form";
 import { TimelineCard } from "src/components/TimelineCard";
 import { EditLayout } from "src/layout/EditLayout";
@@ -110,11 +109,11 @@ const Player: CustomNextPage = () => {
 
               <div className="px-24 md:px-0" />
             </div>
+            {/* <AudioWaveform /> */}
           </div>
         </div>
         <div className="flex items-center space-x-6 pl-12">
           <p className="text-xs font-bold text-gray-600">{calculateTime(currentFrame)}</p>
-          <AudioWaveform />
         </div>
         {/** 入力フォーム */}
         <div className="mx-5 pt-5 md:hidden">
