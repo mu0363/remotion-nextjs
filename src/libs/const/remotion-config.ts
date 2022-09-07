@@ -1,7 +1,7 @@
 import type { Template1Type, TimelineSceneType } from "types";
 
 export const COMP_NAME = "MyComp";
-export const SITE_ID = "https://remotionlambda-47aic418sn.s3.us-east-1.amazonaws.com/sites/gkem51a0pz/index.html";
+export const SITE_ID = "https://remotionlambda-47aic418sn.s3.us-east-1.amazonaws.com/sites/j16b05o8oq/index.html";
 export const REGION = "us-east-1";
 export const TEMPLATE1_DURATION = 360;
 export const storageUrl = "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public";
@@ -19,7 +19,7 @@ export const defaultProps: Template1Type = {
       scene_number: 1,
       image_number: 1,
       image_url: `${storageUrl}/images/image-01.jpg`,
-      text: "最初の文字です",
+      text: "素敵な友人に\n恵まれた大学時代",
     },
     {
       id: 2,
@@ -27,7 +27,7 @@ export const defaultProps: Template1Type = {
       scene_number: 2,
       image_number: 1,
       image_url: `${storageUrl}/images/image-02.jpg`,
-      text: "2番目の文字です",
+      text: "いつでもどこでも\n二人は一緒でした",
     },
     {
       id: 3,
@@ -35,7 +35,7 @@ export const defaultProps: Template1Type = {
       scene_number: 3,
       image_number: 1,
       image_url: `${storageUrl}/images/image-03.jpg`,
-      text: "最後の文字です。\n改行もできます",
+      text: "楽しかったみんなとの旅行\nまた一緒に行こうね",
     },
   ],
 };
@@ -44,17 +44,17 @@ export const timelineScenes: TimelineSceneType[] = [
   {
     id: 1,
     time: 3,
-    thumbnail: `${storageUrl}/images/thumbnail/T1S1_thumbnail.jpg`,
+    thumbnail: `${storageUrl}/images/thumbnail/T1S1_thumbnail.webp`,
   },
   {
     id: 2,
     time: 4,
-    thumbnail: `${storageUrl}/images/thumbnail/T1S2_thumbnail.jpg`,
+    thumbnail: `${storageUrl}/images/thumbnail/T1S2_thumbnail.webp`,
   },
   {
     id: 3,
     time: 3,
-    thumbnail: `${storageUrl}/images/thumbnail/T1S3_thumbnail.jpg`,
+    thumbnail: `${storageUrl}/images/thumbnail/T1S3_thumbnail.webp`,
   },
 ];
 

@@ -6,7 +6,7 @@ export const T1S1_Image1: FC<{ image: string }> = ({ image }) => {
   const frame = useCurrentFrame();
   const { height, fps } = useVideoConfig();
 
-  const entranceTransform = spring({
+  const entrance = spring({
     fps,
     frame,
     config: {
@@ -19,7 +19,7 @@ export const T1S1_Image1: FC<{ image: string }> = ({ image }) => {
     extrapolateRight: "clamp",
   });
 
-  const transformOffset = interpolate(entranceTransform, [0, 1], [height, 0]);
+  const transformOffset = interpolate(entrance, [0, 1], [height, 0]);
   const wave = Math.cos((frame - 5) / 15) * 10 + transformOffset;
 
   return (
@@ -27,11 +27,11 @@ export const T1S1_Image1: FC<{ image: string }> = ({ image }) => {
       <Img
         src={image}
         alt="avatar"
-        className="absolute z-10 mt-[900px] ml-24 h-[720px] w-[1080px] rounded-3xl object-cover"
+        className="absolute z-10 mt-[950px] ml-24 h-[720px] w-[1080px] rounded-3xl object-cover"
         style={{
           transform: `translateY(${wave}px)`,
           rotate: "-2deg",
-          // boxShadow: "2px 4px 18px #212121",
+          boxShadow: "8px 8px 24px #BFBFBF",
         }}
       />
       <Img
@@ -40,7 +40,7 @@ export const T1S1_Image1: FC<{ image: string }> = ({ image }) => {
         className="h-[2580px] w-[3520px] object-cover"
         style={{
           opacity: opacity,
-          // filter: "blur(20px)",
+          // filter: "blur(10px)",
           // rotate: "3deg",
         }}
       />

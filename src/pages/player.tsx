@@ -89,15 +89,15 @@ const Player: CustomNextPage = () => {
             <div className="absolute cursor-grab active:cursor-grabbing">
               <FunnelIcon className="w-6 text-gray-600" />
             </div>
-            <div className="absolute left-2.5 top-1 rounded-full bg-gray-600 py-10 px-0.5" />
+            <div className="absolute left-2.5 top-1 rounded-full bg-gray-600 py-11 px-0.5" />
           </div>
         </div>
 
         {/** mobile再生バー */}
         <div className="relative flex items-center justify-center md:hidden">
-          <div className="absolute z-20 mt-11 scroll-auto rounded-full bg-gray-600 py-9 px-0.5" />
+          <div className="absolute z-20 mt-12 scroll-auto rounded-full bg-gray-600 py-9 px-0.5" />
         </div>
-        <div className="mx-0 mt-1 md:mx-5">
+        <div className="mx-0 mt-1 md:mx-5 md:mt-2">
           <div className="relative flex items-center">
             <PlayButton playerRef={playerRef} />
             <div className="flex overflow-x-auto pl-48 md:pl-20" ref={scrollRef}>

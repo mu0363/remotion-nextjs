@@ -16,6 +16,7 @@ export const T1S1_Text1: FC<{ text: string }> = ({ text }) => {
       style={{
         opacity,
         fontFamily: "Kiwi Maru",
+        textShadow: "0 0 5px #FFF,0 0 5px #FFF,0 0 5px #FFF,0 0 5px #FFF",
       }}
     >
       {text}
