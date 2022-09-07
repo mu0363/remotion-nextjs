@@ -1,10 +1,9 @@
 // FIXME:
 /* eslint-disable no-console */
-import { PlayIcon, ChevronLeftIcon, MusicalNoteIcon } from "@heroicons/react/24/solid";
-import { Button, Progress, Container, createStyles, Header as MantineHeader, Modal, Drawer } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import { ChevronLeftIcon } from "@heroicons/react/24/solid";
+import { Button, Container, createStyles, Header as MantineHeader, Modal } from "@mantine/core";
 import { NextLink } from "@mantine/next";
-import { Player as RemotionPlayer, PlayerRef } from "@remotion/player";
+import { PlayerRef } from "@remotion/player";
 import { IconCloudStorm, IconDownload } from "@tabler/icons";
 import { useAtomValue } from "jotai";
 import Link from "next/link";
@@ -14,9 +13,7 @@ import type { FC, MouseEvent } from "react";
 import type { RenderProgressType } from "src/pages/api/progress";
 import { activeSceneAtom } from "src/libs/atom/atom";
 import { HEADER_HEIGHT, HEADER_HEIGHT_SM } from "src/libs/const";
-import { TEMPLATE1_DURATION } from "src/libs/const/remotion-config";
 import { selectAllTemplate1Data } from "src/libs/store/features/template1Slice";
-import { Template1 } from "src/remotion/Template1";
 import { RenderInfo } from "types";
 
 const useStyles = createStyles((theme) => ({
@@ -46,7 +43,6 @@ const useStyles = createStyles((theme) => ({
 /** @package */
 export const Header: FC = () => {
   const { classes } = useStyles();
-  const [isDrawerOpened, handlers] = useDisclosure(false);
   const [isOpened, setIsOpened] = useState(false);
   const playerRef = useRef<PlayerRef>(null);
   const template1Data = useSelector(selectAllTemplate1Data);
@@ -137,103 +133,74 @@ export const Header: FC = () => {
           <div className="flex items-center space-x-1 hover:cursor-pointer">
             <ChevronLeftIcon className="ml-1 h-6 text-gray-600 md:ml-5 md:h-7" />
             <div
-              className="text-sm text-gray-600 md:text-sm"
-              style={{ fontFamily: "BIZ UDPGothic", fontWeight: "bold" }}
+              className="text-sm font-bold text-gray-600 md:text-base"
+              // style={{ fontFamily: "BIZ UDPGothic", fontWeight: "bold" }}
             >
               戻る
             </div>
           </div>
         </Link>
-        <div className="flex items-center space-x-3">
-          <MusicalNoteIcon
-            className="h-8 cursor-pointer rounded-full bg-orange-400 p-2 text-white hover:bg-orange-500"
-            onClick={() => handlers.open()}
-          />
-          <div className="flex items-center space-x-3">
-            <div
-              className="flex cursor-pointer items-center space-x-1 rounded-lg bg-red-400 py-1 pr-4 pl-2 hover:bg-red-500 md:rounded-xl"
-              onClick={() => setIsOpened(true)}
-            >
-              <PlayIcon className="h-5 text-white md:h-7" />
-              <div
-                className="text-base font-bold text-white md:text-sm"
-                style={{ fontFamily: "BIZ UDPGothic", fontWeight: "bold" }}
-              >
-                12秒
-              </div>
-            </div>
-          </div>
-        </div>
+
+        <Button
+          type="button"
+          radius="xl"
+          color="red"
+          leftIcon={<IconCloudStorm size={18} />}
+          onClick={() => setIsOpened(true)}
+        >
+          Render
+        </Button>
       </Container>
-      <Drawer
-        opened={isDrawerOpened}
-        onClose={() => handlers.close()}
-        title={<div className="font-bold text-gray-600">BGMを選択</div>}
-        padding="xl"
-        size="md"
-        position="right"
-        overlayOpacity={0.55}
-        overlayBlur={3}
-        withCloseButton={false}
-      >
-        <div className="flex items-center space-x-3">
-          <PlayIcon className="h-5 text-gray-600" />
-          <p>Captured Memories</p>
-        </div>
-      </Drawer>
       <Modal
         opened={isOpened}
         onClose={() => setIsOpened(false)}
-        withCloseButton={false}
+        overlayOpacity={0.55}
+        overlayBlur={3}
         centered
-        size="100%"
+        size="md"
         transition="fade"
-        transitionDuration={600}
+        transitionDuration={300}
         transitionTimingFunction="ease"
         className="m-0 p-0"
       >
-        <div className="mb-5 flex flex-col">
+        <div className="mx-10">
           {/** 書き出しボタン */}
-          <div>
-            {renderStatus?.type === "success" ? null : (
-              <Progress value={renderStatus?.percent ? renderStatus?.percent * 100 : 0} />
-            )}
-            {renderStatus?.type === "success" ? (
+
+          {renderStatus?.type === "success" ? (
+            <div className="flex flex-col items-center">
+              <p className="text-2xl font-bold text-gray-600">完了しました！</p>
               <NextLink href={renderStatus.url} target="_blank">
-                <Button
-                  leftIcon={<IconDownload size={18} />}
-                  className="mt-3 w-full rounded-full bg-red-400 hover:bg-red-500"
-                >
+                <Button radius="xl" color="cyan" leftIcon={<IconDownload size={18} />} className="my-10">
                   ダウンロード
                 </Button>
               </NextLink>
-            ) : (
+            </div>
+          ) : (
+            <div className="flex flex-col items-center">
+              {isLoading ? (
+                <p className="text-2xl font-bold text-gray-600">書き出し中です...</p>
+              ) : (
+                <p className="text-2xl font-bold text-gray-600">本当に書き出しますか?</p>
+              )}
               <Button
                 type="button"
+                radius="xl"
+                color="red"
                 leftIcon={<IconCloudStorm size={18} />}
                 loading={isLoading}
                 onClick={handleSubmit}
-                className="mt-3 w-full rounded-full"
+                className="my-10"
               >
-                {isLoading ? "書き出し中" : "Render"}
+                {isLoading
+                  ? `書き出し中 ${renderStatus?.percent ? renderStatus?.percent * 100 : 0}%`
+                  : "映像へ書き出す"}
               </Button>
-            )}
-          </div>
+            </div>
+          )}
         </div>
-        <div className="border shadow-lg">
-          <RemotionPlayer
-            ref={playerRef}
-            component={Template1}
-            inputProps={template1Data}
-            durationInFrames={TEMPLATE1_DURATION}
-            compositionWidth={1920}
-            compositionHeight={1080}
-            style={{ width: "100%" }}
-            fps={30}
-            controls
-            loop
-          />
-        </div>
+        {/* {renderStatus?.type === "success" ? null : (
+            <Progress value={renderStatus?.percent ? renderStatus?.percent * 100 : 0} />
+          )} */}
       </Modal>
     </MantineHeader>
   );

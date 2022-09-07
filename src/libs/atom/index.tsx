@@ -1,1 +1,1 @@
-export { videConfigAtom, isPlayingAtom, activeSceneAtom } from "./atom";
+export { videConfigAtom, isPlayingAtom, activeSceneAtom, currentMusicAtom } from "./atom";

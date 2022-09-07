@@ -46,6 +46,7 @@
     "react-redux": "^8.0.2",
     "remotion": "3.2.12",
     "styled-components": "^5.3.5",
+    "use-sound": "^4.0.1",
     "uuid": "^8.3.2",
     "wavesurfer.js": "^6.2.0",
     "zod": "^3.18.0"

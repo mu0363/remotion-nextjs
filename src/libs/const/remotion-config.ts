@@ -1,3 +1,4 @@
+import { MusicType } from "./../../../types/types";
 import type { Template1Type, TimelineSceneType } from "types";
 
 export const COMP_NAME = "MyComp";
@@ -44,17 +45,44 @@ export const timelineScenes: TimelineSceneType[] = [
   {
     id: 1,
     time: 3,
-    thumbnail: `${storageUrl}/images/thumbnail/T1S1_thumbnail.webp`,
+    thumbnail: `${storageUrl}/images/thumbnail/thumbnail_T1S1.webp`,
   },
   {
     id: 2,
     time: 4,
-    thumbnail: `${storageUrl}/images/thumbnail/T1S2_thumbnail.webp`,
+    thumbnail: `${storageUrl}/images/thumbnail/thumbnail_T1S2.webp`,
   },
   {
     id: 3,
     time: 3,
-    thumbnail: `${storageUrl}/images/thumbnail/T1S3_thumbnail.webp`,
+    thumbnail: `${storageUrl}/images/thumbnail/thumbnail_T1S3.webp`,
+  },
+];
+
+export const musicList: MusicType[] = [
+  {
+    id: 1,
+    name: "Captured Memories",
+    artist: "Marshall Usinger",
+    time: "3:30",
+    thumbnail: `${storageUrl}/images/thumbnail/thumbnail_music_01.jpeg`,
+    music: "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/music/music1.mp3",
+  },
+  {
+    id: 2,
+    name: "Sunny Summer",
+    artist: "Zach Sorgen",
+    time: "1:55",
+    thumbnail: `${storageUrl}/images/thumbnail/thumbnail_music_02.jpeg`,
+    music: "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/music/music2.mp3",
+  },
+  {
+    id: 3,
+    name: "On the Tip of My Toes",
+    artist: "Jane & The Boy",
+    time: "3:08",
+    thumbnail: `${storageUrl}/images/thumbnail/thumbnail_music_04.jpeg`,
+    music: "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/music/music3.mp3",
   },
 ];
 
