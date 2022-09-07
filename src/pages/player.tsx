@@ -1,7 +1,7 @@
 // FIXME:
 /* eslint-disable no-console */
 import { FunnelIcon, PlayIcon, PauseIcon, MusicalNoteIcon } from "@heroicons/react/24/solid";
-import { Avatar, Drawer, Group, Text, UnstyledButton } from "@mantine/core";
+import { Avatar, Drawer, Group, Text, Tooltip } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Player as RemotionPlayer, PlayerRef } from "@remotion/player";
 import { useAtom, useAtomValue } from "jotai";
@@ -119,13 +119,21 @@ const Player: CustomNextPage = () => {
           </div>
           <div className="flex items-center justify-between space-x-6 px-6 md:pl-7 md:pr-0">
             <p className="text-xs font-bold text-gray-600">{calculateTime(currentFrame)}</p>
-            <div
-              className="flex cursor-pointer items-center space-x-1 rounded-full bg-orange-400 py-1 px-3 hover:bg-orange-500"
-              onClick={() => handlers.open()}
+            <Tooltip
+              label={<div className="font-bold">BGMを変更</div>}
+              color="orange"
+              withArrow
+              transition="fade"
+              transitionDuration={300}
             >
-              <MusicalNoteIcon className="h-3 text-white" />
-              <p className="text-xs font-bold text-white">{currentMusicData.name}</p>
-            </div>
+              <div
+                className="group flex cursor-pointer items-center space-x-1 rounded-full bg-orange-400 py-1 px-3 hover:bg-orange-500"
+                onClick={() => handlers.open()}
+              >
+                <MusicalNoteIcon className="h-3 text-white" />
+                <p className="text-xs font-bold text-white">{currentMusicData.name}</p>
+              </div>
+            </Tooltip>
           </div>
 
           {/** 入力フォーム */}
@@ -204,7 +212,7 @@ const MusicCard: FC<{ musicData: MusicType }> = ({ musicData }) => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <UnstyledButton key={musicData.id}>
+    <div className="hover:scale-125 hover:cursor-pointer">
       <Group>
         <div
           onClick={() => {
@@ -221,12 +229,13 @@ const MusicCard: FC<{ musicData: MusicType }> = ({ musicData }) => {
         </div>
         <Avatar size={40} src={musicData.thumbnail} />
         <div>
+          <p className="scale-125 transition duration-100">text</p>
           <Text lineClamp={1}>{musicData.name}</Text>
           <Text size="xs" color="dimmed">
             {musicData.artist}
           </Text>
         </div>
       </Group>
-    </UnstyledButton>
+    </div>
   );
 };
