@@ -44,17 +44,17 @@ export const timelineScenes: TimelineSceneType[] = [
   {
     id: 1,
     time: 3,
-    thumbnail: `${storageUrl}/thumbnail/T1S1_thumbnail.webp`,
+    thumbnail: `${storageUrl}/images/thumbnail/T1S1_thumbnail.jpg`,
   },
   {
     id: 2,
     time: 4,
-    thumbnail: `${storageUrl}/thumbnail/T1S2_thumbnail.webp`,
+    thumbnail: `${storageUrl}/images/thumbnail/T1S2_thumbnail.jpg`,
   },
   {
     id: 3,
     time: 3,
-    thumbnail: `${storageUrl}/thumbnail/T1S3_thumbnail.webp`,
+    thumbnail: `${storageUrl}/images/thumbnail/T1S3_thumbnail.jpg`,
   },
 ];
 

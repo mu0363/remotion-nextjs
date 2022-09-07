@@ -27,7 +27,7 @@ export const T1S1_Image1: FC<{ image: string }> = ({ image }) => {
       <Img
         src={image}
         alt="avatar"
-        className="absolute z-10 mt-[900px] ml-24 h-[720px] w-[980px] rounded-3xl object-cover"
+        className="absolute z-10 mt-[900px] ml-24 h-[720px] w-[1080px] rounded-3xl object-cover"
         style={{
           transform: `translateY(${wave}px)`,
           rotate: "-2deg",
