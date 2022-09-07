@@ -51,7 +51,7 @@ export const Form = () => {
   return (
     <div>
       <Stack>
-        <Badge className="w-20" style={{ fontFamily: "BIZ UDPGothic", fontWeight: "bold" }}>{`シーン${id}`}</Badge>
+        <Badge color="cyan" className="w-20">{`シーン${id}`}</Badge>
         <Textarea onChange={handleChange} size="lg" value={text} />
         <Tooltip label="画像を変更" color="blue" withArrow>
           <div className="flex items-center justify-center">

@@ -31,10 +31,16 @@ export const TimelineCard: FC<Props> = ({ card, playerRef }) => {
   };
 
   return (
-    <Tooltip label={`シーン${id}`} color="teal" withArrow transition="fade" transitionDuration={300}>
+    <Tooltip
+      label={<div className="font-bold">{`シーン${id}`}</div>}
+      color="cyan"
+      withArrow
+      transition="fade"
+      transitionDuration={300}
+    >
       <div
         className={`my-3 mr-2 h-16 w-28 cursor-pointer rounded-2xl ${
-          activeSceneData.scene_number === id ? "border border-solid border-blue-300" : "border"
+          activeSceneData.scene_number === id ? "border-2 border-solid border-blue-300" : "border-2"
         } `}
       >
         <Image

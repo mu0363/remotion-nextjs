@@ -46,3 +46,14 @@ export type Template1Type = {
   watermark: string;
   sceneState: SceneState[];
 };
+
+// 音楽リスト
+export type MusicState = {
+      id: number,
+    name: string,
+    artist: string,
+    time: string,
+    thumbnail: string,
+    music: string,
+    isSelected: boolean
+}

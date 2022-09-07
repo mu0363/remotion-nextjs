@@ -19,8 +19,8 @@ export const AudioWaveform = () => {
 
   const BAR_WIDTH = 7;
   const BAR_MARGIN_BETWEEN = 2;
-  const MAX_BAR_HEIGHT = 50;
-  const QUANTITY_OF_SAMPLES = durationInFrames / 1.5;
+  const MAX_BAR_HEIGHT = 30;
+  const QUANTITY_OF_SAMPLES = durationInFrames / 2.5;
 
   const getWaveForm = useCallback(async () => {
     const audioData = await getAudioData(music);
@@ -46,6 +46,7 @@ export const AudioWaveform = () => {
   }, [QUANTITY_OF_SAMPLES, setWaveforms, music]);
 
   useEffect(() => {
+    // FIXME:
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     getWaveForm();
   }, [getWaveForm]);

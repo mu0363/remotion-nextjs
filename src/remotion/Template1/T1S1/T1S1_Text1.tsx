@@ -11,15 +11,15 @@ export const T1S1_Text1: FC<{ text: string }> = ({ text }) => {
   });
 
   return (
-    <p
-      className="absolute z-30 mt-[0px] ml-[1050px] whitespace-pre-wrap text-6xl font-bold leading-normal text-gray-700"
+    <div
+      className="absolute right-0 z-30 mr-28 whitespace-pre-wrap font-sans text-6xl font-bold leading-normal text-gray-700"
       style={{
         opacity,
         fontFamily: "Kiwi Maru",
-        textShadow: "1px 1px 6px #FFF, 1px 1px 6px #FFF, 1px 1px 6px #FFF,1px 1px 20px #FFF",
+        textShadow: "0 0 5px #FFF,0 0 5px #FFF,0 0 5px #FFF,0 0 5px #FFF",
       }}
     >
       {text}
-    </p>
+    </div>
   );
 };
