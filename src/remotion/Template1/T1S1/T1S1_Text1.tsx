@@ -12,7 +12,7 @@ export const T1S1_Text1: FC<{ text: string }> = ({ text }) => {
 
   return (
     <p
-      className="absolute z-30 mt-[0px] ml-[1050px] whitespace-pre-wrap text-6xl font-bold leading-normal text-gray-700"
+      className="absolute z-30 mt-[0px] ml-[1050px] mr-[100px] whitespace-pre-wrap text-6xl font-bold leading-normal text-gray-700"
       style={{
         opacity,
         fontFamily: "Kiwi Maru",
