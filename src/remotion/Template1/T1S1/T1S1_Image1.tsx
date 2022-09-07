@@ -14,17 +14,12 @@ export const T1S1_Image1: FC<{ image: string }> = ({ image }) => {
     },
     durationInFrames: 30,
   });
-  const entranceOpacity = spring({
-    fps,
-    frame,
-    config: {
-      damping: 200,
-    },
-    durationInFrames: 90,
+  const opacity = interpolate(frame, [0, 30], [0, 0.1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
   });
 
   const transformOffset = interpolate(entranceTransform, [0, 1], [height, 0]);
-  const opacityOffset = interpolate(entranceOpacity, [0, 1], [0, 0.1]);
   const wave = Math.cos((frame - 5) / 15) * 10 + transformOffset;
 
   return (
@@ -32,7 +27,7 @@ export const T1S1_Image1: FC<{ image: string }> = ({ image }) => {
       <Img
         src={image}
         alt="avatar"
-        className="absolute z-10 mt-[900px] ml-24 h-[720px] w-[1080px] rounded-3xl object-cover"
+        className="absolute z-10 mt-[900px] ml-24 h-[720px] w-[980px] rounded-3xl object-cover"
         style={{
           transform: `translateY(${wave}px)`,
           rotate: "-2deg",
@@ -44,7 +39,7 @@ export const T1S1_Image1: FC<{ image: string }> = ({ image }) => {
         alt="avatar"
         className="h-[2580px] w-[3520px] object-cover"
         style={{
-          opacity: opacityOffset,
+          opacity: opacity,
           // filter: "blur(20px)",
           // rotate: "3deg",
         }}
