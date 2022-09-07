@@ -19,10 +19,10 @@ import { Template1 } from "src/remotion/Template1";
 const Player: CustomNextPage = () => {
   const template1Data = useSelector(selectAllTemplate1Data);
   const activeSceneData = useAtomValue(activeSceneAtom);
+  const { currentFrame } = useAtomValue(videConfigAtom);
   const playerRef = useRef<PlayerRef>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const dragRef = useRef<HTMLDivElement>(null);
-  const { currentFrame } = useAtomValue(videConfigAtom);
 
   const calculateTime = (fps: number) => {
     const minute = Math.floor(fps / (30 * 60));

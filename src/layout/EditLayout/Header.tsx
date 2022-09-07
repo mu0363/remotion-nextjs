@@ -1,7 +1,8 @@
 // FIXME:
 /* eslint-disable no-console */
-import { PlayIcon, ChevronLeftIcon } from "@heroicons/react/24/solid";
-import { Button, Progress, Container, createStyles, Header as MantineHeader, Modal } from "@mantine/core";
+import { PlayIcon, ChevronLeftIcon, MusicalNoteIcon } from "@heroicons/react/24/solid";
+import { Button, Progress, Container, createStyles, Header as MantineHeader, Modal, Drawer } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 import { NextLink } from "@mantine/next";
 import { Player as RemotionPlayer, PlayerRef } from "@remotion/player";
 import { IconCloudStorm, IconDownload } from "@tabler/icons";
@@ -45,6 +46,7 @@ const useStyles = createStyles((theme) => ({
 /** @package */
 export const Header: FC = () => {
   const { classes } = useStyles();
+  const [isDrawerOpened, handlers] = useDisclosure(false);
   const [isOpened, setIsOpened] = useState(false);
   const playerRef = useRef<PlayerRef>(null);
   const template1Data = useSelector(selectAllTemplate1Data);
@@ -143,20 +145,42 @@ export const Header: FC = () => {
           </div>
         </Link>
         <div className="flex items-center space-x-3">
-          <div
-            className="flex cursor-pointer items-center space-x-1 rounded-lg bg-red-400 py-1 pr-4 pl-2 hover:bg-red-500 md:rounded-xl"
-            onClick={() => setIsOpened(true)}
-          >
-            <PlayIcon className="h-5 text-white md:h-7" />
+          <MusicalNoteIcon
+            className="h-8 cursor-pointer rounded-full bg-orange-400 p-2 text-white hover:bg-orange-500"
+            onClick={() => handlers.open()}
+          />
+          <div className="flex items-center space-x-3">
             <div
-              className="text-base font-bold text-white md:text-sm"
-              style={{ fontFamily: "BIZ UDPGothic", fontWeight: "bold" }}
+              className="flex cursor-pointer items-center space-x-1 rounded-lg bg-red-400 py-1 pr-4 pl-2 hover:bg-red-500 md:rounded-xl"
+              onClick={() => setIsOpened(true)}
             >
-              12秒
+              <PlayIcon className="h-5 text-white md:h-7" />
+              <div
+                className="text-base font-bold text-white md:text-sm"
+                style={{ fontFamily: "BIZ UDPGothic", fontWeight: "bold" }}
+              >
+                12秒
+              </div>
             </div>
           </div>
         </div>
       </Container>
+      <Drawer
+        opened={isDrawerOpened}
+        onClose={() => handlers.close()}
+        title={<div className="font-bold text-gray-600">BGMを選択</div>}
+        padding="xl"
+        size="md"
+        position="right"
+        overlayOpacity={0.55}
+        overlayBlur={3}
+        withCloseButton={false}
+      >
+        <div className="flex items-center space-x-3">
+          <PlayIcon className="h-5 text-gray-600" />
+          <p>Captured Memories</p>
+        </div>
+      </Drawer>
       <Modal
         opened={isOpened}
         onClose={() => setIsOpened(false)}
