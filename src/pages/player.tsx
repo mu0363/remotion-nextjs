@@ -106,7 +106,7 @@ const Player: CustomNextPage = () => {
 
           {/** mobile再生バー */}
           <div className="relative flex items-center justify-center md:hidden">
-            <div className="absolute z-20 mt-12 scroll-auto rounded-full bg-gray-600 py-9 px-0.5" />
+            <div className="absolute z-20 mt-24 mr-4 scroll-auto rounded-full bg-gray-600 py-9 px-0.5" />
           </div>
           <div className="mx-0 mt-1 md:mr-5 md:mt-2">
             <div className="relative flex items-center">
