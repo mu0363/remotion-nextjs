@@ -3,6 +3,7 @@ export {
   SITE_ID,
   REGION,
   Template1DefaultProps,
+  Template2DefaultProps,
   timelineScenes,
   thumbnailStartFrame,
   musicList,

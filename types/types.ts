@@ -56,6 +56,12 @@ export type Template1Type = {
   sceneState: SceneState[];
 };
 
+export type Template2Type = {
+  music: string;
+  watermark: string;
+  sceneState: SceneState[];
+};
+
 // 音楽リスト
 export type MusicState = {
       id: number,

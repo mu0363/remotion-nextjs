@@ -22,8 +22,8 @@ export const Template2: FC<Template1Type> = (props) => {
     <>
       <Audio src={music} volume={(f) => interpolate(f, [170, 360], [1, 0], { extrapolateLeft: "clamp" })} />
       <Watermark watermark={watermark} />
-      <T2S1 text="Think different" />
-      <T2S2 text="Just do it" />
+      <T2S1 sceneState={sceneState[0]} />
+      <T2S2 sceneState={sceneState[1]} />
       <Video src="https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/videos/AWARDS_OPENER.mp4" />
     </>
   );

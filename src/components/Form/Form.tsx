@@ -6,22 +6,33 @@ import { useAtomValue } from "jotai";
 import Image from "next/image";
 import { ChangeEvent } from "react";
 import { useDispatch } from "react-redux";
-import { activeSceneAtom } from "src/libs/atom/atom";
+import { activeSceneAtom, selectedTemplateAtom } from "src/libs/atom/atom";
 import { storageUrl, USER_ID } from "src/libs/const/remotion-config";
 import { useCurrentData } from "src/libs/hooks/useCurrentData";
-import { updateImage, updateText } from "src/libs/store/features/template1Slice";
+import { updateImage, updateT1Text } from "src/libs/store/features/template1Slice";
+import { updateT2Text } from "src/libs/store/features/template2Slice";
 import { supabaseClient } from "src/libs/supabase/supabaseClient";
 import { ImageType } from "types";
 
 /** @package */
 export const Form = () => {
   const dispatch = useDispatch();
+  const selectedTemplate = useAtomValue(selectedTemplateAtom);
   const { scene_number } = useAtomValue(activeSceneAtom);
   const currentData = useCurrentData(scene_number);
   const { id, template_number, image_number, text, image_url } = currentData;
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    dispatch(updateText({ scene_number, id: scene_number, text: e.target.value }));
+    switch (selectedTemplate) {
+      case "template01":
+        dispatch(updateT1Text({ scene_number, id: scene_number, text: e.target.value }));
+        break;
+      case "template02":
+        dispatch(updateT2Text({ scene_number, id: scene_number, text: e.target.value }));
+        break;
+      default:
+        dispatch(updateT1Text({ scene_number, id: scene_number, text: e.target.value }));
+    }
   };
 
   const handleImage = (e: ChangeEvent<HTMLInputElement>) => {

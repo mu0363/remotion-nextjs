@@ -1,7 +1,7 @@
-import type { Template1Type, MusicState, TemplateTimelineSceneType } from "types";
+import type { Template1Type, MusicState, TemplateTimelineSceneType, Template2Type } from "types";
 
 export const COMP_NAME = "MyComp";
-export const SITE_ID = "https://remotionlambda-47aic418sn.s3.us-east-1.amazonaws.com/sites/s0chk1nwo6/index.html";
+export const SITE_ID = "https://remotionlambda-47aic418sn.s3.us-east-1.amazonaws.com/sites/c7o4e4mmwc/index.html";
 export const REGION = "us-east-1";
 export const TEMPLATE1_DURATION = 360;
 export const storageUrl = "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public";
@@ -36,6 +36,29 @@ export const Template1DefaultProps: Template1Type = {
       image_number: 1,
       image_url: `${storageUrl}/images/image-03.jpg`,
       text: "楽しかったみんなとの旅行\nまた一緒に行こうね",
+    },
+  ],
+};
+
+export const Template2DefaultProps: Template2Type = {
+  music: "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/music/music2.mp3",
+  watermark: WATERMARK,
+  sceneState: [
+    {
+      id: 1,
+      template_number: 2,
+      scene_number: 1,
+      image_number: 1,
+      image_url: `${storageUrl}/images/image-01.jpg`,
+      text: "Think different.",
+    },
+    {
+      id: 2,
+      template_number: 2,
+      scene_number: 2,
+      image_number: 1,
+      image_url: `${storageUrl}/images/image-02.jpg`,
+      text: "Just Do It.",
     },
   ],
 };
