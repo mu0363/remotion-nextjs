@@ -12,9 +12,11 @@ export const T1S1_Text1: FC<{ text: string }> = ({ text }) => {
 
   return (
     <div
-      className="mt-16 whitespace-pre-wrap font-sans text-5xl font-bold leading-normal text-gray-700"
+      className="absolute right-0 z-30 mr-28 whitespace-pre-wrap font-sans text-6xl font-bold leading-normal text-gray-700"
       style={{
         opacity,
+        fontFamily: "Kiwi Maru",
+        textShadow: "0 0 5px #FFF,0 0 5px #FFF,0 0 5px #FFF,0 0 5px #FFF",
       }}
     >
       {text}

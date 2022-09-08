@@ -1,9 +1,10 @@
 import "../styles/global.css";
+import "../styles/font.css";
 import { Provider } from "react-redux";
 import { Composition } from "remotion";
 import { COMP_NAME } from "../libs/const";
 import { defaultProps, TEMPLATE1_DURATION } from "../libs/const/remotion-config";
-import { store } from "../store";
+import { store } from "../libs/store";
 import { Template1 } from "./Template1";
 import type { FC } from "react";
 

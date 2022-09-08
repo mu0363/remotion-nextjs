@@ -1,54 +1,90 @@
-import { SceneState } from "src/store/features/template1Slice";
-import { TimelineSceneType } from "types";
+import type { Template1Type, TimelineSceneType, MusicState } from "types";
 
 export const COMP_NAME = "MyComp";
-export const SITE_ID = "https://remotionlambda-47aic418sn.s3.us-east-1.amazonaws.com/sites/mi4bvcd4un/index.html";
+export const SITE_ID = "https://remotionlambda-47aic418sn.s3.us-east-1.amazonaws.com/sites/s0chk1nwo6/index.html";
 export const REGION = "us-east-1";
 export const TEMPLATE1_DURATION = 360;
 export const storageUrl = "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public";
+export const WATERMARK = "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/images/watermark.png";
+export const WATERMARK_EMPTY =
+  "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/images/watermark_empty.png";
 export const USER_ID = "22DFD4AE-6E10-491F-81BE-8D9C66CCDDB0";
-export const defaultProps: SceneState[] = [
-  {
-    id: 1,
-    template_number: 1,
-    scene_number: 1,
-    image_number: 1,
-    image_url: `${storageUrl}/images/girl.png`,
-    text: "最初の文字です",
-  },
-  {
-    id: 2,
-    template_number: 1,
-    scene_number: 2,
-    image_number: 1,
-    image_url: `${storageUrl}/images/sena_robot.webp`,
-    text: "2番目の文字です",
-  },
-  {
-    id: 3,
-    template_number: 1,
-    scene_number: 3,
-    image_number: 1,
-    image_url: `${storageUrl}/images/the_cat.png`,
-    text: "最後の文字です。\n改行もできます",
-  },
-];
+export const defaultProps: Template1Type = {
+  music: "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/music/music1.mp3",
+  watermark: WATERMARK,
+  sceneState: [
+    {
+      id: 1,
+      template_number: 1,
+      scene_number: 1,
+      image_number: 1,
+      image_url: `${storageUrl}/images/image-01.jpg`,
+      text: "素敵な友人に\n恵まれた大学時代",
+    },
+    {
+      id: 2,
+      template_number: 1,
+      scene_number: 2,
+      image_number: 1,
+      image_url: `${storageUrl}/images/image-02.jpg`,
+      text: "いつでもどこでも\n二人は一緒でした",
+    },
+    {
+      id: 3,
+      template_number: 1,
+      scene_number: 3,
+      image_number: 1,
+      image_url: `${storageUrl}/images/image-03.jpg`,
+      text: "楽しかったみんなとの旅行\nまた一緒に行こうね",
+    },
+  ],
+};
 
 export const timelineScenes: TimelineSceneType[] = [
   {
     id: 1,
     time: 3,
-    thumbnail: `${storageUrl}/thumbnail/T1S1_thumbnail.webp`,
+    thumbnail: `${storageUrl}/images/thumbnail/thumbnail_T1S1.webp`,
   },
   {
     id: 2,
     time: 4,
-    thumbnail: `${storageUrl}/thumbnail/T1S2_thumbnail.webp`,
+    thumbnail: `${storageUrl}/images/thumbnail/thumbnail_T1S2.webp`,
   },
   {
     id: 3,
     time: 3,
-    thumbnail: `${storageUrl}/thumbnail/T1S3_thumbnail.webp`,
+    thumbnail: `${storageUrl}/images/thumbnail/thumbnail_T1S3.webp`,
+  },
+];
+
+export const musicList: MusicState[] = [
+  {
+    id: 1,
+    name: "Captured Memories",
+    artist: "Marshall Usinger",
+    time: "3:30",
+    thumbnail: `${storageUrl}/images/thumbnail/thumbnail_music_01.jpeg`,
+    music: "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/music/music1.mp3",
+    isSelected: true,
+  },
+  {
+    id: 2,
+    name: "Sunny Summer",
+    artist: "Zach Sorgen",
+    time: "1:55",
+    thumbnail: `${storageUrl}/images/thumbnail/thumbnail_music_02.jpeg`,
+    music: "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/music/music2.mp3",
+    isSelected: false,
+  },
+  {
+    id: 3,
+    name: "On the Tip of My Toes",
+    artist: "Jane & The Boy",
+    time: "3:08",
+    thumbnail: `${storageUrl}/images/thumbnail/thumbnail_music_04.jpeg`,
+    music: "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/music/music3.mp3",
+    isSelected: false,
   },
 ];
 

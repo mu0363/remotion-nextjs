@@ -29,3 +29,31 @@ export type RenderInfo = {
     | "ap-northeast-1";
   createdAt: string;
 };
+
+
+// Redux
+export type SceneState = {
+  id: number;
+  template_number: number;
+  scene_number: number;
+  image_number: number;
+  image_url: string;
+  text: string;
+};
+
+export type Template1Type = {
+  music: string;
+  watermark: string;
+  sceneState: SceneState[];
+};
+
+// 音楽リスト
+export type MusicState = {
+      id: number,
+    name: string,
+    artist: string,
+    time: string,
+    thumbnail: string,
+    music: string,
+    isSelected: boolean
+}
