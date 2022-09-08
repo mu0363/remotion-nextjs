@@ -32,7 +32,7 @@ export const T2S2_Text1: FC<{ text: string }> = ({ text }) => {
   return (
     <div className="flex h-screen w-full items-center justify-center">
       <div
-        className="absolute z-30 mt-[180px] whitespace-pre-wrap text-[80px] leading-normal text-white"
+        className="absolute z-30 mt-[0px] whitespace-pre-wrap text-[80px] leading-normal text-white"
         style={{
           opacity: `${frame < 90 ? opacityIn : opacityOut}`,
           fontFamily: "Cinzel",

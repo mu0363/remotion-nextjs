@@ -10,6 +10,15 @@ export type TimelineSceneType = {
   thumbnail: string;
 };
 
+// export type TemplateTimelineSceneType = {
+//   [key: string]: TimelineSceneType[],
+// };
+
+export type TemplateTimelineSceneType = Record<SelectedTemplateType,TimelineSceneType[]>
+
+export type SelectedTemplateType = "template01" | "template02" 
+
+
 // 書き出し時にポーリング関数へ渡す情報
 export type RenderInfo = {
   id: string;

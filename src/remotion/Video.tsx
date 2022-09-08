@@ -3,7 +3,7 @@ import "../styles/font.css";
 import { Provider } from "react-redux";
 import { Composition } from "remotion";
 import { COMP_NAME } from "../libs/const";
-import { defaultProps, TEMPLATE1_DURATION } from "../libs/const/remotion-config";
+import { Template1DefaultProps, TEMPLATE1_DURATION } from "../libs/const/remotion-config";
 import { store } from "../libs/store";
 import { Template2 } from "./Template2";
 import type { FC } from "react";
@@ -18,7 +18,7 @@ export const RemotionVideo: FC = () => {
         fps={30}
         width={1920}
         height={1080}
-        defaultProps={defaultProps}
+        defaultProps={Template1DefaultProps}
       />
     </Provider>
   );

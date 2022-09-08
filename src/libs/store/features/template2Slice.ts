@@ -4,17 +4,7 @@ import { RootState } from "../store";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { SceneState } from "types";
 
-// FIXME: Mapを使いたい
-// export type PageState = { id: number; text: string; image: string };
-// export type Template1State = Map<string, PageState>;
-
-// const pagesMap = new Map<string, { id: number; text: string; image: string }>([
-//   ["page1", { id: 1, text: "First Text from Redux", image: "https://source.unsplash.com/random/200x200" }],
-//   ["page2", { id: 2, text: "Second Text from Redux", image: "https://source.unsplash.com/random/200x200" }],
-// ]);
-// const initialState = pagesMap;
-
-export const template1Slice = createSlice({
+export const template2Slice = createSlice({
   name: "template1",
   initialState: Template1DefaultProps,
   reducers: {
@@ -34,7 +24,7 @@ export const template1Slice = createSlice({
   },
 });
 
-export const selectAllTemplate1Data = (state: RootState) => state.template1;
-export const { updateText, updateImage, updateMusic } = template1Slice.actions;
+export const selectAllTemplate1Data = (state: RootState) => state.template2;
+export const { updateText, updateImage, updateMusic } = template2Slice.actions;
 
-export default template1Slice.reducer;
+export default template2Slice.reducer;

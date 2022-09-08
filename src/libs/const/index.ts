@@ -2,7 +2,7 @@ export {
   COMP_NAME,
   SITE_ID,
   REGION,
-  defaultProps,
+  Template1DefaultProps,
   timelineScenes,
   thumbnailStartFrame,
   musicList,

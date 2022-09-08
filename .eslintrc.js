@@ -95,5 +95,8 @@ module.exports = {
         caughtErrorsIgnorePattern: "^_",
       },
     ],
+    // FIXME:
+    // https://github.com/typescript-eslint/typescript-eslint/issues/4619
+    "@typescript-eslint/no-misused-promises": ["error", { checksVoidReturn: false }],
   },
 };

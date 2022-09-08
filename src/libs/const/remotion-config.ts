@@ -1,4 +1,4 @@
-import type { Template1Type, TimelineSceneType, MusicState } from "types";
+import type { Template1Type, MusicState, TemplateTimelineSceneType } from "types";
 
 export const COMP_NAME = "MyComp";
 export const SITE_ID = "https://remotionlambda-47aic418sn.s3.us-east-1.amazonaws.com/sites/s0chk1nwo6/index.html";
@@ -9,7 +9,7 @@ export const WATERMARK = "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/ob
 export const WATERMARK_EMPTY =
   "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/images/watermark_empty.png";
 export const USER_ID = "22DFD4AE-6E10-491F-81BE-8D9C66CCDDB0";
-export const defaultProps: Template1Type = {
+export const Template1DefaultProps: Template1Type = {
   music: "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/music/music1.mp3",
   watermark: WATERMARK,
   sceneState: [
@@ -40,23 +40,37 @@ export const defaultProps: Template1Type = {
   ],
 };
 
-export const timelineScenes: TimelineSceneType[] = [
-  {
-    id: 1,
-    time: 3,
-    thumbnail: `${storageUrl}/images/thumbnail/thumbnail_T1S1.webp`,
-  },
-  {
-    id: 2,
-    time: 4,
-    thumbnail: `${storageUrl}/images/thumbnail/thumbnail_T1S2.webp`,
-  },
-  {
-    id: 3,
-    time: 3,
-    thumbnail: `${storageUrl}/images/thumbnail/thumbnail_T1S3.webp`,
-  },
-];
+export const timelineScenes: TemplateTimelineSceneType = {
+  template01: [
+    {
+      id: 1,
+      time: 3,
+      thumbnail: `${storageUrl}/images/thumbnail/thumbnail_T1S1.webp`,
+    },
+    {
+      id: 2,
+      time: 4,
+      thumbnail: `${storageUrl}/images/thumbnail/thumbnail_T1S2.webp`,
+    },
+    {
+      id: 3,
+      time: 3,
+      thumbnail: `${storageUrl}/images/thumbnail/thumbnail_T1S3.webp`,
+    },
+  ],
+  template02: [
+    {
+      id: 1,
+      time: 3,
+      thumbnail: `${storageUrl}/images/thumbnail/thumbnail_T1S1.webp`,
+    },
+    {
+      id: 2,
+      time: 4,
+      thumbnail: `${storageUrl}/images/thumbnail/thumbnail_T1S2.webp`,
+    },
+  ],
+};
 
 export const musicList: MusicState[] = [
   {

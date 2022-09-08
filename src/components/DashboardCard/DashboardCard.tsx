@@ -1,17 +1,20 @@
 import { Card, Grid, Group, Image, Text } from "@mantine/core";
+import { useRouter } from "next/router";
 import { FC } from "react";
+import { SelectedTemplateType } from "types";
 
 /** @package */
-export const DashboardCard: FC = () => {
-  const getRandomInt = (max: number) => {
-    return Math.floor(Math.random() * max);
-  };
+export const DashboardCard: FC<{ selectedTemplate: SelectedTemplateType }> = ({ selectedTemplate }) => {
+  const router = useRouter();
 
   return (
     <Grid.Col md={4} lg={3}>
       <Card radius="lg" shadow="sm" withBorder>
-        <Card.Section component="a" href="/player">
-          <Image src={`https://source.unsplash.com/random/320x180?rand=${getRandomInt(100)}`} alt="template" />
+        <Card.Section
+          className="cursor-pointer"
+          onClick={() => router.push({ pathname: "/player", query: { template: selectedTemplate } })}
+        >
+          <Image src={`https://source.unsplash.com/random/320x180`} alt="template" />
         </Card.Section>
 
         <Group position="apart" mt="md" mb="xs">

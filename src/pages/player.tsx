@@ -5,6 +5,7 @@ import { Avatar, Drawer, Group, Text, Tooltip } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Player as RemotionPlayer, PlayerRef } from "@remotion/player";
 import { useAtom, useAtomValue } from "jotai";
+import { useRouter } from "next/router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useSound from "use-sound";
@@ -14,7 +15,7 @@ import { Form } from "src/components/Form";
 import { TimelineCard } from "src/components/TimelineCard";
 import { EditLayout } from "src/layout/EditLayout";
 import { videConfigAtom } from "src/libs/atom";
-import { activeSceneAtom, isPlayingAtom } from "src/libs/atom/atom";
+import { activeSceneAtom, isPlayingAtom, selectedTemplateAtom } from "src/libs/atom/atom";
 import { TEMPLATE1_DURATION, timelineScenes } from "src/libs/const/remotion-config";
 import {
   selectAllMusicSliceData,
@@ -22,15 +23,19 @@ import {
   updateMusicList,
 } from "src/libs/store/features/musicSlice";
 import { selectAllTemplate1Data, updateMusic } from "src/libs/store/features/template1Slice";
+import { Template1 } from "src/remotion/Template1";
 import { Template2 } from "src/remotion/Template2";
-import { MusicState } from "types";
+import { MusicState, SelectedTemplateType, TimelineSceneType } from "types";
 
 const Player: CustomNextPage = () => {
+  const router = useRouter();
+  const [currentTimelineScene, setCurrentTimelineScene] = useState<TimelineSceneType[]>(timelineScenes.template01);
   const [isDrawerOpened, handlers] = useDisclosure(false);
   const template1Data = useSelector(selectAllTemplate1Data);
   const currentMusicData = useSelector(selectCurrentMusicSliceData);
   const musicListData = useSelector(selectAllMusicSliceData);
   const activeSceneData = useAtomValue(activeSceneAtom);
+  const [selectedTemplate, setSelectedTemplate] = useAtom(selectedTemplateAtom);
   const { currentFrame } = useAtomValue(videConfigAtom);
   const playerRef = useRef<PlayerRef>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -49,6 +54,22 @@ const Player: CustomNextPage = () => {
       dragRef.current;
     }
   }, []);
+
+  useEffect(() => {
+    const template = router.query.template as SelectedTemplateType;
+    setSelectedTemplate(template);
+    switch (template) {
+      case "template01":
+        setCurrentTimelineScene(timelineScenes.template01);
+        break;
+      case "template02":
+        setCurrentTimelineScene(timelineScenes.template02);
+        break;
+      default:
+        setCurrentTimelineScene(timelineScenes.template01);
+    }
+    setCurrentTimelineScene;
+  }, [router.query.template, setSelectedTemplate]);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -84,7 +105,7 @@ const Player: CustomNextPage = () => {
         <div className="mx-0 pt-0 md:mx-10 md:pt-10">
           <RemotionPlayer
             ref={playerRef}
-            component={Template2}
+            component={selectedTemplate === "template01" ? Template1 : Template2}
             inputProps={template1Data}
             durationInFrames={TEMPLATE1_DURATION}
             compositionWidth={1920}
@@ -92,6 +113,7 @@ const Player: CustomNextPage = () => {
             style={{ width: "100%" }}
             fps={30}
             controls={true}
+            loop
           />
 
           {/** 再生バー */}
@@ -112,7 +134,7 @@ const Player: CustomNextPage = () => {
             <div className="relative flex items-center">
               <PlayButton playerRef={playerRef} />
               <div className="flex overflow-x-auto pl-48 md:pl-[100px]" ref={scrollRef}>
-                {timelineScenes.map((card) => (
+                {currentTimelineScene.map((card) => (
                   <div key={card.id}>
                     <TimelineCard card={card} playerRef={playerRef} />
                   </div>
