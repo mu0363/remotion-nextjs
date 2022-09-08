@@ -22,7 +22,7 @@ import {
   updateMusicList,
 } from "src/libs/store/features/musicSlice";
 import { selectAllTemplate1Data, updateMusic } from "src/libs/store/features/template1Slice";
-import { Template1 } from "src/remotion/Template1";
+import { Template2 } from "src/remotion/Template2";
 import { MusicState } from "types";
 
 const Player: CustomNextPage = () => {
@@ -84,7 +84,7 @@ const Player: CustomNextPage = () => {
         <div className="mx-0 pt-0 md:mx-10 md:pt-10">
           <RemotionPlayer
             ref={playerRef}
-            component={Template1}
+            component={Template2}
             inputProps={template1Data}
             durationInFrames={TEMPLATE1_DURATION}
             compositionWidth={1920}
