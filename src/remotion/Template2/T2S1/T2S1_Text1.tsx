@@ -37,7 +37,7 @@ export const T2S1_Text1: FC<{ text: string }> = ({ text }) => {
           opacity: `${frame < 90 ? opacityIn : opacityOut}`,
           fontFamily: "Cinzel",
           transform: `scale(${scale})`,
-          filter: `blur(${blur}px)`,
+          // filter: `blur(${blur}px)`,
           letterSpacing: `${letterSpacing}px`,
           // textShadow: "0 0 5px #FFF,0 0 5px #FFF,0 0 5px #FFF,0 0 5px #FFF",
         }}
