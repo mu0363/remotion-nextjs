@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { defaultProps } from "../../const";
+import { Template1DefaultProps } from "../../const";
 import { RootState } from "../store";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { SceneState } from "types";
@@ -16,9 +16,9 @@ import type { SceneState } from "types";
 
 export const template1Slice = createSlice({
   name: "template1",
-  initialState: defaultProps,
+  initialState: Template1DefaultProps,
   reducers: {
-    updateText: (states, action: PayloadAction<Pick<SceneState, "scene_number" | "id" | "text">>) => {
+    updateT1Text: (states, action: PayloadAction<Pick<SceneState, "scene_number" | "id" | "text">>) => {
       const pageContents = states.sceneState.filter((state) => (state.scene_number = action.payload.scene_number));
       const content = pageContents.filter((pageContent) => pageContent.id === action.payload.id);
       content[0].text = action.payload.text;
@@ -28,13 +28,13 @@ export const template1Slice = createSlice({
       const content = pageContents.filter((pageContent) => pageContent.id === action.payload.id);
       content[0].image_url = action.payload.image_url;
     },
-    updateMusic: (states, action: PayloadAction<{ music: string }>) => {
+    updateT1Music: (states, action: PayloadAction<{ music: string }>) => {
       states.music = action.payload.music;
     },
   },
 });
 
 export const selectAllTemplate1Data = (state: RootState) => state.template1;
-export const { updateText, updateImage, updateMusic } = template1Slice.actions;
+export const { updateT1Text, updateImage, updateT1Music } = template1Slice.actions;
 
 export default template1Slice.reducer;

@@ -1,1 +1,12 @@
-export type {ImageType, TimelineSceneType, RenderInfo, SceneState, Template1Type, MusicState} from './types'
+export type {
+  ImageType,
+  TimelineSceneType,
+  RenderInfo,
+  SceneState,
+  Template1Type,
+  Template2Type,
+  MusicState,
+  TemplateTimelineSceneType,
+  SelectedTemplateType,
+  DashboardThumbnailType,
+} from "./types";
