@@ -22,7 +22,7 @@ export const T1S2: FC<Props> = ({ sceneState }) => {
           justifyContent: "center",
         }}
       >
-        <T1S2_Image1 image={image_url} />
+        {image_url !== undefined && <T1S2_Image1 image={image_url} />}
         <T1S2_Text1 text={text} />
         <Subtitle />
       </AbsoluteFill>
