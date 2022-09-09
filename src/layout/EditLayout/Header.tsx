@@ -11,9 +11,10 @@ import { useCallback, useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import type { FC, MouseEvent } from "react";
 import type { RenderProgressType } from "src/pages/api/progress";
-import { activeSceneAtom } from "src/libs/atom/atom";
+import { activeSceneAtom, selectedTemplateAtom } from "src/libs/atom/atom";
 import { HEADER_HEIGHT, HEADER_HEIGHT_SM } from "src/libs/const";
 import { selectAllTemplate1Data } from "src/libs/store/features/template1Slice";
+import { selectAllTemplate2Data } from "src/libs/store/features/template2Slice";
 import { RenderInfo } from "types";
 
 const useStyles = createStyles((theme) => ({
@@ -45,7 +46,9 @@ export const Header: FC = () => {
   const { classes } = useStyles();
   const [isOpened, setIsOpened] = useState(false);
   const playerRef = useRef<PlayerRef>(null);
+  const selectedTemplate = useAtomValue(selectedTemplateAtom);
   const template1Data = useSelector(selectAllTemplate1Data);
+  const template2Data = useSelector(selectAllTemplate2Data);
   const activeSceneData = useAtomValue(activeSceneAtom);
   const [isLoading, setIsLoading] = useState(false);
   const [renderInfo, setRenderInfo] = useState<RenderInfo>();
@@ -105,9 +108,10 @@ export const Header: FC = () => {
 
   // 書き出し開始
   const renderStart = async () => {
+    const selectedTemplateData = selectedTemplate === "template01" ? template1Data : template2Data;
     const renderStartRes = await fetch("/api/render", {
       method: "POST",
-      body: JSON.stringify(template1Data),
+      body: JSON.stringify(selectedTemplateData),
     });
     // FIXME: アサーション削除
     const renderInfo = (await renderStartRes.json()) as RenderInfo;

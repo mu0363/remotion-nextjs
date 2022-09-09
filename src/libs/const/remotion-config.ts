@@ -1,17 +1,26 @@
-import type { Template1Type, MusicState, TemplateTimelineSceneType, Template2Type } from "types";
+import type {
+  Template1Type,
+  MusicState,
+  TemplateTimelineSceneType,
+  Template2Type,
+  DashboardThumbnailType,
+} from "types";
 
-export const COMP_NAME = "MyComp";
-export const SITE_ID = "https://remotionlambda-47aic418sn.s3.us-east-1.amazonaws.com/sites/c7o4e4mmwc/index.html";
+export const SITE_ID = "https://remotionlambda-47aic418sn.s3.us-east-1.amazonaws.com/sites/9o8ckbll4i/index.html";
 export const REGION = "us-east-1";
 export const TEMPLATE1_DURATION = 360;
 export const storageUrl = "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public";
-export const WATERMARK = "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/images/watermark.png";
+export const WATERMARK_BLACK =
+  "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/images/watermark/watermark_black.webp";
+export const WATERMARK_WHITE =
+  "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/images/watermark/watermark_white.webp";
 export const WATERMARK_EMPTY =
-  "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/images/watermark_empty.png";
+  "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/images/watermark/watermark_empty.webp";
 export const USER_ID = "22DFD4AE-6E10-491F-81BE-8D9C66CCDDB0";
 export const Template1DefaultProps: Template1Type = {
   music: "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/music/music1.mp3",
-  watermark: WATERMARK,
+  watermark: WATERMARK_BLACK,
+  composition: "template01",
   sceneState: [
     {
       id: 1,
@@ -42,7 +51,8 @@ export const Template1DefaultProps: Template1Type = {
 
 export const Template2DefaultProps: Template2Type = {
   music: "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/music/music2.mp3",
-  watermark: WATERMARK,
+  watermark: WATERMARK_WHITE,
+  composition: "template02",
   sceneState: [
     {
       id: 1,
@@ -62,6 +72,27 @@ export const Template2DefaultProps: Template2Type = {
     },
   ],
 };
+
+export const dashboardThumbnailData: DashboardThumbnailType[] = [
+  {
+    id: 1,
+    selectedTemplate: "template01" as const,
+    image:
+      "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/images/thumbnail/thumbnail_template01.jpg",
+    title: "Basic SlideShow",
+    description:
+      "それも平生いったいこの不足者という事のうちになるうな。さぞ前から内談者はほとんどその混同んたでもにしているましには努力すたたて、あくまでには云いんたずませ。知人を行っあるのもよく今でいったいたたう。",
+  },
+  {
+    id: 2,
+    selectedTemplate: "template02" as const,
+    image:
+      "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/images/thumbnail/thumbnail_template02.jpg",
+    title: "Text placement in space",
+    description:
+      "それも平生いったいこの不足者という事のうちになるうな。さぞ前から内談者はほとんどその混同んたでもにしているましには努力すたたて、あくまでには云いんたずませ。知人を行っあるのもよく今でいったいたたう。",
+  },
+];
 
 export const timelineScenes: TemplateTimelineSceneType = {
   template01: [
@@ -85,12 +116,12 @@ export const timelineScenes: TemplateTimelineSceneType = {
     {
       id: 1,
       time: 3,
-      thumbnail: `${storageUrl}/images/thumbnail/thumbnail_T1S1.webp`,
+      thumbnail: `${storageUrl}/images/thumbnail/thumbnail_T2S1.webp`,
     },
     {
       id: 2,
       time: 4,
-      thumbnail: `${storageUrl}/images/thumbnail/thumbnail_T1S2.webp`,
+      thumbnail: `${storageUrl}/images/thumbnail/thumbnail_T2S2.webp`,
     },
   ],
 };

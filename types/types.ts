@@ -1,7 +1,15 @@
-import type { definitions } from './supabase';
+import type { definitions } from "./supabase";
+
+export type DashboardThumbnailType = {
+  id: number;
+  selectedTemplate: SelectedTemplateType;
+  image: string;
+  title: string;
+  description: string;
+};
 
 // 自動生成したsupabaseからの取得データ
-export type ImageType = definitions['images'];
+export type ImageType = definitions["images"];
 
 // タイムラインのサムネイルデータ
 export type TimelineSceneType = {
@@ -14,10 +22,9 @@ export type TimelineSceneType = {
 //   [key: string]: TimelineSceneType[],
 // };
 
-export type TemplateTimelineSceneType = Record<SelectedTemplateType,TimelineSceneType[]>
+export type TemplateTimelineSceneType = Record<SelectedTemplateType, TimelineSceneType[]>;
 
-export type SelectedTemplateType = "template01" | "template02" 
-
+export type SelectedTemplateType = "template01" | "template02";
 
 // 書き出し時にポーリング関数へ渡す情報
 export type RenderInfo = {
@@ -39,7 +46,6 @@ export type RenderInfo = {
   createdAt: string;
 };
 
-
 // Redux
 export type SceneState = {
   id: number;
@@ -53,22 +59,24 @@ export type SceneState = {
 export type Template1Type = {
   music: string;
   watermark: string;
+  composition: string;
   sceneState: SceneState[];
 };
 
 export type Template2Type = {
   music: string;
   watermark: string;
+  composition: string;
   sceneState: SceneState[];
 };
 
 // 音楽リスト
 export type MusicState = {
-      id: number,
-    name: string,
-    artist: string,
-    time: string,
-    thumbnail: string,
-    music: string,
-    isSelected: boolean
-}
+  id: number;
+  name: string;
+  artist: string;
+  time: string;
+  thumbnail: string;
+  music: string;
+  isSelected: boolean;
+};
