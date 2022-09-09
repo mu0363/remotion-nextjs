@@ -6,7 +6,7 @@ import type {
   DashboardThumbnailType,
 } from "types";
 
-export const SITE_ID = "https://remotionlambda-47aic418sn.s3.us-east-1.amazonaws.com/sites/9o8ckbll4i/index.html";
+export const SITE_ID = "https://remotionlambda-47aic418sn.s3.us-east-1.amazonaws.com/sites/2mrale9rae/index.html";
 export const REGION = "us-east-1";
 export const TEMPLATE1_DURATION = 360;
 export const storageUrl = "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public";
@@ -59,7 +59,6 @@ export const Template2DefaultProps: Template2Type = {
       template_number: 2,
       scene_number: 1,
       image_number: 1,
-      image_url: "",
       text: "Think different.",
     },
     {
@@ -67,7 +66,6 @@ export const Template2DefaultProps: Template2Type = {
       template_number: 2,
       scene_number: 2,
       image_number: 1,
-      image_url: "",
       text: "Just Do It.",
     },
   ],

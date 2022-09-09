@@ -64,7 +64,7 @@ export const Form = () => {
       <Stack>
         <Badge color="cyan" className="w-20">{`シーン${id}`}</Badge>
         <Textarea onChange={handleChange} size="lg" value={text} />
-        {image_url !== "" && (
+        {image_url !== undefined && (
           <Tooltip label="画像を変更" color="blue" withArrow>
             <div className="flex items-center justify-center">
               <label className="inline-block cursor-pointer">

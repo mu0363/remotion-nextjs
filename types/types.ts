@@ -52,7 +52,7 @@ export type SceneState = {
   template_number: number;
   scene_number: number;
   image_number: number;
-  image_url: string;
+  image_url?: string;
   text: string;
 };
 

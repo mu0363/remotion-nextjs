@@ -14,7 +14,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // FIXME: アサーション削除
     const data = req.body as string;
     const templateData = JSON.parse(data) as Template1Type;
-    console.log(templateData);
 
     const [first] = await getFunctions({
       compatibleOnly: true,
