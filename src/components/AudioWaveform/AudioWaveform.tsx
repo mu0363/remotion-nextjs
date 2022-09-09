@@ -7,7 +7,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { videConfigAtom } from "src/libs/atom";
 import { waveFormAtom } from "src/libs/atom/atom";
-import { selectAllTemplate1Data, updateMusic } from "src/libs/store/features/template1Slice";
+import { selectAllTemplate1Data, updateT1Music } from "src/libs/store/features/template1Slice";
 
 /** @package */
 export const AudioWaveform = () => {
@@ -91,7 +91,7 @@ export const AudioWaveform = () => {
         <Menu.Item
           onClick={() =>
             dispatch(
-              updateMusic({
+              updateT1Music({
                 music: "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/music/music1.mp3",
               })
             )
@@ -102,7 +102,7 @@ export const AudioWaveform = () => {
         <Menu.Item
           onClick={() =>
             dispatch(
-              updateMusic({
+              updateT1Music({
                 music: "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/music/music2.mp3",
               })
             )
@@ -113,7 +113,7 @@ export const AudioWaveform = () => {
         <Menu.Item
           onClick={() =>
             dispatch(
-              updateMusic({
+              updateT1Music({
                 music: "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/music/music3.mp3",
               })
             )
