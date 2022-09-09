@@ -64,24 +64,26 @@ export const Form = () => {
       <Stack>
         <Badge color="cyan" className="w-20">{`シーン${id}`}</Badge>
         <Textarea onChange={handleChange} size="lg" value={text} />
-        <Tooltip label="画像を変更" color="blue" withArrow>
-          <div className="flex items-center justify-center">
-            <label className="inline-block cursor-pointer">
-              <div className="relative h-16 w-32">
-                <IconCamera className="absolute top-0 left-0 z-10 h-16 w-32 rounded-xl p-3 text-gray-500 opacity-0 transition duration-200 ease-in-out hover:bg-gray-200 hover:opacity-70" />
-                <Image
-                  width={160}
-                  height={80}
-                  src={image_url}
-                  objectFit="cover"
-                  alt="current-image"
-                  className="rounded-xl"
-                />
-              </div>
-              <input type="file" name="avatar-upload" accept="image/*" className="hidden" onChange={handleImage} />
-            </label>
-          </div>
-        </Tooltip>
+        {image_url !== "" && (
+          <Tooltip label="画像を変更" color="blue" withArrow>
+            <div className="flex items-center justify-center">
+              <label className="inline-block cursor-pointer">
+                <div className="relative h-16 w-32">
+                  <IconCamera className="absolute top-0 left-0 z-10 h-16 w-32 rounded-xl p-3 text-gray-500 opacity-0 transition duration-200 ease-in-out hover:bg-gray-200 hover:opacity-70" />
+                  <Image
+                    width={160}
+                    height={80}
+                    src={image_url}
+                    objectFit="cover"
+                    alt="current-image"
+                    className="rounded-xl"
+                  />
+                </div>
+                <input type="file" name="avatar-upload" accept="image/*" className="hidden" onChange={handleImage} />
+              </label>
+            </div>
+          </Tooltip>
+        )}
       </Stack>
     </div>
   );

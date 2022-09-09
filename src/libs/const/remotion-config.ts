@@ -59,7 +59,7 @@ export const Template2DefaultProps: Template2Type = {
       template_number: 2,
       scene_number: 1,
       image_number: 1,
-      image_url: `${storageUrl}/images/image-01.jpg`,
+      image_url: "",
       text: "Think different.",
     },
     {
@@ -67,7 +67,7 @@ export const Template2DefaultProps: Template2Type = {
       template_number: 2,
       scene_number: 2,
       image_number: 1,
-      image_url: `${storageUrl}/images/image-02.jpg`,
+      image_url: "",
       text: "Just Do It.",
     },
   ],
