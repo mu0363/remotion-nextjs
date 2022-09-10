@@ -19,6 +19,7 @@
     "@emotion/react": "^11.10.0",
     "@emotion/server": "^11.10.0",
     "@heroicons/react": "^2.0.10",
+    "@line/bot-sdk": "^7.5.2",
     "@mantine/core": "^5.1.6",
     "@mantine/dropzone": "^5.2.3",
     "@mantine/form": "^5.1.6",
