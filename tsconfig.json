@@ -21,7 +21,8 @@
     "sourceMap": true,
     "strict": true,
     "target": "es2018",
-    "incremental": true
+    "incremental": true,
+    "useUnknownInCatchVariables": false
   },
   "ts-node": {
     "files": true

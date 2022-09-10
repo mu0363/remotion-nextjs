@@ -1,5 +1,5 @@
 declare namespace NodeJS {
-  interface ProcessEnv  {
+  interface ProcessEnv {
     readonly NODE_ENV: "development" | "production" | "test";
     readonly REMOTION_AWS_ACCESS_KEY_ID: string;
     readonly REMOTION_AWS_SECRET_ACCESS_KEY: string;
@@ -10,5 +10,7 @@ declare namespace NodeJS {
     readonly FIREBASE_CLIENT_ID: string;
     readonly FIREBASE_CLIENT_X509_CERT_URL: string;
     readonly FIREBASE_COLLECTION_NAME: string;
-  };
+    readonly LINE_CHANNEL_ACCESS_TOKEN: string;
+    readonly LINE_CHANNEL_SECRET: string;
+  }
 }
