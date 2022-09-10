@@ -1,4 +1,4 @@
-import { WebhookRequestBody } from "@line/bot-sdk";
+import { TextEventMessage, WebhookRequestBody } from "@line/bot-sdk";
 import { Middleware } from "@line/bot-sdk/lib/middleware";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import * as line from "src/libs/line";
@@ -22,19 +22,20 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
       await runMiddleware(req, res, line.middleware);
 
       // Handle events
-      const body: WebhookRequestBody = req.body as WebhookRequestBody;
+      const body = req.body as WebhookRequestBody;
       await Promise.all(
         body.events.map((event) =>
           (async () => {
             if (event.mode === "active") {
               switch (event.type) {
                 case "message": {
+                  const eventMessage = event.message as TextEventMessage;
                   const name = event.source.userId
                     ? (await line.client.getProfile(event.source.userId)).displayName
                     : "User";
                   await line.client.replyMessage(event.replyToken, {
                     type: "text",
-                    text: `Hi, ${name}!`,
+                    text: `Hi, ${name}! ${eventMessage.text}`,
                   });
                   break;
                 }
