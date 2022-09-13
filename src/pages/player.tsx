@@ -17,6 +17,7 @@ import { EditLayout } from "src/layout/EditLayout";
 import { videConfigAtom } from "src/libs/atom";
 import { activeSceneAtom, isPlayingAtom, selectedTemplateAtom } from "src/libs/atom";
 import { TEMPLATE1_DURATION, timelineScenes } from "src/libs/const/remotion-config";
+import { useLineImage } from "src/libs/hooks/useLineImage";
 import {
   selectAllMusicSliceData,
   selectCurrentMusicSliceData,
@@ -56,6 +57,8 @@ const Player: CustomNextPage = () => {
       dragRef.current;
     }
   }, []);
+
+  useLineImage();
 
   useEffect(() => {
     const template = router.query.template as SelectedTemplateType;
@@ -115,6 +118,7 @@ const Player: CustomNextPage = () => {
             style={{ width: "100%" }}
             fps={30}
             controls={true}
+            loop
           />
 
           {/** 再生バー */}

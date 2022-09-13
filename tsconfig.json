@@ -23,6 +23,7 @@
     "target": "es2018",
     "incremental": true,
     "useUnknownInCatchVariables": false
+    // "noUncheckedIndexedAccess": true
   },
   "ts-node": {
     "files": true

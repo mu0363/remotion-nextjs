@@ -1,6 +1,6 @@
 import { ClientConfig, Client, middleware as lineMiddleware, MiddlewareConfig } from "@line/bot-sdk";
 
-const clientConfig: ClientConfig = {
+export const clientConfig: ClientConfig = {
   channelAccessToken: process.env.LINE_CHANNEL_ACCESS_TOKEN,
   channelSecret: process.env.LINE_CHANNEL_SECRET,
 };
