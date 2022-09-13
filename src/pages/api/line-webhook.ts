@@ -1,4 +1,3 @@
-import fs from "node:fs/promises";
 import { TextEventMessage, WebhookRequestBody } from "@line/bot-sdk";
 import { Middleware } from "@line/bot-sdk/lib/middleware";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
@@ -58,8 +57,6 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
                     const filePath = `./src/libs/tmp/${event.message.id}.jpg`;
                     // 画像を取得
                     const buffer = await getMessageContent(event.message.id);
-                    // 画像を一時保存
-                    await fs.writeFile(filePath, buffer, "binary");
                     const { data, error } = await supabaseAdmin.storage
                       .from("images")
                       .upload(`line/${event.message.id}.jpg`, buffer, { contentType: "image/jpeg" });
@@ -72,9 +69,6 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
                         image_url: `${storageUrl}/images/${data.path}`,
                       },
                     ]);
-
-                    // 一時保存した画像を削除する
-                    await fs.unlink(filePath);
                   }
                   const eventMessage = event.message as TextEventMessage;
                   const name = event.source.userId
