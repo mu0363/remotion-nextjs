@@ -1,11 +1,11 @@
 // FIXME:
 /* eslint-disable no-console */
 import { getFunctions, renderMediaOnLambda } from "@remotion/lambda";
-import { NextApiRequest, NextApiResponse } from "next";
 import { v4 as uuidv4 } from "uuid";
-import type { RenderInfo, Template1Type } from "types";
 import { REGION, SITE_ID } from "src/libs/const";
 import { WATERMARK_EMPTY } from "src/libs/const/remotion-config";
+import type { NextApiRequest, NextApiResponse } from "next";
+import type { RenderInfo, Template1Type } from "types";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") return;

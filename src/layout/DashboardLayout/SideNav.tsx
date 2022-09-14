@@ -10,9 +10,9 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { IconAlertCircle, IconMessages, IconDatabase, IconChevronRight, IconChevronLeft } from "@tabler/icons";
-import { FC } from "react";
 import { getPath, SIDENAV_WIDTH } from "src/libs/const";
 import { ActiveLink } from "src/libs/next";
+import type { FC } from "react";
 
 /** @package */
 export const SideNav: FC = () => {

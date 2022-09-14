@@ -2,9 +2,9 @@
 /* eslint-disable no-console */
 import { Burger, Container, createStyles, Group, Header as MantineHeader, MediaQuery } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import type { FC } from "react";
 import { AvantIcon } from "src/components/SVG";
 import { HEADER_HEIGHT } from "src/libs/const";
+import type { FC } from "react";
 
 const useStyles = createStyles((theme) => ({
   inner: {

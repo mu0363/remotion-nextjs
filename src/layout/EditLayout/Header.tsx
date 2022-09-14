@@ -3,19 +3,19 @@
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import { Button, Container, createStyles, Header as MantineHeader, Modal } from "@mantine/core";
 import { NextLink } from "@mantine/next";
-import { PlayerRef } from "@remotion/player";
 import { IconCloudStorm, IconDownload } from "@tabler/icons";
 import { useAtomValue } from "jotai";
 import Link from "next/link";
 import { useCallback, useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
-import type { FC, MouseEvent } from "react";
-import type { RenderProgressType } from "src/pages/api/progress";
 import { activeSceneAtom, selectedTemplateAtom } from "src/libs/atom/atom";
 import { HEADER_HEIGHT, HEADER_HEIGHT_SM } from "src/libs/const";
 import { selectAllTemplate1Data } from "src/libs/store/features/template1Slice";
 import { selectAllTemplate2Data } from "src/libs/store/features/template2Slice";
-import { RenderInfo } from "types";
+import type { PlayerRef } from "@remotion/player";
+import type { FC, MouseEvent } from "react";
+import type { RenderProgressType } from "src/pages/api/progress";
+import type { RenderInfo } from "types";
 
 const useStyles = createStyles((theme) => ({
   root: {

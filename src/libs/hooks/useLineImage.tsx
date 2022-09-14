@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { updateImage } from "../store/features/template1Slice";
 import { supabaseClient } from "src/libs/supabase/supabaseClient";
+import { updateImage } from "../store/features/template1Slice";
 
 type RealtimePayloadType = {
   schema: string;

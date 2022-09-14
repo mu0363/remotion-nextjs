@@ -1,7 +1,7 @@
 import { Aside, MediaQuery } from "@mantine/core";
-import type { FC } from "react";
 import { Form } from "src/components/Form";
 import { ASIDE_WIDTH } from "src/libs/const";
+import type { FC } from "react";
 
 /** @package */
 export const ASide: FC = () => {
