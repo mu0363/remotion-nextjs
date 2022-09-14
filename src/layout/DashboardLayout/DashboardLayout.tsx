@@ -1,9 +1,9 @@
 import { AppShell, createStyles } from "@mantine/core";
-import { CustomLayout } from "next";
+import { HEADER_HEIGHT, SIDENAV_WIDTH } from "src/libs/const";
 import { LayoutErrorBoundary } from "../LayoutErrorBoundary";
 import { Header } from "./Header";
 import { SideNav } from "./SideNav";
-import { HEADER_HEIGHT, SIDENAV_WIDTH } from "src/libs/const";
+import type { CustomLayout } from "next";
 
 const useStyles = createStyles((theme) => {
   return {

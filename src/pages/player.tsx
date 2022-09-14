@@ -9,8 +9,6 @@ import { useRouter } from "next/router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useSound from "use-sound";
-import type { CustomNextPage } from "next";
-import type { FC, RefObject } from "react";
 import { Form } from "src/components/Form";
 import { TimelineCard } from "src/components/TimelineCard";
 import { EditLayout } from "src/layout/EditLayout";
@@ -27,7 +25,9 @@ import { selectAllTemplate1Data, updateT1Music } from "src/libs/store/features/t
 import { selectAllTemplate2Data, updateT2Music } from "src/libs/store/features/template2Slice";
 import { Template1 } from "src/remotion/Template1";
 import { Template2 } from "src/remotion/Template2";
-import { MusicState, SelectedTemplateType, TimelineSceneType } from "types";
+import type { CustomNextPage } from "next";
+import type { FC, RefObject } from "react";
+import type { MusicState, SelectedTemplateType, TimelineSceneType } from "types";
 
 const Player: CustomNextPage = () => {
   const router = useRouter();

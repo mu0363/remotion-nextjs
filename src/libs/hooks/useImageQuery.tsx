@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabaseClient } from "../supabase/supabaseClient";
-import { ImageType } from "types";
+import type { ImageType } from "types";
 
 export const useImageQuery = () => {
   const getImages = async (): Promise<ImageType[]> => {

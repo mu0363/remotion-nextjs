@@ -13,16 +13,3 @@ const middlewareConfig: MiddlewareConfig = {
 /** @package */
 export const client = new Client(clientConfig);
 export const middleware = lineMiddleware(middlewareConfig);
-
-// const client = new Client(clientConfig);
-// const handleEvent = (event: line.WebhookEvent) => {
-//   if (event.type !== "message" || event.message.type !== "text") {
-//     return Promise.resolve(null);
-//   }
-//   return client.replyMessage(event.replyToken, {
-//     type: "text",
-//     text: event.message.text,
-//   });
-// };
-
-// line.middleware(config);

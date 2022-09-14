@@ -1,6 +1,6 @@
 import { getRenderProgress, RenderProgress } from "@remotion/lambda";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { RenderInfo } from "types";
+import type { RenderInfo } from "types";
 
 export type RenderProgressType =
   | {

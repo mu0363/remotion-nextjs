@@ -1,5 +1,4 @@
-import { interpolate } from "remotion";
-import { useCurrentFrame } from "remotion";
+import { interpolate, useCurrentFrame } from "remotion";
 import type { FC } from "react";
 
 /* @package **/
