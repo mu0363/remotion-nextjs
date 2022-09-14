@@ -8,5 +8,5 @@
     "source.fixAll.format": true
   },
   "editor.guides.bracketPairs": true,
-  "[prisma]": { "editor.defaultFormatter": "Prisma.prisma" }
+  "eslint.format.enable": true
 }

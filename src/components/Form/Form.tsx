@@ -12,7 +12,7 @@ import { useCurrentData } from "src/libs/hooks/useCurrentData";
 import { updateImage, updateT1Text } from "src/libs/store/features/template1Slice";
 import { updateT2Text } from "src/libs/store/features/template2Slice";
 import { supabaseClient } from "src/libs/supabase/supabaseClient";
-import { ImageType } from "types";
+import type { ImageType } from "types";
 
 /** @package */
 export const Form = () => {

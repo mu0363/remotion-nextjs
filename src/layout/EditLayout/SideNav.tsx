@@ -1,6 +1,6 @@
 import { Box, MediaQuery, Navbar, useMantineTheme } from "@mantine/core";
-import { FC } from "react";
 import { SIDENAV_WIDTH } from "src/libs/const";
+import type { FC } from "react";
 
 /** @package */
 export const SideNav: FC = () => {

@@ -1,5 +1,6 @@
 import { atom } from "jotai";
-import { SelectedTemplateType } from "types";
+
+import type { SelectedTemplateType } from "types";
 
 /** @package */
 export const videConfigAtom = atom({ currentFrame: 0, fps: 30, width: 0, height: 0, durationInFrames: 0 });

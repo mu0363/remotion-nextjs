@@ -1,13 +1,13 @@
 // FIXME:
 /* eslint-disable no-console */
 import { Tooltip } from "@mantine/core";
-import { PlayerRef } from "@remotion/player";
 import { useAtom, useSetAtom } from "jotai";
 import Image from "next/image";
-import { FC, RefObject } from "react";
 import { activeSceneAtom, isPlayingAtom } from "src/libs/atom/atom";
 import { thumbnailStartFrame } from "src/libs/const";
-import { TimelineSceneType } from "types";
+import type { PlayerRef } from "@remotion/player";
+import type { FC, RefObject } from "react";
+import type { TimelineSceneType } from "types";
 
 type Props = {
   card: TimelineSceneType;

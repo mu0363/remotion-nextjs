@@ -1,6 +1,5 @@
 import { AppShell, Navbar, Header, Text, MediaQuery, Burger, useMantineTheme } from "@mantine/core";
 import { useState } from "react";
-
 import type { FC, ReactNode } from "react";
 
 export const PlayerLayout: FC<{ children: ReactNode }> = ({ children }) => {
