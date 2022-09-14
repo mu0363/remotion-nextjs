@@ -54,7 +54,6 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
               switch (event.type) {
                 case "message": {
                   if (event.message.type === "image") {
-                    const filePath = `./src/libs/tmp/${event.message.id}.jpg`;
                     // 画像を取得
                     const buffer = await getMessageContent(event.message.id);
                     const { data, error } = await supabaseAdmin.storage
