@@ -2,6 +2,7 @@
 /* eslint-disable no-console */
 import { Badge, Stack, Textarea, Tooltip } from "@mantine/core";
 import { IconCamera } from "@tabler/icons";
+import { format } from "date-fns";
 import { useAtomValue } from "jotai";
 import Image from "next/image";
 import { ChangeEvent } from "react";
@@ -38,11 +39,13 @@ export const Form = () => {
   const handleImage = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const file = e.target.files[0];
-    const filename = file.name;
+    const filename = `T${template_number}_S${scene_number}_${format(new Date(), "yyyyMMddhhmmss")}`;
     const objectUrl = window.URL.createObjectURL(file);
     dispatch(updateImage({ scene_number, id: scene_number, image_url: objectUrl }));
     (async () => {
-      const { data, error } = await supabaseClient.storage.from("images").upload(`${USER_ID}/${filename}`, file);
+      const { data, error } = await supabaseClient.storage
+        .from("images")
+        .upload(`${format(new Date(), "yyMMdd")}/${USER_ID}/${filename}`, file);
       if (error) {
         throw new Error("something went wrong");
       }
@@ -57,6 +60,11 @@ export const Form = () => {
       ]);
       dispatch(updateImage({ scene_number, id: scene_number, image_url: `${storageUrl}/images/${data.path}` }));
     })().catch((err) => console.log(err));
+  };
+
+  const handleTest = () => {
+    const date = format(new Date(), "yyyyMMddhhmmss");
+    console.log(date);
   };
 
   return (
@@ -84,6 +92,7 @@ export const Form = () => {
             </div>
           </Tooltip>
         )}
+        <button onClick={handleTest}>TEST</button>
       </Stack>
     </div>
   );
