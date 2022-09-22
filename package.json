@@ -12,7 +12,7 @@
     "lint": "next lint",
     "render": "remotion render src/remotion/index.tsx MyComp out/video.mp4",
     "video": "remotion preview src/remotion/index.tsx",
-    "site": "npx remotion lambda sites create src/remotion/index.tsx",
+    "site": "npx remotion lambda sites create src/remotion/index.tsx --site-name=remotion-next-js",
     "deploy": "npx remotion lambda functions deploy",
     "gen:type": "npx openapi-typescript https://worhhbmrflaaoczgxikp.supabase.co/rest/v1/?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndvcmhoYm1yZmxhYW9jemd4aWtwIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjE3NDIxMjgsImV4cCI6MTk3NzMxODEyOH0.KbXOkiUa9KBCPi_SQ0t7iXGuvglZbsHL5jBnB1L-Ypc --output types/supabase.ts"
   },
