@@ -17,8 +17,9 @@
     "gen:type": "npx openapi-typescript https://worhhbmrflaaoczgxikp.supabase.co/rest/v1/?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndvcmhoYm1yZmxhYW9jemd4aWtwIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjE3NDIxMjgsImV4cCI6MTk3NzMxODEyOH0.KbXOkiUa9KBCPi_SQ0t7iXGuvglZbsHL5jBnB1L-Ypc --output types/supabase.ts"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.0",
+    "@emotion/react": "^11.10.4",
     "@emotion/server": "^11.10.0",
+    "@emotion/styled": "^11.10.4",
     "@heroicons/react": "^2.0.10",
     "@line/bot-sdk": "^7.5.2",
     "@mantine/core": "^5.1.6",
@@ -49,7 +50,6 @@
     "react-error-boundary": "^3.1.4",
     "react-redux": "^8.0.2",
     "remotion": "3.2.13",
-    "styled-components": "^5.3.5",
     "use-sound": "^4.0.1",
     "uuid": "^8.3.2",
     "wavesurfer.js": "^6.2.0",
@@ -61,7 +61,6 @@
     "@types/node": "18.7.5",
     "@types/react": "18.0.17",
     "@types/react-dom": "18.0.6",
-    "@types/styled-components": "^5.1.26",
     "@types/uuid": "^8.3.4",
     "@types/wavesurfer.js": "^6.0.3",
     "@typescript-eslint/eslint-plugin": "^5.33.1",
