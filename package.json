@@ -30,6 +30,7 @@
     "@mantine/next": "^5.1.6",
     "@mantine/notifications": "^5.1.6",
     "@mantine/nprogress": "^5.1.6",
+    "@rajesh896/video-thumbnails-generator": "^2.3.9",
     "@reduxjs/toolkit": "^1.8.4",
     "@remotion/cli": "3.2.13",
     "@remotion/lambda": "3.2.13",

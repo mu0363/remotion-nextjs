@@ -1848,6 +1848,11 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
 
+"@rajesh896/video-thumbnails-generator@^2.3.9":
+  version "2.3.9"
+  resolved "https://registry.yarnpkg.com/@rajesh896/video-thumbnails-generator/-/video-thumbnails-generator-2.3.9.tgz#2d3b0a2451ab33a4f580ba7599f616804da39a7c"
+  integrity sha512-tV775KsZpyhaXMG/z+APNBL8bpGSaYgvCmELC7k3z0n6rGcFhsDhFFqJkmguiVR83bNLWth8wdFOGkpsBS3Jzw==
+
 "@reduxjs/toolkit@^1.8.4":
   version "1.8.5"
   resolved "https://registry.yarnpkg.com/@reduxjs/toolkit/-/toolkit-1.8.5.tgz#c14bece03ee08be88467f22dc0ecf9cf875527cd"
