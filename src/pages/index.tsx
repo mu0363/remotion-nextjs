@@ -8,17 +8,19 @@ const Home: NextPage = () => {
   const template1Data = useSelector(selectAllTemplate1Data);
 
   return (
-    <Player
-      component={Template1}
-      inputProps={template1Data}
-      durationInFrames={120}
-      compositionWidth={1920}
-      compositionHeight={1080}
-      fps={30}
-      style={{ width: "100%" }}
-      controls
-      loop
-    />
+    <div>
+      <Player
+        component={Template1}
+        inputProps={template1Data}
+        durationInFrames={120}
+        compositionWidth={1920}
+        compositionHeight={1080}
+        fps={30}
+        style={{ width: "100%" }}
+        controls
+        loop
+      />
+    </div>
   );
 };
 

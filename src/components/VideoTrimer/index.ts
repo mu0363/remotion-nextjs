@@ -1,0 +1,1 @@
+export { VideoTrimer } from "./VideoTrimer";

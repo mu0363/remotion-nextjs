@@ -1,12 +1,10 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
-import { generateVideoThumbnails } from "@rajesh896/video-thumbnails-generator";
-import Image from "next/image";
 import { useCallback, useEffect, useState, useRef } from "react";
 import type { ChangeEvent, FC } from "react";
 
 const Container = styled.div`
-  height: 25vh;
+  height: 10vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18,7 +16,7 @@ const ThumbBase = css`
   pointer-events: none;
   position: absolute;
   height: 0;
-  width: 100%;
+  width: 95%;
   outline: none;
 
   &::-webkit-slider-thumb {
@@ -30,7 +28,7 @@ const ThumbBase = css`
 
     border: none;
     height: 56px;
-    width: 16px;
+    width: 20px;
     background: #17a2b8;
   }
 `;
@@ -72,16 +70,12 @@ const SliderBox = styled.div<{ minPercent: number; maxPercent: number }>`
 
   left: ${(props) => `${props.minPercent}%`};
   width: ${(props) => `${props.maxPercent - props.minPercent}%`};
-  background: #dddddd;
+  background: #eeeeee;
   z-index: 2;
 `;
 
-const Thumbnails = styled.div`
-  position: absolute;
-  display: flex;
-`;
-
-const MultiRangeSlider: FC = () => {
+/** @package */
+export const VideoTrimer: FC = () => {
   const min = 0;
   const max = 1000;
   const gap = 100;
@@ -89,7 +83,6 @@ const MultiRangeSlider: FC = () => {
   const [maxVal, setMaxVal] = useState(max);
   const [minPercent, setMinPercent] = useState(0);
   const [maxPercent, setMaxPercent] = useState(100);
-  const [videoThumbnails, setVideoThumbnails] = useState<string[]>([]);
 
   const minValRef = useRef<HTMLInputElement>(null);
   const maxValRef = useRef<HTMLInputElement>(null);
@@ -123,58 +116,36 @@ const MultiRangeSlider: FC = () => {
     }
   }, [maxVal, getPercent, minPercent, maxPercent]);
 
-  const getVideoThumbnails = async (e: ChangeEvent<HTMLInputElement>, numberOfThumbnails: number) => {
-    const files = e.currentTarget.files;
-    if (!files || files?.length === 0) return;
-    const videoFile = files[0];
-    if (!videoFile.type.includes("video")) return;
-    const thumbnails = await generateVideoThumbnails(videoFile, numberOfThumbnails, "video");
-    setVideoThumbnails(thumbnails);
-  };
-
   return (
-    <div>
-      <Container>
-        <RangeLeft
-          type="range"
-          min={min}
-          max={max}
-          value={minVal}
-          ref={minValRef}
-          onChange={(event: ChangeEvent<HTMLInputElement>) => {
-            const value = Math.min(+event.target.value, maxVal - gap);
-            setMinVal(value);
-            event.target.value = value.toString();
-          }}
-        />
-        <RangeRight
-          type="range"
-          min={min}
-          max={max}
-          value={maxVal}
-          ref={maxValRef}
-          onChange={(event: ChangeEvent<HTMLInputElement>) => {
-            const value = Math.max(+event.target.value, minVal + gap);
-            setMaxVal(value);
-            event.target.value = value.toString();
-          }}
-        />
+    <Container>
+      <RangeLeft
+        type="range"
+        min={min}
+        max={max}
+        value={minVal}
+        ref={minValRef}
+        onChange={(event: ChangeEvent<HTMLInputElement>) => {
+          const value = Math.min(+event.target.value, maxVal - gap);
+          setMinVal(value);
+          event.target.value = value.toString();
+        }}
+      />
+      <RangeRight
+        type="range"
+        min={min}
+        max={max}
+        value={maxVal}
+        ref={maxValRef}
+        onChange={(event: ChangeEvent<HTMLInputElement>) => {
+          const value = Math.max(+event.target.value, minVal + gap);
+          setMaxVal(value);
+          event.target.value = value.toString();
+        }}
+      />
 
-        <Slider>
-          <SliderBox minPercent={minPercent} maxPercent={maxPercent} />
-        </Slider>
-      </Container>
-      <Thumbnails>
-        {videoThumbnails.map((videoThumbnail, index) => (
-          <div key={index}>
-            <Image src={videoThumbnail} alt="thumbnail" width={82} height={46} />
-          </div>
-        ))}
-      </Thumbnails>
-
-      <input type="file" onChange={(e) => getVideoThumbnails(e, 5)} />
-    </div>
+      <Slider>
+        <SliderBox minPercent={minPercent} maxPercent={maxPercent} />
+      </Slider>
+    </Container>
   );
 };
-
-export default MultiRangeSlider;

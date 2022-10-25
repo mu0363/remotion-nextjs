@@ -1,7 +1,5 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
-import { generateVideoThumbnails } from "@rajesh896/video-thumbnails-generator";
-import Image from "next/image";
 import { useCallback, useEffect, useState, useRef } from "react";
 import type { ChangeEvent, FC } from "react";
 
@@ -76,9 +74,30 @@ const SliderBox = styled.div<{ minPercent: number; maxPercent: number }>`
   z-index: 2;
 `;
 
-const Thumbnails = styled.div`
+const RangeCenter = styled.input<{ minPercent: number; maxPercent: number; widthPercent: number }>`
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  pointer-events: none;
   position: absolute;
-  display: flex;
+  height: 0;
+  width: 100%;
+  outline: none;
+  z-index: 5;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    /* pointer-events: all; */
+    position: relative;
+    cursor: grab;
+    &:active {
+      cursor: grabbing;
+    }
+    border: solid 4px #17a2b8;
+    height: 56px;
+    width: ${(props) => `${props.maxPercent - props.minPercent}%`};
+    transform: translateX(10%);
+  }
 `;
 
 const MultiRangeSlider: FC = () => {
@@ -89,8 +108,7 @@ const MultiRangeSlider: FC = () => {
   const [maxVal, setMaxVal] = useState(max);
   const [minPercent, setMinPercent] = useState(0);
   const [maxPercent, setMaxPercent] = useState(100);
-  const [videoThumbnails, setVideoThumbnails] = useState<string[]>([]);
-
+  const [widthPercent, setWidthPercent] = useState(0);
   const minValRef = useRef<HTMLInputElement>(null);
   const maxValRef = useRef<HTMLInputElement>(null);
   const range = useRef<HTMLDivElement>(null);
@@ -103,6 +121,7 @@ const MultiRangeSlider: FC = () => {
     if (maxValRef.current) {
       setMinPercent(getPercent(minVal));
       setMaxPercent(getPercent(+maxValRef.current.value)); // Precede with '+' to convert the value from type string to type number
+      setWidthPercent((minPercent / maxPercent) * 100);
 
       if (range.current) {
         range.current.style.left = `${minPercent}%`;
@@ -116,21 +135,13 @@ const MultiRangeSlider: FC = () => {
     if (minValRef.current) {
       setMinPercent(getPercent(+minValRef.current.value));
       setMaxPercent(getPercent(maxVal));
+      setWidthPercent((minPercent / maxPercent) * 100);
 
       if (range.current) {
         range.current.style.width = `${maxPercent - minPercent}%`;
       }
     }
   }, [maxVal, getPercent, minPercent, maxPercent]);
-
-  const getVideoThumbnails = async (e: ChangeEvent<HTMLInputElement>, numberOfThumbnails: number) => {
-    const files = e.currentTarget.files;
-    if (!files || files?.length === 0) return;
-    const videoFile = files[0];
-    if (!videoFile.type.includes("video")) return;
-    const thumbnails = await generateVideoThumbnails(videoFile, numberOfThumbnails, "video");
-    setVideoThumbnails(thumbnails);
-  };
 
   return (
     <div>
@@ -159,20 +170,27 @@ const MultiRangeSlider: FC = () => {
             event.target.value = value.toString();
           }}
         />
+        {/* FIXME: 全体を掴んで動かせるようにする*/}
+        <RangeCenter
+          minPercent={minPercent}
+          maxPercent={maxPercent}
+          widthPercent={widthPercent}
+          type="range"
+          min={min}
+          max={max}
+          value={maxVal}
+          ref={maxValRef}
+          onChange={(event: ChangeEvent<HTMLInputElement>) => {
+            const value = Math.max(+event.target.value, minVal + gap);
+            setMaxVal(value);
+            event.target.value = value.toString();
+          }}
+        />
 
         <Slider>
           <SliderBox minPercent={minPercent} maxPercent={maxPercent} />
         </Slider>
       </Container>
-      <Thumbnails>
-        {videoThumbnails.map((videoThumbnail, index) => (
-          <div key={index}>
-            <Image src={videoThumbnail} alt="thumbnail" width={82} height={46} />
-          </div>
-        ))}
-      </Thumbnails>
-
-      <input type="file" onChange={(e) => getVideoThumbnails(e, 5)} />
     </div>
   );
 };
