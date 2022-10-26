@@ -1,5 +1,6 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
+import { PlayIcon } from "@heroicons/react/24/solid";
 import { useCallback, useEffect, useState, useRef } from "react";
 import ReactPlayer from "react-player";
 import type { ChangeEvent, FC } from "react";
@@ -11,7 +12,31 @@ const Container = styled.div`
   justify-content: center;
 `;
 
-const ThumbBase = css`
+const PlayerContainer = styled.div`
+  position: relative;
+`;
+
+const PlayerButton = styled.button<{ isPlaying: boolean }>`
+  position: absolute;
+  height: 4rem;
+  width: 4rem;
+  border-radius: 50%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  visibility: ${(props) => (props.isPlaying ? "hidden" : "visible")};
+  background: rgba(0, 0, 0, 0.3);
+  border: 4px solid white;
+  z-index: 2;
+`;
+
+const PlayerTime = styled.p`
+  position: absolute;
+`;
+
+const RangeBase = css`
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
   pointer-events: none;
@@ -30,33 +55,33 @@ const ThumbBase = css`
     border: none;
     height: 56px;
     width: 20px;
-    background: #17a2b8;
+    background: #f2cb0a;
   }
 `;
 
 const RangeLeft = styled.input`
   z-index: 3;
 
-  ${ThumbBase}
+  ${RangeBase}
   &::-webkit-slider-thumb {
-    border-top-left-radius: 10%;
-    border-bottom-left-radius: 10%;
+    border-top-left-radius: 0.5em;
+    border-bottom-left-radius: 0.5em;
   }
 `;
 
 const RangeRight = styled.input`
   z-index: 4;
 
-  ${ThumbBase}
+  ${RangeBase}
   &::-webkit-slider-thumb {
-    border-top-right-radius: 10%;
-    border-bottom-right-radius: 10%;
+    border-top-right-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
   }
 `;
 
 const Slider = styled.div`
   position: relative;
-  width: 100%;
+  width: 95%;
 `;
 
 const SliderBox = styled.div<{ minPercent: number; maxPercent: number }>`
@@ -68,6 +93,8 @@ const SliderBox = styled.div<{ minPercent: number; maxPercent: number }>`
   position: absolute;
   height: 56px;
   margin-top: -28px;
+  border-top: 6px solid #f2cb0a;
+  border-bottom: 6px solid #f2cb0a;
 
   left: ${(props) => `${props.minPercent}%`};
   right: ${(props) => `${100 - props.maxPercent}%`};
@@ -77,12 +104,13 @@ const SliderBox = styled.div<{ minPercent: number; maxPercent: number }>`
 
 /** @package */
 export const VideoTrimerFixDuration: FC = () => {
-  const gap = 1; // second
+  const gap = 3; // second
   const [minVal, setMinVal] = useState(0);
   const [maxVal, setMaxVal] = useState(1000);
   const [minPercent, setMinPercent] = useState(0);
   const [maxPercent, setMaxPercent] = useState(100);
   const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
 
   const minValRef = useRef<HTMLInputElement>(null);
   const maxValRef = useRef<HTMLInputElement>(null);
@@ -98,22 +126,24 @@ export const VideoTrimerFixDuration: FC = () => {
   useEffect(() => {
     setMinPercent(getPercent(minVal));
     playerRef.current?.seekTo(minVal, "seconds");
+    setIsPlaying(false);
   }, [minVal, getPercent]);
 
   // Set width of the range to decrease from the right side
   useEffect(() => {
     setMaxPercent(getPercent(maxVal));
     playerRef.current?.seekTo(maxVal, "seconds");
+    setIsPlaying(false);
   }, [maxVal, getPercent]);
 
   // React Player
   const onReady = useCallback(() => {
     if (!isReady) {
       playerRef.current?.seekTo(minVal, "seconds");
-      const currentDuration = playerRef.current?.getDuration();
-      if (currentDuration) {
-        setDuration(currentDuration);
-        setMaxVal(currentDuration);
+      const videoDuration = playerRef.current?.getDuration();
+      if (videoDuration) {
+        setDuration(videoDuration);
+        setMaxVal(videoDuration);
       }
       setIsReady(true);
     }
@@ -126,18 +156,38 @@ export const VideoTrimerFixDuration: FC = () => {
       <p>{`maxVal: ${maxVal}`}</p>
       <p>{`min%: ${minPercent}`}</p>
       <p>{`max%: ${`${maxPercent}`}`}</p>
-      <button onClick={() => setIsPlaying(!isPlaying)}>STOP</button>
-      <ReactPlayer
-        url="https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/videos/AWARDS_OPENER.mp4"
-        width="100%"
-        height="100%"
-        playing={isPlaying}
-        ref={playerRef}
-        controls={true}
-        muted={true}
-        onReady={onReady}
-        onPlay={() => setIsPlaying(true)}
-      />
+      <p>{`currentTime: ${`${currentTime}`}`}</p>
+
+      <PlayerContainer>
+        <PlayerButton
+          isPlaying={isPlaying}
+          onClick={() => {
+            playerRef.current?.seekTo(minVal, "seconds");
+            setIsPlaying(!isPlaying);
+          }}
+        >
+          <PlayIcon className="mx-auto h-10 pl-1 text-white" />
+        </PlayerButton>
+        <ReactPlayer
+          url="https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/1080/Big_Buck_Bunny_1080_10s_20MB.mp4"
+          width="100%"
+          height="100%"
+          playing={isPlaying}
+          ref={playerRef}
+          muted={true}
+          onReady={onReady}
+          onPlay={() => setIsPlaying(true)}
+          onProgress={(state) => {
+            setCurrentTime(state.playedSeconds);
+            if (state.playedSeconds > Math.floor(maxVal)) {
+              setIsPlaying(false);
+            }
+          }}
+        />
+        <p className="font-bold">{`0:${String(Math.floor(minVal)).padStart(2, "0")} / 0:${String(
+          Math.floor(maxVal)
+        ).padStart(2, "0")}`}</p>
+      </PlayerContainer>
       <Container>
         <RangeLeft
           type="range"
@@ -163,7 +213,6 @@ export const VideoTrimerFixDuration: FC = () => {
             setMaxVal(value);
           }}
         />
-
         <Slider>
           <SliderBox minPercent={minPercent} maxPercent={maxPercent} />
         </Slider>
