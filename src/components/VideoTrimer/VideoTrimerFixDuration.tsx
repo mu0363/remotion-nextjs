@@ -27,13 +27,13 @@ const PlayerButton = styled.button<{ isPlaying: boolean }>`
   right: 0;
   margin: auto;
   visibility: ${(props) => (props.isPlaying ? "hidden" : "visible")};
-  background: rgba(0, 0, 0, 0.3);
-  border: 4px solid white;
+  background: rgba(0, 0, 0, 0.4);
+  border: 4px solid rgba(255, 255, 255, 1);
   z-index: 2;
-`;
-
-const PlayerTime = styled.p`
-  position: absolute;
+  :hover {
+    background: rgba(0, 0, 0, 0.2);
+    border: 4px solid rgba(255, 255, 255, 0.8);
+  }
 `;
 
 const RangeBase = css`
@@ -169,12 +169,12 @@ export const VideoTrimerFixDuration: FC = () => {
           <PlayIcon className="mx-auto h-10 pl-1 text-white" />
         </PlayerButton>
         <ReactPlayer
-          url="https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/1080/Big_Buck_Bunny_1080_10s_20MB.mp4"
+          url="https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/videos/SportsDay2022.mp4?t=2022-10-26T06%3A48%3A31.064Z"
+          // url="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
           width="100%"
           height="100%"
           playing={isPlaying}
           ref={playerRef}
-          muted={true}
           onReady={onReady}
           onPlay={() => setIsPlaying(true)}
           onProgress={(state) => {
@@ -184,9 +184,10 @@ export const VideoTrimerFixDuration: FC = () => {
             }
           }}
         />
-        <p className="font-bold">{`0:${String(Math.floor(minVal)).padStart(2, "0")} / 0:${String(
-          Math.floor(maxVal)
-        ).padStart(2, "0")}`}</p>
+        <p className="font-bold">{`${Math.floor(minVal / 60)}:${String(Math.floor(minVal % 60)).padStart(
+          2,
+          "0"
+        )} / ${Math.floor(maxVal / 60)}:${String(Math.floor(maxVal % 60)).padStart(2, "0")}`}</p>
       </PlayerContainer>
       <Container>
         <RangeLeft
