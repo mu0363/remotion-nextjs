@@ -14,7 +14,7 @@ import { useCurrentData } from "src/libs/hooks/useCurrentData";
 import { updateImage, updateT1Text } from "src/libs/store/features/template1Slice";
 import { updateT2Text } from "src/libs/store/features/template2Slice";
 import { supabaseClient } from "src/libs/supabase/supabaseClient";
-import { VideoTrimerModal } from "../VideoTrimerModal";
+import { VideoTrimerFixDuration } from "../VideoTrimer";
 import type { ImageType } from "types";
 
 /** @package */
@@ -91,7 +91,7 @@ export const Form = () => {
           </Tooltip>
         )}
         <Modal opened={isOpened} onClose={() => setIsOpened(false)} size="xl" title="Introduce yourself!">
-          <VideoTrimerModal />
+          <VideoTrimerFixDuration />
         </Modal>
         <button onClick={() => setIsOpened(true)}>Trim</button>
       </Stack>

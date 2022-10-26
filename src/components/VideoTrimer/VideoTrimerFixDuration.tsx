@@ -70,87 +70,63 @@ const SliderBox = styled.div<{ minPercent: number; maxPercent: number }>`
   margin-top: -28px;
 
   left: ${(props) => `${props.minPercent}%`};
-  width: ${(props) => `${props.maxPercent - props.minPercent}%`};
+  right: ${(props) => `${100 - props.maxPercent}%`};
   background: #eeeeee;
   z-index: 2;
 `;
 
 /** @package */
-export const VideoTrimer: FC = () => {
-  const min = 0;
-  const max = 1000;
-  const gap = 1;
-  const [minVal, setMinVal] = useState(min);
-  const [maxVal, setMaxVal] = useState<number>(max);
+export const VideoTrimerFixDuration: FC = () => {
+  const gap = 1; // second
+  const [minVal, setMinVal] = useState(0);
+  const [maxVal, setMaxVal] = useState(1000);
   const [minPercent, setMinPercent] = useState(0);
   const [maxPercent, setMaxPercent] = useState(100);
+  const [duration, setDuration] = useState(0);
 
   const minValRef = useRef<HTMLInputElement>(null);
   const maxValRef = useRef<HTMLInputElement>(null);
-  const range = useRef<HTMLDivElement>(null);
 
-  // Convert to percentage
-  const getPercent = useCallback((value: number) => Math.round(((value - min) / (max - min)) * 100), [min, max]);
-
-  // Set width of the range to decrease from the left side
-  useEffect(() => {
-    if (maxValRef.current) {
-      setMinPercent(getPercent(minVal));
-      setMaxPercent(getPercent(+maxValRef.current.value)); // Precede with '+' to convert the value from type string to type number
-
-      if (range.current) {
-        range.current.style.left = `${minPercent}%`;
-        range.current.style.width = `${maxPercent - minPercent}%`;
-      }
-    }
-  }, [minVal, getPercent, minPercent, maxPercent]);
-
-  // Set width of the range to decrease from the right side
-  useEffect(() => {
-    if (minValRef.current) {
-      setMinPercent(getPercent(+minValRef.current.value));
-      setMaxPercent(getPercent(maxVal));
-
-      if (range.current) {
-        range.current.style.width = `${maxPercent - minPercent}%`;
-      }
-    }
-  }, [maxVal, getPercent, minPercent, maxPercent]);
-
-  // React Player
   const playerRef = useRef<ReactPlayer>(null);
   const [isReady, setIsReady] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [duration, setDuration] = useState<number>();
 
+  // Convert to percentage
+  const getPercent = useCallback((value: number) => Math.round((value / duration) * 100), [duration]);
+
+  // Set width of the range to decrease from the left side
+  useEffect(() => {
+    setMinPercent(getPercent(minVal));
+    playerRef.current?.seekTo(minVal, "seconds");
+  }, [minVal, getPercent]);
+
+  // Set width of the range to decrease from the right side
+  useEffect(() => {
+    setMaxPercent(getPercent(maxVal));
+    playerRef.current?.seekTo(maxVal, "seconds");
+  }, [maxVal, getPercent]);
+
+  // React Player
   const onReady = useCallback(() => {
     if (!isReady) {
       playerRef.current?.seekTo(minVal, "seconds");
-      setDuration(playerRef.current?.getDuration());
       const currentDuration = playerRef.current?.getDuration();
       if (currentDuration) {
+        setDuration(currentDuration);
         setMaxVal(currentDuration);
       }
       setIsReady(true);
     }
   }, [isReady, minVal]);
 
-  useEffect(() => {
-    playerRef.current?.seekTo(minVal, "seconds");
-  }, [minVal, playerRef]);
-
-  useEffect(() => {
-    playerRef.current?.seekTo(maxVal, "seconds");
-  }, [maxVal, playerRef]);
-
   return (
     <div>
-      {duration && <p>{`duration: ${duration}`}</p>}
+      <p>{`duration: ${duration}`}</p>
       <p>{`minVal: ${minVal}`}</p>
       <p>{`maxVal: ${maxVal}`}</p>
       <p>{`min%: ${minPercent}`}</p>
       <p>{`max%: ${`${maxPercent}`}`}</p>
-      <button onClick={() => setIsPlaying(false)}>STOP</button>
+      <button onClick={() => setIsPlaying(!isPlaying)}>STOP</button>
       <ReactPlayer
         url="https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/videos/AWARDS_OPENER.mp4"
         width="100%"
@@ -165,7 +141,7 @@ export const VideoTrimer: FC = () => {
       <Container>
         <RangeLeft
           type="range"
-          min={min}
+          min={0}
           max={duration}
           value={minVal}
           ref={minValRef}
@@ -173,12 +149,11 @@ export const VideoTrimer: FC = () => {
           onChange={(event: ChangeEvent<HTMLInputElement>) => {
             const value = Math.min(+event.target.value, maxVal - gap);
             setMinVal(value);
-            event.target.value = value.toString();
           }}
         />
         <RangeRight
           type="range"
-          min={min}
+          min={0}
           max={duration}
           value={maxVal}
           ref={maxValRef}
@@ -186,7 +161,6 @@ export const VideoTrimer: FC = () => {
           onChange={(event: ChangeEvent<HTMLInputElement>) => {
             const value = Math.max(+event.target.value, minVal + gap);
             setMaxVal(value);
-            event.target.value = value.toString();
           }}
         />
 
