@@ -1,7 +1,6 @@
 import { Sequence, AbsoluteFill } from "remotion";
-import { Subtitle } from "./Subtitle";
-import { T1S2_Image1 } from "./T1S2_Image1";
 import { T1S2_Text1 } from "./T1S2_Text1";
+import { T1S2_Video } from "./T1S2_Video";
 import type { FC } from "react";
 import type { SceneState } from "types";
 
@@ -22,9 +21,8 @@ export const T1S2: FC<Props> = ({ sceneState }) => {
           justifyContent: "center",
         }}
       >
-        {image_url !== undefined && <T1S2_Image1 image={image_url} />}
+        {image_url !== undefined && <T1S2_Video image={image_url} />}
         <T1S2_Text1 text={text} />
-        <Subtitle />
       </AbsoluteFill>
     </Sequence>
   );

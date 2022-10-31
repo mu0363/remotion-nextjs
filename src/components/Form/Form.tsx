@@ -1,11 +1,12 @@
 // FIXME:
 /* eslint-disable no-console */
 import { Badge, Stack, Textarea, Tooltip } from "@mantine/core";
+import { Modal } from "@mantine/core";
 import { IconCamera } from "@tabler/icons";
 import { format } from "date-fns";
 import { useAtomValue } from "jotai";
 import Image from "next/image";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import { activeSceneAtom, selectedTemplateAtom } from "src/libs/atom/atom";
 import { storageUrl, USER_ID } from "src/libs/const/remotion-config";
@@ -13,10 +14,12 @@ import { useCurrentData } from "src/libs/hooks/useCurrentData";
 import { updateImage, updateT1Text } from "src/libs/store/features/template1Slice";
 import { updateT2Text } from "src/libs/store/features/template2Slice";
 import { supabaseClient } from "src/libs/supabase/supabaseClient";
+import { VideoTrimerFixDuration } from "../VideoTrimer";
 import type { ImageType } from "types";
 
 /** @package */
 export const Form = () => {
+  const [isOpened, setIsOpened] = useState<boolean>(false);
   const dispatch = useDispatch();
   const selectedTemplate = useAtomValue(selectedTemplateAtom);
   const { scene_number } = useAtomValue(activeSceneAtom);
@@ -62,11 +65,6 @@ export const Form = () => {
     })().catch((err) => console.log(err));
   };
 
-  const handleTest = () => {
-    const date = format(new Date(), "yyyyMMddhhmmss");
-    console.log(date);
-  };
-
   return (
     <div>
       <Stack>
@@ -92,7 +90,10 @@ export const Form = () => {
             </div>
           </Tooltip>
         )}
-        <button onClick={handleTest}>TEST</button>
+        <Modal opened={isOpened} onClose={() => setIsOpened(false)} size="xl" title="Introduce yourself!">
+          <VideoTrimerFixDuration />
+        </Modal>
+        <button onClick={() => setIsOpened(true)}>Trim</button>
       </Stack>
     </div>
   );
