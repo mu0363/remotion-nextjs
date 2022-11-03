@@ -39,7 +39,7 @@ export const TimelineCard: FC<Props> = ({ card, playerRef }) => {
       transitionDuration={300}
     >
       <div
-        className={`my-3 mr-2 h-16 w-28 cursor-pointer rounded-2xl ${
+        className={`z-10 my-3 mr-2 h-16 w-28 cursor-pointer rounded-2xl ${
           activeSceneData.scene_number === id ? "border-2 border-solid border-blue-300" : "border-2"
         } `}
       >

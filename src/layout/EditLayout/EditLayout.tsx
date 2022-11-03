@@ -3,7 +3,7 @@ import { ASIDE_WIDTH, HEADER_HEIGHT, HEADER_HEIGHT_SM } from "src/libs/const";
 import { LayoutErrorBoundary } from "../LayoutErrorBoundary";
 import { ASide } from "./ASide";
 import { Header } from "./Header";
-import type { CustomLayout } from "next";
+import type { FC, ReactNode } from "react";
 
 const useStyles = createStyles((theme) => {
   return {
@@ -20,14 +20,18 @@ const useStyles = createStyles((theme) => {
   };
 });
 
+type Props = {
+  children: ReactNode;
+};
+
 /** @package */
-export const EditLayout: CustomLayout = (page) => {
+export const EditLayout: FC<Props> = ({ children }) => {
   const { classes } = useStyles();
 
   return (
     <AppShell className={classes.appShell} header={<Header />} aside={<ASide />}>
       <div className={classes.container}>
-        <LayoutErrorBoundary>{page}</LayoutErrorBoundary>
+        <LayoutErrorBoundary>{children}</LayoutErrorBoundary>
       </div>
     </AppShell>
   );

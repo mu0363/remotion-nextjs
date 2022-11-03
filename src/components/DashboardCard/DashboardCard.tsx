@@ -13,7 +13,7 @@ export const DashboardCard: FC<{ dashboardThumbnail: DashboardThumbnailType }> =
       <Card radius="lg" shadow="sm" withBorder>
         <Card.Section
           className="cursor-pointer"
-          onClick={() => router.push({ pathname: "/player", query: { template: selectedTemplate } })}
+          onClick={() => router.push({ pathname: "/dashboard/player", query: { template: selectedTemplate } })}
         >
           <Image src={image} alt="template" />
         </Card.Section>

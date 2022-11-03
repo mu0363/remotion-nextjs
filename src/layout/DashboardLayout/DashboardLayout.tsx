@@ -3,7 +3,7 @@ import { HEADER_HEIGHT, SIDENAV_WIDTH } from "src/libs/const";
 import { LayoutErrorBoundary } from "../LayoutErrorBoundary";
 import { Header } from "./Header";
 import { SideNav } from "./SideNav";
-import type { CustomLayout } from "next";
+import type { FC, ReactNode } from "react";
 
 const useStyles = createStyles((theme) => {
   return {
@@ -19,8 +19,12 @@ const useStyles = createStyles((theme) => {
   };
 });
 
+type Props = {
+  children: ReactNode;
+};
+
 /** @package */
-export const DashboardLayout: CustomLayout = (page) => {
+export const DashboardLayout: FC<Props> = ({ children }) => {
   const { classes } = useStyles();
 
   return (
@@ -33,7 +37,7 @@ export const DashboardLayout: CustomLayout = (page) => {
       navbar={<SideNav />}
     >
       <div className={classes.container}>
-        <LayoutErrorBoundary>{page}</LayoutErrorBoundary>
+        <LayoutErrorBoundary>{children}</LayoutErrorBoundary>
       </div>
     </AppShell>
   );

@@ -2,6 +2,7 @@
 /* eslint-disable no-console */
 import { Badge, Stack, Textarea, Tooltip } from "@mantine/core";
 import { Modal } from "@mantine/core";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { IconCamera } from "@tabler/icons";
 import { format } from "date-fns";
 import { useAtomValue } from "jotai";
@@ -13,12 +14,12 @@ import { storageUrl, USER_ID } from "src/libs/const/remotion-config";
 import { useCurrentData } from "src/libs/hooks/useCurrentData";
 import { updateImage, updateT1Text } from "src/libs/store/features/template1Slice";
 import { updateT2Text } from "src/libs/store/features/template2Slice";
-import { supabaseClient } from "src/libs/supabase/supabaseClient";
 import { VideoTrimerFixDuration } from "../VideoTrimer";
 import type { ImageType } from "types";
 
 /** @package */
 export const Form = () => {
+  const supabase = useSupabaseClient();
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const dispatch = useDispatch();
   const selectedTemplate = useAtomValue(selectedTemplateAtom);
@@ -46,13 +47,13 @@ export const Form = () => {
     const objectUrl = window.URL.createObjectURL(file);
     dispatch(updateImage({ scene_number, id: scene_number, image_url: objectUrl }));
     (async () => {
-      const { data, error } = await supabaseClient.storage
+      const { data, error } = await supabase.storage
         .from("images")
         .upload(`${format(new Date(), "yyMMdd")}/${USER_ID}/${filename}`, file);
       if (error) {
         throw new Error("something went wrong");
       }
-      await supabaseClient.from("images").insert<Omit<ImageType, "id" | "created_at">>([
+      await supabase.from("images").insert<Omit<ImageType, "id" | "created_at">>([
         {
           user_id: USER_ID,
           template_number,

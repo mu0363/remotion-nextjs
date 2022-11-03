@@ -1,10 +1,11 @@
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useQuery } from "@tanstack/react-query";
-import { supabaseClient } from "../supabase/supabaseClient";
 import type { ImageType } from "types";
 
 export const useImageQuery = () => {
+  const supabase = useSupabaseClient();
   const getImages = async (): Promise<ImageType[]> => {
-    const { data, error } = await supabaseClient.from("images").select<"*", ImageType>("*");
+    const { data, error } = await supabase.from("images").select<"*", ImageType>("*");
     if (error) throw new Error(error.message);
     return data;
   };
