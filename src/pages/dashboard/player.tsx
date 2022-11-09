@@ -1,6 +1,7 @@
 // FIXME:
 /* eslint-disable no-console */
-import { FunnelIcon, PlayIcon, PauseIcon, MusicalNoteIcon } from "@heroicons/react/24/solid";
+import styled from "@emotion/styled";
+import { PlayIcon, PauseIcon, MusicalNoteIcon } from "@heroicons/react/24/solid";
 import { Avatar, Drawer, Group, Text, Tooltip } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Player as RemotionPlayer, PlayerRef } from "@remotion/player";
@@ -25,24 +26,62 @@ import { selectAllTemplate1Data, updateT1Music } from "src/libs/store/features/t
 import { selectAllTemplate2Data, updateT2Music } from "src/libs/store/features/template2Slice";
 import { Template1 } from "src/remotion/Template1";
 import { Template2 } from "src/remotion/Template2";
-import type { CustomNextPage } from "next";
-import type { FC, RefObject } from "react";
-import type { MusicState, SelectedTemplateType, TimelineSceneType } from "types";
+import type { NextPage } from "next";
+import type { FC, RefObject, ChangeEvent } from "react";
+import type { MusicState, SelectedTemplateType, TimelineSceneType } from "src/types";
 
-const Player: CustomNextPage = () => {
+const Timeline = styled.div`
+  position: relative;
+`;
+
+const TimelineSlider = styled.input<{ sliderLength: number }>`
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  pointer-events: none;
+  height: 0;
+  width: ${(props) => `${props.sliderLength}px`};
+  outline: none;
+  position: absolute;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    pointer-events: all;
+    cursor: grab;
+    :active {
+      cursor: grabbing;
+    }
+    position: relative;
+    z-index: 4;
+
+    border: none;
+    width: 1.2rem;
+    height: 6rem;
+    margin-top: 5rem;
+
+    background-image: url("/timelineBar.svg");
+  }
+`;
+
+const TimelineCardDiv = styled.div`
+  position: absolute;
+  display: flex;
+`;
+
+const Player: NextPage = () => {
   const router = useRouter();
   const [currentTimelineScene, setCurrentTimelineScene] = useState<TimelineSceneType[]>(timelineScenes.template01);
+  const [sliderLength, setSliderLength] = useState(0);
+  const [isPlaying, setIsPlaying] = useAtom(isPlayingAtom);
   const [isDrawerOpened, handlers] = useDisclosure(false);
   const template1Data = useSelector(selectAllTemplate1Data);
   const template2Data = useSelector(selectAllTemplate2Data);
   const currentMusicData = useSelector(selectCurrentMusicSliceData);
   const musicListData = useSelector(selectAllMusicSliceData);
-  const activeSceneData = useAtomValue(activeSceneAtom);
   const [selectedTemplate, setSelectedTemplate] = useAtom(selectedTemplateAtom);
   const { currentFrame } = useAtomValue(videConfigAtom);
   const playerRef = useRef<PlayerRef>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const dragRef = useRef<HTMLDivElement>(null);
 
   const calculateTime = (fps: number) => {
     const minute = Math.floor(fps / (30 * 60));
@@ -54,11 +93,30 @@ const Player: CustomNextPage = () => {
   const getOffset = useCallback(() => {
     if (scrollRef.current && playerRef.current) {
       playerRef.current.seekTo(scrollRef.current.scrollLeft);
-      dragRef.current;
     }
   }, []);
 
+  const getSliderLength = (sceneCount: number) => {
+    // カード1枚が112px、間が8px
+    return sceneCount * 112 + (sceneCount - 1) * 8;
+  };
+
+  const seekTimeline = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      setIsPlaying(false);
+      if (playerRef.current) {
+        playerRef.current.seekTo(Number(event.target.value));
+      }
+    },
+    [setIsPlaying]
+  );
+
   useLineImage();
+
+  // カードの枚数を入力してタイムラインスライダーの長さを取得
+  useEffect(() => {
+    setSliderLength(getSliderLength(3));
+  }, []);
 
   useEffect(() => {
     const template = router.query.template as SelectedTemplateType;
@@ -77,35 +135,11 @@ const Player: CustomNextPage = () => {
   }, [router.query.template, setSelectedTemplate]);
 
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollLeft += (currentFrame + 1000) / 1000;
-    }
-  }, [currentFrame]);
-
-  useEffect(() => {
-    getOffset();
-  }, [getOffset]);
-
-  useEffect(() => {
     window.addEventListener("touchmove", getOffset);
   }, [getOffset]);
 
-  useEffect(() => {
-    // prevent scroll
-    document.body.style.overflow = "hidden";
-    if (playerRef.current) {
-      playerRef.current.pause();
-      playerRef.current.seekTo(activeSceneData.from);
-    }
-  }, [activeSceneData]);
-
-  useEffect(() => {
-    if (dragRef.current) {
-    }
-  }, [dragRef]);
-
   return (
-    <div>
+    <EditLayout>
       <div className="fixed w-full md:static">
         <div className="mx-0 pt-0 md:mx-10 md:pt-10">
           <RemotionPlayer
@@ -117,17 +151,25 @@ const Player: CustomNextPage = () => {
             compositionHeight={1080}
             style={{ width: "100%" }}
             fps={30}
-            controls={true}
             loop
           />
-
-          {/** 再生バー */}
-          <div className="relative z-20 hidden md:flex" style={{ left: currentFrame + 90 }} ref={dragRef}>
-            <div className="absolute">
-              <div className="absolute cursor-grab active:cursor-grabbing">
-                <FunnelIcon className="w-6 text-gray-600" />
-              </div>
-              <div className="absolute left-2.5 top-1 rounded-full bg-gray-600 py-11 px-0.5" />
+          <div className="my-5 flex justify-end">
+            <div>
+              <Tooltip
+                label={<div className="font-bold">BGMを変更</div>}
+                color="orange"
+                withArrow
+                transition="fade"
+                transitionDuration={300}
+              >
+                <div
+                  className="group flex cursor-pointer items-center space-x-1 rounded-full bg-orange-400 py-1 px-3 hover:bg-orange-500"
+                  onClick={() => handlers.open()}
+                >
+                  <MusicalNoteIcon className="h-3 text-white" />
+                  <p className="text-xs font-bold text-white">{currentMusicData.name}</p>
+                </div>
+              </Tooltip>
             </div>
           </div>
 
@@ -135,38 +177,31 @@ const Player: CustomNextPage = () => {
           <div className="relative flex items-center justify-center md:hidden">
             <div className="absolute z-20 mt-24 mr-4 scroll-auto rounded-full bg-gray-600 py-9 px-0.5" />
           </div>
-          <div className="mx-0 mt-1 md:mr-5 md:mt-2">
-            <div className="relative flex items-center">
+
+          <div className="flex">
+            <div className="mt-2 mr-5 flex flex-col items-center space-y-2">
               <PlayButton playerRef={playerRef} />
-              <div className="flex overflow-x-auto pl-48 md:pl-[100px]" ref={scrollRef}>
+              <p className="text-xs font-bold text-gray-600">{calculateTime(currentFrame)}</p>
+            </div>
+            <Timeline>
+              <TimelineSlider
+                type="range"
+                min={0}
+                max={TEMPLATE1_DURATION}
+                step="0.01"
+                value={currentFrame}
+                onChange={(event) => seekTimeline(event)}
+                sliderLength={sliderLength}
+              />
+              <TimelineCardDiv ref={scrollRef}>
                 {currentTimelineScene.map((card) => (
                   <div key={card.id}>
                     <TimelineCard card={card} playerRef={playerRef} />
                   </div>
                 ))}
-
-                <div className="px-24 md:px-0" />
-              </div>
-              {/* <AudioWaveform /> */}
-            </div>
-          </div>
-          <div className="flex items-center justify-between space-x-6 px-6 md:pl-7 md:pr-0">
-            <p className="text-xs font-bold text-gray-600">{calculateTime(currentFrame)}</p>
-            <Tooltip
-              label={<div className="font-bold">BGMを変更</div>}
-              color="orange"
-              withArrow
-              transition="fade"
-              transitionDuration={300}
-            >
-              <div
-                className="group flex cursor-pointer items-center space-x-1 rounded-full bg-orange-400 py-1 px-3 hover:bg-orange-500"
-                onClick={() => handlers.open()}
-              >
-                <MusicalNoteIcon className="h-3 text-white" />
-                <p className="text-xs font-bold text-white">{currentMusicData.name}</p>
-              </div>
-            </Tooltip>
+              </TimelineCardDiv>
+            </Timeline>
+            {/* <AudioWaveform /> */}
           </div>
 
           {/** 入力フォーム */}
@@ -192,15 +227,13 @@ const Player: CustomNextPage = () => {
       >
         <div className="space-y-5">
           {musicListData.map((musicData) => (
-            <MusicCard key={musicData.id} musicData={musicData} />
+            <MusicCard key={musicData.id} musicData={musicData} isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
           ))}
         </div>
       </Drawer>
-    </div>
+    </EditLayout>
   );
 };
-
-Player.getLayout = EditLayout;
 
 export default Player;
 
@@ -220,30 +253,28 @@ const PlayButton: FC<PlayButtonProps> = ({ playerRef }) => {
   }, [activeSceneData, playerRef]);
 
   return (
-    <div className="absolute z-20">
-      <div className="flex flex-col items-center">
-        <div
-          className="mx-5"
-          onClick={() => {
-            playerRef.current?.toggle();
-            setIsPlaying(!isPlaying);
-          }}
-        >
-          {isPlaying ? (
-            <PauseIcon className="h-12 cursor-pointer rounded-full border-2 bg-white p-2 text-gray-600 shadow-md hover:bg-gray-100" />
-          ) : (
-            <PlayIcon className="h-12 cursor-pointer rounded-full border-2 bg-white p-2 text-gray-600 shadow-md hover:bg-gray-100" />
-          )}
-        </div>
-      </div>
+    <div
+      onClick={() => {
+        playerRef.current?.toggle();
+        setIsPlaying(!isPlaying);
+      }}
+    >
+      {isPlaying ? (
+        <PauseIcon className="h-12 cursor-pointer rounded-full border-2 bg-white p-2 text-gray-600 shadow-md hover:bg-gray-100" />
+      ) : (
+        <PlayIcon className="h-12 cursor-pointer rounded-full border-2 bg-white p-2 text-gray-600 shadow-md hover:bg-gray-100" />
+      )}
     </div>
   );
 };
 
-const MusicCard: FC<{ musicData: MusicState }> = ({ musicData }) => {
+const MusicCard: FC<{ musicData: MusicState; isPlaying: boolean; setIsPlaying: (isPlaying: boolean) => void }> = ({
+  musicData,
+  isPlaying,
+  setIsPlaying,
+}) => {
   const selectedTemplate = useAtomValue(selectedTemplateAtom);
   const [play, { stop }] = useSound(musicData.music, { interrupt: true });
-  const [isPlaying, setIsPlaying] = useState(false);
   const dispatch = useDispatch();
 
   return (

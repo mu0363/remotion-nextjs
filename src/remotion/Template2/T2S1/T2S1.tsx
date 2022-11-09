@@ -1,7 +1,7 @@
 import { AbsoluteFill, Sequence } from "remotion";
 import { T2S1_Text1 } from "./T2S1_Text1";
 import type { FC } from "react";
-import type { SceneState } from "types";
+import type { SceneState } from "src/types";
 
 type Props = {
   sceneState: SceneState;

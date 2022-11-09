@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import { REGION, SITE_ID } from "src/libs/const";
 import { WATERMARK_EMPTY } from "src/libs/const/remotion-config";
 import type { NextApiRequest, NextApiResponse } from "next";
-import type { RenderInfo, Template1Type } from "types";
+import type { RenderInfo, Template1Type } from "src/types";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") return;

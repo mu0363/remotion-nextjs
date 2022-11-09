@@ -54,18 +54,40 @@ const RangeBase = css`
 
     border: none;
     height: 56px;
-    width: 20px;
     background: #f2cb0a;
   }
 `;
 
 const RangeLeft = styled.input`
-  z-index: 3;
+  z-index: 4;
 
   ${RangeBase}
   &::-webkit-slider-thumb {
     border-top-left-radius: 0.5em;
     border-bottom-left-radius: 0.5em;
+    width: 20px;
+  }
+`;
+
+const RangeCenter = styled.input<{ minPercent: number; maxPercent: number }>`
+  z-index: 3;
+  ${RangeBase}
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    pointer-events: all;
+    position: relative;
+    cursor: grab;
+    &:active {
+      cursor: grabbing;
+    }
+
+    border: none;
+    height: 30px;
+    width: 30px;
+    border-radius: 0.5em;
+    /* width: ${(props) => `${props.maxPercent - props.minPercent - 5}%`}; */
+    background: #f2cb0a;
   }
 `;
 
@@ -76,6 +98,7 @@ const RangeRight = styled.input`
   &::-webkit-slider-thumb {
     border-top-right-radius: 0.5em;
     border-bottom-right-radius: 0.5em;
+    width: 20px;
   }
 `;
 
@@ -85,11 +108,6 @@ const Slider = styled.div`
 `;
 
 const SliderBox = styled.div<{ minPercent: number; maxPercent: number }>`
-  pointer-events: all;
-  cursor: grab;
-  &:active {
-    cursor: grabbing;
-  }
   position: absolute;
   height: 56px;
   margin-top: -28px;
@@ -106,6 +124,7 @@ const SliderBox = styled.div<{ minPercent: number; maxPercent: number }>`
 export const VideoTrimerFixDuration: FC = () => {
   const gap = 3; // second
   const [minVal, setMinVal] = useState(0);
+  const [middleVal, setMiddleVal] = useState(500);
   const [maxVal, setMaxVal] = useState(1000);
   const [minPercent, setMinPercent] = useState(0);
   const [maxPercent, setMaxPercent] = useState(100);
@@ -119,22 +138,61 @@ export const VideoTrimerFixDuration: FC = () => {
   const [isReady, setIsReady] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  // Convert to percentage
+  // パーセントに変換
   const getPercent = useCallback((value: number) => Math.round((value / duration) * 100), [duration]);
 
-  // Set width of the range to decrease from the left side
+  // 中間値を計算
+  const getMiddle = useCallback((minVal: number, maxVal: number) => (maxVal - minVal) / 2 + minVal, []);
+
+  // 真ん中のレンジスライダー
+  useEffect(() => {
+    if (minVal < 0) {
+      setMinVal(0);
+    }
+
+    if (maxVal > duration) {
+      setMaxVal(duration);
+    }
+
+    setMiddleVal(getMiddle(minVal, maxVal));
+    playerRef.current?.seekTo(minVal, "seconds");
+    setIsPlaying(false);
+  }, [minVal, maxVal, duration, getPercent, getMiddle]);
+
+  // 右のレンジスライダー
+  useEffect(() => {
+    setMaxPercent(getPercent(maxVal));
+    playerRef.current?.seekTo(maxVal, "seconds");
+    setIsPlaying(false);
+  }, [maxVal, getPercent]);
+
+  // 左のレンジスライダー
   useEffect(() => {
     setMinPercent(getPercent(minVal));
     playerRef.current?.seekTo(minVal, "seconds");
     setIsPlaying(false);
   }, [minVal, getPercent]);
 
-  // Set width of the range to decrease from the right side
-  useEffect(() => {
-    setMaxPercent(getPercent(maxVal));
-    playerRef.current?.seekTo(maxVal, "seconds");
-    setIsPlaying(false);
-  }, [maxVal, getPercent]);
+  const slideTrimBox = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const diff = middleVal - Number(event.target.value);
+      setMinVal((prev) => {
+        if (minVal >= 0 && maxVal < duration) {
+          return prev - diff;
+        } else {
+          return prev;
+        }
+      });
+      setMaxVal((prev) => {
+        if (minVal > 0 && maxVal <= duration) {
+          return prev - diff;
+        } else {
+          return prev;
+        }
+      });
+    },
+    [minVal, maxVal, duration, middleVal]
+  );
 
   // React Player
   const onReady = useCallback(() => {
@@ -144,6 +202,7 @@ export const VideoTrimerFixDuration: FC = () => {
       if (videoDuration) {
         setDuration(videoDuration);
         setMaxVal(videoDuration);
+        setMiddleVal(videoDuration / 2);
       }
       setIsReady(true);
     }
@@ -154,6 +213,7 @@ export const VideoTrimerFixDuration: FC = () => {
       <p>{`duration: ${duration}`}</p>
       <p>{`minVal: ${minVal}`}</p>
       <p>{`maxVal: ${maxVal}`}</p>
+      <p>{`middleVal: ${middleVal}`}</p>
       <p>{`min%: ${minPercent}`}</p>
       <p>{`max%: ${`${maxPercent}`}`}</p>
       <p>{`currentTime: ${`${currentTime}`}`}</p>
@@ -198,9 +258,19 @@ export const VideoTrimerFixDuration: FC = () => {
           ref={minValRef}
           step="0.01"
           onChange={(event: ChangeEvent<HTMLInputElement>) => {
-            const value = Math.min(+event.target.value, maxVal - gap);
+            const value = Math.min(Number(event.target.value), maxVal - gap);
             setMinVal(value);
           }}
+        />
+        <RangeCenter
+          type="range"
+          step="0.01"
+          minPercent={minPercent}
+          maxPercent={maxPercent}
+          min={0}
+          max={duration}
+          value={middleVal}
+          onChange={slideTrimBox}
         />
         <RangeRight
           type="range"

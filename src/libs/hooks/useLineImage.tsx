@@ -1,6 +1,6 @@
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { supabaseClient } from "src/libs/supabase/supabaseClient";
 import { updateImage } from "../store/features/template1Slice";
 
 type RealtimePayloadType = {
@@ -14,9 +14,10 @@ type RealtimePayloadType = {
 };
 
 export const useLineImage = () => {
+  const supabase = useSupabaseClient();
   const dispatch = useDispatch();
   useEffect(() => {
-    const channel = supabaseClient
+    const channel = supabase
       .channel("db-changes")
       .on(
         "postgres_changes",
@@ -29,7 +30,7 @@ export const useLineImage = () => {
     channel.subscribe();
 
     const unsubscribe = async () => {
-      await supabaseClient.removeChannel(channel);
+      await supabase.removeChannel(channel);
     };
 
     return () => {
@@ -39,5 +40,5 @@ export const useLineImage = () => {
         }
       });
     };
-  }, [dispatch]);
+  }, [dispatch, supabase]);
 };

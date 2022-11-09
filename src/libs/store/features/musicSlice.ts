@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { musicList } from "../../const";
 import { RootState } from "../store";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import type { MusicState } from "types";
+import type { MusicState } from "src/types";
 
 export const musicSlice = createSlice({
   name: "musicList",
