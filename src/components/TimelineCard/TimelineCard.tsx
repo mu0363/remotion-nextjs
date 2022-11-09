@@ -7,7 +7,7 @@ import { activeSceneAtom, isPlayingAtom } from "src/libs/atom/atom";
 import { thumbnailStartFrame } from "src/libs/const";
 import type { PlayerRef } from "@remotion/player";
 import type { FC, RefObject } from "react";
-import type { TimelineSceneType } from "types";
+import type { TimelineSceneType } from "src/types";
 
 type Props = {
   card: TimelineSceneType;
@@ -39,7 +39,7 @@ export const TimelineCard: FC<Props> = ({ card, playerRef }) => {
       transitionDuration={300}
     >
       <div
-        className={`my-3 mr-2 h-16 w-28 cursor-pointer rounded-2xl ${
+        className={`z-10 my-3 mr-2 h-16 w-28 cursor-pointer rounded-2xl ${
           activeSceneData.scene_number === id ? "border-2 border-solid border-blue-300" : "border-2"
         } `}
       >

@@ -5,7 +5,7 @@ import { videConfigAtom } from "../../libs/atom";
 import { Watermark } from "../Watermark";
 import { T2S1 } from "./T2S1";
 import { T2S2 } from "./T2S2";
-import type { Template1Type } from "types";
+import type { Template1Type } from "src/types";
 
 /** @package */
 export const Template2: FC<Template1Type> = (props) => {

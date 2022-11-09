@@ -4,6 +4,7 @@ import { Burger, Container, createStyles, Group, Header as MantineHeader, MediaQ
 import { useDisclosure } from "@mantine/hooks";
 import { AvantIcon } from "src/components/SVG";
 import { HEADER_HEIGHT } from "src/libs/const";
+import { useMutateAuth } from "src/libs/hooks/useMutateAuth";
 import type { FC } from "react";
 
 const useStyles = createStyles((theme) => ({
@@ -23,6 +24,7 @@ const useStyles = createStyles((theme) => ({
 
 /** @package */
 export const Header: FC = () => {
+  const { session, signInWithGoogle, signout } = useMutateAuth();
   const { classes } = useStyles();
   const [isOpened, { toggle }] = useDisclosure(false);
 
@@ -33,9 +35,11 @@ export const Header: FC = () => {
           <MediaQuery largerThan="md" styles={{ display: "none" }}>
             <Burger opened={isOpened} onClick={toggle} size="sm" />
           </MediaQuery>
-          <MediaQuery smallerThan="md" styles={{ display: "none" }}>
+
+          <div className="flex justify-between">
             <AvantIcon />
-          </MediaQuery>
+            <button onClick={signout}>Signout</button>
+          </div>
         </Group>
       </Container>
     </MantineHeader>
