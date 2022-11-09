@@ -15,11 +15,13 @@ import { useCurrentData } from "src/libs/hooks/useCurrentData";
 import { updateImage, updateT1Text } from "src/libs/store/features/template1Slice";
 import { updateT2Text } from "src/libs/store/features/template2Slice";
 import { VideoTrimerFixDuration } from "../VideoTrimer";
-import type { ImageType } from "types";
+import type { Database } from "src/types/database.types";
+
+type ImageType = Database["public"]["Tables"]["images"]["Row"];
 
 /** @package */
 export const Form = () => {
-  const supabase = useSupabaseClient();
+  const supabase = useSupabaseClient<Database>();
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const dispatch = useDispatch();
   const selectedTemplate = useAtomValue(selectedTemplateAtom);

@@ -15,7 +15,7 @@ import { selectAllTemplate2Data } from "src/libs/store/features/template2Slice";
 import type { PlayerRef } from "@remotion/player";
 import type { FC, MouseEvent } from "react";
 import type { RenderProgressType } from "src/pages/api/progress";
-import type { RenderInfo } from "types";
+import type { RenderInfo } from "src/types";
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -45,14 +45,14 @@ const useStyles = createStyles((theme) => ({
 export const Header: FC = () => {
   const { classes } = useStyles();
   const [isOpened, setIsOpened] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [renderInfo, setRenderInfo] = useState<RenderInfo>();
+  const [renderStatus, setRenderStatus] = useState<RenderProgressType>();
   const playerRef = useRef<PlayerRef>(null);
   const selectedTemplate = useAtomValue(selectedTemplateAtom);
   const template1Data = useSelector(selectAllTemplate1Data);
   const template2Data = useSelector(selectAllTemplate2Data);
   const activeSceneData = useAtomValue(activeSceneAtom);
-  const [isLoading, setIsLoading] = useState(false);
-  const [renderInfo, setRenderInfo] = useState<RenderInfo>();
-  const [renderStatus, setRenderStatus] = useState<RenderProgressType>();
 
   useEffect(() => {
     // スクロール禁止

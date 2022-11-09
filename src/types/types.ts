@@ -1,5 +1,3 @@
-import type { definitions } from "./supabase";
-
 export type DashboardThumbnailType = {
   id: number;
   selectedTemplate: SelectedTemplateType;
@@ -7,9 +5,6 @@ export type DashboardThumbnailType = {
   title: string;
   description: string;
 };
-
-// 自動生成したsupabaseからの取得データ
-export type ImageType = definitions["images"];
 
 // タイムラインのサムネイルデータ
 export type TimelineSceneType = {

@@ -4,7 +4,7 @@ import type {
   TemplateTimelineSceneType,
   Template2Type,
   DashboardThumbnailType,
-} from "types";
+} from "src/types";
 
 export const SITE_ID = "https://remotionlambda-47aic418sn.s3.us-east-1.amazonaws.com/sites/remotion-next-js/index.html";
 export const REGION = "us-east-1";

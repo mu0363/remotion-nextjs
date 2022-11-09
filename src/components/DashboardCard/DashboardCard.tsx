@@ -1,7 +1,7 @@
 import { Card, Grid, Group, Image, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 import type { FC } from "react";
-import type { DashboardThumbnailType } from "types";
+import type { DashboardThumbnailType } from "src/types";
 
 /** @package */
 export const DashboardCard: FC<{ dashboardThumbnail: DashboardThumbnailType }> = ({ dashboardThumbnail }) => {

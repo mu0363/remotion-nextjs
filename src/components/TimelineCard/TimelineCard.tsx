@@ -7,7 +7,7 @@ import { activeSceneAtom, isPlayingAtom } from "src/libs/atom/atom";
 import { thumbnailStartFrame } from "src/libs/const";
 import type { PlayerRef } from "@remotion/player";
 import type { FC, RefObject } from "react";
-import type { TimelineSceneType } from "types";
+import type { TimelineSceneType } from "src/types";
 
 type Props = {
   card: TimelineSceneType;

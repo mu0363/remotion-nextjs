@@ -1,6 +1,8 @@
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useQuery } from "@tanstack/react-query";
-import type { ImageType } from "types";
+import type { Database } from "src/types/database.types";
+
+type ImageType = Database["public"]["Tables"]["images"]["Row"];
 
 export const useImageQuery = () => {
   const supabase = useSupabaseClient();

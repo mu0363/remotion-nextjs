@@ -6,7 +6,7 @@ import { Watermark } from "../Watermark";
 import { T1S1 } from "./T1S1";
 import { T1S2 } from "./T1S2";
 import { T1S3 } from "./T1S3";
-import type { Template1Type } from "types";
+import type { Template1Type } from "src/types";
 
 /** @package */
 export const Template1: FC<Template1Type> = (props) => {

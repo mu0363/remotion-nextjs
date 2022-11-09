@@ -28,7 +28,7 @@ import { Template1 } from "src/remotion/Template1";
 import { Template2 } from "src/remotion/Template2";
 import type { NextPage } from "next";
 import type { FC, RefObject, ChangeEvent } from "react";
-import type { MusicState, SelectedTemplateType, TimelineSceneType } from "types";
+import type { MusicState, SelectedTemplateType, TimelineSceneType } from "src/types";
 
 const Timeline = styled.div`
   position: relative;

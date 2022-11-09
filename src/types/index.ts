@@ -1,5 +1,4 @@
 export type {
-  ImageType,
   TimelineSceneType,
   RenderInfo,
   SceneState,

@@ -9,11 +9,12 @@ import { useState } from "react";
 import { Provider } from "react-redux";
 import { store } from "src/libs/store";
 import type { AppProps } from "next/app";
+import type { Database } from "src/types/database.types";
 
 const queryClient = new QueryClient();
 
 const MyApp = ({ Component, pageProps }: AppProps<{ initialSession: Session }>) => {
-  const [supabaseClient] = useState(() => createBrowserSupabaseClient());
+  const [supabaseClient] = useState(() => createBrowserSupabaseClient<Database>());
 
   const [colorScheme, setColorScheme] = useState<ColorScheme>("light");
   const toggleColorScheme = (value?: ColorScheme) =>
