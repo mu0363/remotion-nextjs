@@ -146,10 +146,18 @@ export const VideoTrimerFixDuration: FC = () => {
 
   // 真ん中のレンジスライダー
   useEffect(() => {
+    if (minVal < 0) {
+      setMinVal(0);
+    }
+
+    if (maxVal > duration) {
+      setMaxVal(duration);
+    }
+
     setMiddleVal(getMiddle(minVal, maxVal));
     playerRef.current?.seekTo(minVal, "seconds");
     setIsPlaying(false);
-  }, [minVal, maxVal, getPercent, getMiddle]);
+  }, [minVal, maxVal, duration, getPercent, getMiddle]);
 
   // 右のレンジスライダー
   useEffect(() => {
@@ -168,12 +176,22 @@ export const VideoTrimerFixDuration: FC = () => {
   const slideTrimBox = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       const diff = middleVal - Number(event.target.value);
-      setMaxVal((prev) => prev - diff);
-      setMinVal((prev) => prev - diff);
-      // setMiddleVal(Number(event.target.value) + diff);
-      // setMiddleVal(Number(event.target.value) + diff);
+      setMinVal((prev) => {
+        if (minVal >= 0 && maxVal < duration) {
+          return prev - diff;
+        } else {
+          return prev;
+        }
+      });
+      setMaxVal((prev) => {
+        if (minVal > 0 && maxVal <= duration) {
+          return prev - diff;
+        } else {
+          return prev;
+        }
+      });
     },
-    [middleVal]
+    [minVal, maxVal, duration, middleVal]
   );
 
   // React Player
