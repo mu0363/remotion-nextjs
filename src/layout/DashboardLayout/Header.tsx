@@ -24,7 +24,7 @@ const useStyles = createStyles((theme) => ({
 
 /** @package */
 export const Header: FC = () => {
-  const { session, signInWithGoogle, signout } = useMutateAuth();
+  const { signout } = useMutateAuth();
   const { classes } = useStyles();
   const [isOpened, { toggle }] = useDisclosure(false);
 
