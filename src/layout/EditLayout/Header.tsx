@@ -77,6 +77,8 @@ export const Header: FC = () => {
         }),
       });
       const progressJson = (await progress.json()) as RenderProgressType;
+      console.log({ progressJson });
+
       setRenderStatus(progressJson);
     };
 
