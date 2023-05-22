@@ -1,4 +1,4 @@
-import { getRenderProgress, RenderProgress } from "@remotion/lambda";
+import { getRenderProgress, RenderProgress } from "@remotion/lambda/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { RenderInfo } from "src/types";
 
@@ -31,7 +31,7 @@ const getRenderProgressStatus = (progress: RenderProgress): RenderProgressType =
     return {
       type: "error",
       percent: 0,
-      errors: progress.errors[0].stack,
+      errors: progress.errors[0].message,
     };
   }
 

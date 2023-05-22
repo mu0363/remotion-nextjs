@@ -9,7 +9,7 @@ import {
   UnstyledButton,
   useMantineTheme,
 } from "@mantine/core";
-import { IconAlertCircle, IconMessages, IconDatabase, IconChevronRight, IconChevronLeft } from "@tabler/icons";
+import { IconChevronRight, IconChevronLeft, IconDatabase } from "@tabler/icons";
 import { getPath, SIDENAV_WIDTH } from "src/libs/const";
 import { ActiveLink } from "src/libs/next";
 import type { FC } from "react";
@@ -22,9 +22,9 @@ export const SideNav: FC = () => {
         <Navbar.Section grow mt="sm">
           <MainLinks />
         </Navbar.Section>
-        <Navbar.Section>
+        {/* <Navbar.Section>
           <User />
-        </Navbar.Section>
+        </Navbar.Section> */}
       </Navbar>
     </MediaQuery>
   );
@@ -71,9 +71,9 @@ const MainLink = ({ icon, color, label, href }: MainLinkProps) => {
 };
 
 const data = [
-  { icon: <IconAlertCircle size={16} />, color: "teal", label: "Dashboard", href: getPath("DASHBOARD") },
-  { icon: <IconMessages size={16} />, color: "violet", label: "Discussions", href: getPath("INDEX") },
-  { icon: <IconDatabase size={16} />, color: "grape", label: "Databases", href: getPath("INDEX") },
+  { icon: <IconDatabase size={16} />, color: "teal", label: "映像を選ぶ", href: getPath("DASHBOARD") },
+  // { icon: <IconMessages size={16} />, color: "violet", label: "Discussions", href: getPath("INDEX") },
+  // { icon: <IconDatabase size={16} />, color: "grape", label: "Databases", href: getPath("INDEX") },
 ];
 
 const MainLinks = () => {

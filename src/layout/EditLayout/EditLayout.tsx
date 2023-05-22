@@ -1,4 +1,4 @@
-import { AppShell, createStyles } from "@mantine/core";
+import { AppShell, Center, createStyles } from "@mantine/core";
 import { ASIDE_WIDTH, HEADER_HEIGHT, HEADER_HEIGHT_SM } from "src/libs/const";
 import { LayoutErrorBoundary } from "../LayoutErrorBoundary";
 import { ASide } from "./ASide";
@@ -7,7 +7,10 @@ import type { FC, ReactNode } from "react";
 
 const useStyles = createStyles((theme) => {
   return {
-    appShell: { body: { minHeight: "100vh" }, main: { padding: 0, backgroundColor: theme.colors.gray[1] } },
+    appShell: {
+      body: { minHeight: "100vh" },
+      main: { padding: 0, backgroundColor: theme.colors.gray[1] },
+    },
     container: {
       marginTop: HEADER_HEIGHT,
       marginRight: ASIDE_WIDTH,
@@ -29,11 +32,13 @@ export const EditLayout: FC<Props> = ({ children }) => {
   const { classes } = useStyles();
 
   return (
-    <AppShell className={classes.appShell} header={<Header />} aside={<ASide />}>
-      <div className={classes.container}>
-        <LayoutErrorBoundary>{children}</LayoutErrorBoundary>
-      </div>
-    </AppShell>
+    <Center>
+      <AppShell className={classes.appShell} header={<Header />} aside={<ASide />}>
+        <div className={classes.container}>
+          <LayoutErrorBoundary>{children}</LayoutErrorBoundary>
+        </div>
+      </AppShell>
+    </Center>
   );
 };
 
