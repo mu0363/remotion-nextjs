@@ -174,11 +174,6 @@ const Player: NextPage = () => {
             </div>
           </div>
 
-          {/** mobile再生バー */}
-          <div className="relative flex items-center justify-center md:hidden">
-            <div className="absolute z-20 mt-24 mr-4 scroll-auto rounded-full bg-gray-600 py-9 px-0.5" />
-          </div>
-
           <div className="flex">
             <div className="mt-2 mr-5 flex flex-col items-center space-y-2">
               <PlayButton playerRef={playerRef} />

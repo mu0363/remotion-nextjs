@@ -4,8 +4,8 @@ import type { FC } from "react";
 export const AvantIcon: FC<{ className?: string }> = (props) => {
   return (
     <svg
-      width="80"
-      height="22"
+      width="600"
+      height="165"
       viewBox="0 0 323 89"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
