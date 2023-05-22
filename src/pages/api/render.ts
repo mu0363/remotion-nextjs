@@ -1,6 +1,6 @@
 // FIXME:
 /* eslint-disable no-console */
-import { getFunctions, renderMediaOnLambda } from "@remotion/lambda";
+import { getFunctions, renderMediaOnLambda } from "@remotion/lambda/client";
 import { v4 as uuidv4 } from "uuid";
 import { REGION, SITE_ID } from "src/libs/const";
 import { WATERMARK_EMPTY } from "src/libs/const/remotion-config";

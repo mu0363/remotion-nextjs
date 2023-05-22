@@ -9,6 +9,7 @@ export const PlayerLayout: FC<{ children: ReactNode }> = ({ children }) => {
     <AppShell
       styles={{
         main: {
+          width: "6rem",
           background: theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.colors.gray[0],
         },
       }}

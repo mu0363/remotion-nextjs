@@ -15,6 +15,7 @@ import { TimelineCard } from "src/components/TimelineCard";
 import { EditLayout } from "src/layout/EditLayout";
 import { videConfigAtom } from "src/libs/atom";
 import { activeSceneAtom, isPlayingAtom, selectedTemplateAtom } from "src/libs/atom";
+import { playingMusicIdAtom } from "src/libs/atom/atom";
 import { TEMPLATE1_DURATION, timelineScenes } from "src/libs/const/remotion-config";
 import { useLineImage } from "src/libs/hooks/useLineImage";
 import {
@@ -149,11 +150,11 @@ const Player: NextPage = () => {
             durationInFrames={TEMPLATE1_DURATION}
             compositionWidth={1920}
             compositionHeight={1080}
-            style={{ width: "100%" }}
+            style={{ width: "70%" }}
             fps={30}
             loop
           />
-          <div className="my-5 flex justify-end">
+          <div className="my-5 flex justify-start">
             <div>
               <Tooltip
                 label={<div className="font-bold">BGMを変更</div>}
@@ -212,7 +213,10 @@ const Player: NextPage = () => {
       </div>
       <Drawer
         opened={isDrawerOpened}
-        onClose={() => handlers.close()}
+        onClose={() => {
+          handlers.close();
+          setIsPlaying(false);
+        }}
         title={
           <div className="flex items-center space-x-2">
             <MusicalNoteIcon className="h-7 cursor-pointer rounded-full bg-orange-400 p-1.5 text-white hover:bg-orange-500" />
@@ -221,7 +225,7 @@ const Player: NextPage = () => {
         }
         padding="xl"
         size="md"
-        position="right"
+        position="left"
         overlayOpacity={0.55}
         overlayBlur={3}
       >
@@ -273,25 +277,42 @@ const MusicCard: FC<{ musicData: MusicState; isPlaying: boolean; setIsPlaying: (
   isPlaying,
   setIsPlaying,
 }) => {
+  const [playingMusicId, setPlayingMusicId] = useAtom(playingMusicIdAtom);
   const selectedTemplate = useAtomValue(selectedTemplateAtom);
   const [play, { stop }] = useSound(musicData.music, { interrupt: true });
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!isPlaying) {
+      stop();
+    }
+  }, [isPlaying, stop]);
 
   return (
     <div className="hover:scale-125 hover:cursor-pointer">
       <Group>
         <div
           onClick={() => {
+            if (isPlaying && playingMusicId !== musicData.id) {
+              stop();
+              play();
+              setIsPlaying(true);
+            }
             if (isPlaying) {
               stop();
               setIsPlaying(false);
             } else {
               play();
               setIsPlaying(true);
+              setPlayingMusicId(musicData.id);
             }
           }}
         >
-          {isPlaying ? <PauseIcon className="h-6 text-gray-500" /> : <PlayIcon className="h-6 text-gray-500" />}
+          {isPlaying && playingMusicId === musicData.id ? (
+            <PauseIcon className="h-6 text-gray-500" />
+          ) : (
+            <PlayIcon className="h-6 text-gray-500" />
+          )}
         </div>
         <div
           className="flex items-center space-x-2"

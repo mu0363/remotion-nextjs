@@ -38,7 +38,7 @@ export const Header: FC = () => {
 
           <div className="flex justify-between">
             <AvantIcon />
-            <button onClick={signout}>Signout</button>
+            {/* <button onClick={signout}>Signout</button> */}
           </div>
         </Group>
       </Container>

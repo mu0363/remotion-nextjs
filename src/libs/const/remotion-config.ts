@@ -27,7 +27,7 @@ export const Template1DefaultProps: Template1Type = {
       template_number: 1,
       scene_number: 1,
       image_number: 1,
-      image_url: `${storageUrl}/images/image-01.jpg`,
+      image_url: `${storageUrl}/images/image-01.webp`,
       text: "素敵な友人に\n恵まれた大学時代",
     },
     {
@@ -35,7 +35,7 @@ export const Template1DefaultProps: Template1Type = {
       template_number: 1,
       scene_number: 2,
       image_number: 1,
-      image_url: `${storageUrl}/images/image-02.jpg`,
+      image_url: `${storageUrl}/images/image-02.webp`,
       text: "いつでもどこでも\n二人は一緒でした",
     },
     {
@@ -43,7 +43,7 @@ export const Template1DefaultProps: Template1Type = {
       template_number: 1,
       scene_number: 3,
       image_number: 1,
-      image_url: `${storageUrl}/images/image-03.jpg`,
+      image_url: `${storageUrl}/images/image-03.webp`,
       text: "楽しかったみんなとの旅行\nまた一緒に行こうね",
     },
   ],
@@ -77,18 +77,16 @@ export const dashboardThumbnailData: DashboardThumbnailType[] = [
     selectedTemplate: "template01" as const,
     image:
       "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/images/thumbnail/thumbnail_template01.jpg",
-    title: "Basic SlideShow",
-    description:
-      "それも平生いったいこの不足者という事のうちになるうな。さぞ前から内談者はほとんどその混同んたでもにしているましには努力すたたて、あくまでには云いんたずませ。知人を行っあるのもよく今でいったいたたう。",
+    title: "写真スライドショー",
+    description: "複数枚の写真をスライドショーで表示",
   },
   {
     id: 2,
     selectedTemplate: "template02" as const,
     image:
       "https://worhhbmrflaaoczgxikp.supabase.co/storage/v1/object/public/images/thumbnail/thumbnail_template02.jpg",
-    title: "Text placement in space",
-    description:
-      "それも平生いったいこの不足者という事のうちになるうな。さぞ前から内談者はほとんどその混同んたでもにしているましには努力すたたて、あくまでには云いんたずませ。知人を行っあるのもよく今でいったいたたう。",
+    title: "テキスト表示",
+    description: "落ち着いた黒の空間に文字が浮かびあがる",
   },
 ];
 
