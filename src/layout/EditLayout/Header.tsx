@@ -184,7 +184,10 @@ export const Header: FC = () => {
           ) : (
             <div className="flex flex-col items-center">
               {isLoading ? (
-                <p className="text-2xl font-bold text-gray-600">書き出し中です...</p>
+                <div className="text-center">
+                  <p className="text-2xl font-bold text-gray-600">書き出し中です...</p>
+                  <p className="text-base  text-gray-600">3分ほどかかります。そのままお待ちください。</p>
+                </div>
               ) : (
                 <p className="text-2xl font-bold text-gray-600">本当に書き出しますか?</p>
               )}
@@ -198,7 +201,7 @@ export const Header: FC = () => {
                 className="my-10"
               >
                 {isLoading
-                  ? `書き出し中 ${renderStatus?.percent ? renderStatus?.percent * 100 : 0}%`
+                  ? `書き出し中 ${renderStatus?.percent ? Math.round(renderStatus?.percent * 100) : 0}%`
                   : "映像へ書き出す"}
               </Button>
             </div>

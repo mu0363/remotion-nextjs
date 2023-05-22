@@ -37,8 +37,8 @@ export const Header: FC = () => {
           </MediaQuery>
 
           <div className="flex justify-between">
-            <AvantIcon />
-            <button onClick={signout}>Signout</button>
+            <AvantIcon className="h-8 w-20" />
+            {/* <button onClick={signout}>Signout</button> */}
           </div>
         </Group>
       </Container>

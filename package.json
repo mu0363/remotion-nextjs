@@ -13,7 +13,7 @@
     "render": "remotion render src/remotion/index.tsx MyComp out/video.mp4",
     "video": "remotion preview src/remotion/index.tsx",
     "site": "npx remotion lambda sites create src/remotion/index.tsx --site-name=remotion-next-js",
-    "deploy": "npx remotion lambda functions deploy",
+    "deploy": "npx remotion lambda functions deploy --timeout 240",
     "supabase:type": "supabase gen types typescript --project-id worhhbmrflaaoczgxikp > types/database.types.ts"
   },
   "dependencies": {
