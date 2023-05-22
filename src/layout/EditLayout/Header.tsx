@@ -198,7 +198,7 @@ export const Header: FC = () => {
                 className="my-10"
               >
                 {isLoading
-                  ? `書き出し中 ${renderStatus?.percent ? renderStatus?.percent * 100 : 0}%`
+                  ? `書き出し中 ${renderStatus?.percent ? Math.round(renderStatus?.percent * 100) : 0}%`
                   : "映像へ書き出す"}
               </Button>
             </div>
