@@ -4,7 +4,7 @@
 好きな写真や文字を追加して動画を生成することができます。  
 (Remotion & Line-bot 検証用プロジェクト)
 
-![count up](https://firebasestorage.googleapis.com/v0/b/lapin-pos.appspot.com/o/avant-gif-1.gif?alt=media&token=541fc009-c066-483a-978e-332a0f8b4a9b)
+![avant-gif-1](https://github.com/mu0363/lapin-pos/assets/15007672/68049b5a-33a8-4987-b962-becbd0b4a8f1)
 
 # URL
 
