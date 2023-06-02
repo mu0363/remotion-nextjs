@@ -150,7 +150,7 @@ const Player: NextPage = () => {
             durationInFrames={TEMPLATE1_DURATION}
             compositionWidth={1920}
             compositionHeight={1080}
-            style={{ width: "100%" }}
+            style={{ width: "60%" }}
             fps={30}
             loop
           />
