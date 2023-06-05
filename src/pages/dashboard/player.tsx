@@ -153,6 +153,7 @@ const Player: NextPage = () => {
             style={{ width: "60%" }}
             fps={30}
             loop
+            controls
           />
           <div className="my-5 flex justify-start">
             <div>
